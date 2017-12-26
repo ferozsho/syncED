@@ -1,6 +1,6 @@
 # SyncEd
 
-## Synchronize Educational Activities
+### Synchronize Educational Activities
 
 Our mission is to inspire, educate, challenge and encourage the students to reach their highest potential and personal development. Every child is unique, keeping this in mind individual attention is given to every student. We believe in providing a safe, tranquil, stimulating and intellectually challenging environment, where all students shall have ample opportunity to identify and fulfil academic, cultural, sporting and social potential through multiple paths of learning.
 

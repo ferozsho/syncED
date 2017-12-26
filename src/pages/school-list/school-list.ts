@@ -34,8 +34,8 @@ export class SchoolListPage {
     
   }
 
-  moreModal() {
-        
+  filterSchool(events) {
+    console.log(events);
   }
 
 }
