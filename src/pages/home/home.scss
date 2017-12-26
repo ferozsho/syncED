@@ -1,0 +1,37 @@
+page-home {
+	.scroll-content {
+		display: flex;
+		flex-direction: column;
+	}
+	.title {
+		justify-content: center;
+		font-size: 2.8rem;
+	}
+	.title span {
+		display: block;
+		font-weight:400;
+		color: map-get($colors, synced);
+	}
+	.title span+span {
+		font-size:55%;
+		font-weight:200;
+		line-height: 1.77;
+		color: map-get($colors, dark);
+	}
+	.title span i {
+		font-style: normal;
+	}
+	.title span em {
+		font-weight: 900;
+		font-style: normal;
+		margin-left:0.05em;
+		color:#000000;
+	}
+	#logo {
+		justify-content: center;
+		height:145px;
+	}
+	svg {
+		fill: map-get($colors, synced);
+	}
+}
