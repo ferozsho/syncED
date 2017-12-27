@@ -7,6 +7,7 @@ import { AndroidFullScreen } from "@ionic-native/android-full-screen";
 
 import { MyApp } from './app.component';
 import { RestProvider } from '../providers/rest/rest';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { RestProvider } from '../providers/rest/rest';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
