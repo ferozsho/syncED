@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { RestProvider } from './../../providers/rest/rest';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -13,8 +14,8 @@ export class SchoolListPage {
   schList: any;
   schListTemp: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loading: LoadingController, public resProvider: RestProvider, public toastCtrl: ToastController) {
-    this.refreshPage();
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loading: LoadingController, public resProvider: RestProvider, public toastCtrl: ToastController, public storage: Storage) {
+    this.refreshPage(0);
   }
   
   addLoadingMessage() {
@@ -24,26 +25,61 @@ export class SchoolListPage {
     this.loader.present();
   }
 
-  refreshPage() {
+  refreshPage(refKey) {
+    if (refKey != 0) {
+      this.fnRemoveSchoolData('schoolList');
+    }
     this.addLoadingMessage();
-    this.schListTemp = null;
-    this.getSchoolList();
+    this.fnGetSchoolData();
+  }
+
+  fnGetSchoolData() {
+    this.storage.ready().then(() => {
+      this.storage.get('schoolList').then(data => {
+        if (data) {
+          this.schListTemp = data
+          this.schList = data
+          this.loader.dismiss();
+        } else {
+          this.getSchoolList()
+        }
+      }).catch(err => {
+        this.loader.dismiss();
+        this.onPresentToast(err.message);
+        console.log(err);
+      })
+    });
+  }
+
+  fnSetSchoolData(data) {
+    this.storage.set('schoolList', data);
+    this.schList = data;
+    this.schListTemp = data;
+  }
+  fnRemoveSchoolData(name:string) {
+    this.storage.remove(name);
   }
 
   getSchoolList() {
     this.resProvider.getSchoolList()
       .then(data => {
-        this.schList = data;
-        this.schListTemp = data;
+        this.fnSetSchoolData(data);
         this.loader.dismiss();
       },
       error => {
+        this.storage.clear();
+        console.log(error);
         this.loader.dismiss();
-        this.onPresentToast(error.message);
+        this.onPresentToast(error);
       }).catch(exception => {
+        this.storage.clear();
         this.loader.dismiss();
         this.onPresentToast(exception.message);
       });
+  }
+
+  schoolClick(ev: any) {
+    console.log(ev);
   }
 
   onCancel(ev: any) {
@@ -54,9 +90,15 @@ export class SchoolListPage {
     this.schListTemp = this.schList;
     let val = ev.target.value;
     if (val && val.trim() !== '') {
-      this.schListTemp = this.schListTemp.filter(function (item) {
-        return (item.siteName.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      });
+      this.schListTemp = this.schListTemp.filter((item) => {
+        if (
+          item.siteName.toLowerCase().indexOf(val.toLowerCase()) > -1 ||
+          item.siteAddress.toLowerCase().indexOf(val.toLowerCase()) > -1
+        ) {
+          return true;
+        }
+        return false;
+      })
     }
   }
 

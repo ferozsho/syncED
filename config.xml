@@ -23,7 +23,7 @@
     <preference name="FadeSplashScreen" value="true" />
     <preference name="FadeSplashScreenDuration" value="2000" />
     <preference name="AutoHideSplashScreen" value="false" />
-    <preference name="ShowSplashScreenSpinner" value="true" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <platform name="android">
         <allow-intent href="market:*" />
@@ -97,7 +97,6 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.0" />
     <plugin name="cordova-plugin-fullscreen" spec="^1.2.0" />
-    <allow-navigation href="http://192.168.0.100:8100" />
     <engine name="ios" spec="^4.5.4" />
     <engine name="android" spec="7.0.0" />
 </widget>

@@ -2,7 +2,7 @@
   <ion-navbar color="primary">
     <ion-title>School List</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="refreshPage()">
+      <button ion-button icon-only (click)="refreshPage($event)">
         <ion-icon name="refresh"></ion-icon>
       </button>
     </ion-buttons>
@@ -12,11 +12,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-list>
-    <ion-item *ngFor="let item of schListTemp">
-      <h2>{{ item.siteName }}</h2>
-      <p>{{ item.siteAddress }}</p>
-    </ion-item>
+    <ion-item-sliding *ngFor="let item of schListTemp">
+      <button ion-item detail-push>
+        <h2>{{ item.siteName }}</h2>
+        <p>{{ item.siteAddress }}</p>
+      </button>
+    </ion-item-sliding>
   </ion-list>
 </ion-content>
