@@ -14,7 +14,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item-sliding *ngFor="let item of schListTemp">
+    <ion-item-sliding *ngFor="let item of schListTemp" [attr.track]="item.tracks | lowercase" (click)="openSchoolInfo(item)">
       <button ion-item detail-push>
         <h2>{{ item.siteName }}</h2>
         <p>{{ item.siteAddress }}</p>
