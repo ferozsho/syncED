@@ -18,3 +18,16 @@ Node.js® is a JavaScript runtime built
 ## Guide
 
 A detailed description can be found in the [guide](https://ionicframework.com/getting-started).
+
+## ScreenShot
+
+### Home Page
+<img src="http://intellibiz.in/github-images/home.png" alt="Home Page" width="350px" height="580px">
+
+### School List
+<img src="http://intellibiz.in/github-images/school-list.png" alt="School List" width="350px" height="580px">
+
+### School Details Page
+<img src="http://intellibiz.in/github-images/intelli.png" alt="School Information" width="350px" height="580px">
+
+<img src="http://intellibiz.in/github-images/zion.png" alt="School Information" width="350px" height="580px">
