@@ -1,13 +1,5 @@
-$categories: (
-  default: #8E8D93,
-  high: #FE4C52,
-  medium: color($colors, primary),
-  normal: #3bc7c4,
-  low: #FD8B2D
-);
-
 @function auxiliary-categories() {
-  @return map-remove($categories);
+  @return map-remove($categories-colors);
 }
 
 page-school-list {

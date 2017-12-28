@@ -1,3 +1,62 @@
-page-school-info {
+@function auxiliary-categories() {
+  @return map-remove($categories-colors);
+}
 
+page-school-info {
+  .about-header {
+    background-color:#34495E;
+    padding: 16px;
+    width: 100%;
+    min-height: 150px;
+    text-align: center;
+  }
+
+  @each $track, $value in auxiliary-categories() {
+    .about-header[track=#{$track}] {
+      background-color: $value;
+    }
+  }
+  
+  .about-header img {
+    max-width: 200px;
+    min-height: 115px;
+    margin-left: -15px;
+    padding: 25px 0 20px 0;
+  }
+
+  .about-info h4 {
+    font-weight: 300;
+  }
+
+  .about-info p {
+    color: #697072;
+    text-align: left;
+  }
+
+  .about-info p.description {
+    font-family: "Noto Sans";
+    text-align: justify;
+    line-height: 1.75em;
+  }
+
+  .about-info ion-icon {
+    color: color($colors, primary);
+    width: 20px;
+  }
+
+  .md,
+  .wp {
+    .about-info [text-right] {
+      margin-right: 0;
+    }
+  }
+
+  .ios .about-info {
+    text-align: center;
+  }
+
+  .ios .about-info ion-icon {
+    width: auto;
+    margin-right: 10px;
+  }
 }

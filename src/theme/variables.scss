@@ -46,6 +46,14 @@ $colors: (
   bright:     #ffc125
 );
 
+$categories-colors: (
+  default: #8E8D93,
+  high: #FE4C52,
+  medium: color($colors, primary),
+  normal: #3bc7c4,
+  low: #FD8B2D
+);
+
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here

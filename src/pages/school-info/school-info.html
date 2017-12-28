@@ -4,6 +4,21 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h1>School Information</h1>
+<ion-content>
+  <div class="about-header" [attr.track]="session? session.tracks : 'default'">
+    <img src="assets/imgs/no-logo.svg" alt="SyncEd Logo" *ngIf="!session.siteLogo">
+    <img src="{{session.siteLogo}}" alt="{{session.siteName}} Logo" *ngIf="session.siteLogo">
+  </div>
+  <div padding class="about-info" *ngIf="session">
+    <h4 text-capitalize>{{ session.siteName }}</h4>
+    <p>{{ session.siteAddress }}</p>
+    <p class="description">{{ session.siteDescription }}</p>
+  </div>
 </ion-content>
+<ion-footer>
+  <ion-toolbar text-center>
+    <button ion-button color="primary" (click)="registerApplication(session.siteID)">
+       Register Now
+    </button>
+  </ion-toolbar>
+</ion-footer>

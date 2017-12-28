@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
@@ -7,12 +8,30 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'school-info.html',
 })
 export class SchoolInfoPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  
+  session:any;
+    
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
+    this.session = this.navParams.get('item');
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SchoolInfoPage');
+  ionViewCanEnter() {
+    if (this.session == null) {
+      this.storage.get('schoolInfo').then(data => {
+        this.session = data;
+      })
+    } else {
+      this.session = this.navParams.get('item');
+    }
+    console.log('Enter SchoolInfoPage')
   }
 
+  ionViewCanLeave() {
+    this.storage.remove('schoolInfo');
+    console.log('Leave SchoolInfoPage');
+  }
+  
+  registerApplication(siteID: any) {
+    console.log(siteID);
+  }
 }

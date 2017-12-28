@@ -102,8 +102,9 @@ export class SchoolListPage {
     }
   }
 
-  openSchoolInfo(item) {
-    this.navCtrl.push('SchoolInfoPage', { item: item });
+  openSchoolInfo(items) {
+    this.storage.set('schoolInfo', items);
+    this.navCtrl.push('SchoolInfoPage', { item: items });
   }
 
   onPresentToast(msgString: any) {
