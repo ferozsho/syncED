@@ -13,7 +13,16 @@ Node.js® is a JavaScript runtime built
 
 ### Step 2: Install Ionic
 
-    npm install -g cordova ionic
+    $ npm install -g cordova ionic
+
+### Step 3: Update Project
+
+    $ cd ./SyncEd
+    $ npm i
+
+### Step 4: Run Project
+
+    $ ionic serve
 
 ## Guide
 
@@ -29,5 +38,3 @@ A detailed description can be found in the [guide](https://ionicframework.com/ge
 
 ### School Details Page
 <img src="http://intellibiz.in/github-images/intelli.png" alt="School Information" width="350px" height="580px">
-
-<img src="http://intellibiz.in/github-images/zion.png" alt="School Information" width="350px" height="580px">
