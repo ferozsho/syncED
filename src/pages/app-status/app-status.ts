@@ -15,4 +15,8 @@ export class AppStatusPage {
     console.log('ionViewDidLoad AppStatusPage');
   }
 
+  onSearchSubmit(myForm) {
+    console.log(myForm);
+  }
+
 }
