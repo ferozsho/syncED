@@ -31,10 +31,4 @@ A detailed description can be found in the [guide](https://ionicframework.com/ge
 ## ScreenShot
 
 ### Home Page
-<img src="http://intellibiz.in/github-images/home.png" alt="Home Page" width="350px" height="580px">
-
-### School List
-<img src="http://intellibiz.in/github-images/school-list.png" alt="School List" width="350px" height="580px">
-
-### School Details Page
-<img src="http://intellibiz.in/github-images/intelli.png" alt="School Information" width="350px" height="580px">
+<img src="github-images/home.png" alt="Home Page" width="350px" height="580px">
