@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
-import { RestProvider } from './../../providers/rest/rest';
 import { Storage } from '@ionic/storage';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { RestProvider } from './../../providers/rest/rest';
+import { MyApp } from './../../app/app.component';
 
 @IonicPage()
 @Component({
@@ -10,26 +11,18 @@ import { Storage } from '@ionic/storage';
 })
 export class SchoolListPage {
 
-  loader: any;
   schList: any;
   schListTemp: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loading: LoadingController, public resProvider: RestProvider, public toastCtrl: ToastController, public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public myApp: MyApp, public resProvider: RestProvider, public toastCtrl: ToastController, public storage: Storage) {
     this.refreshPage(0);
   }
   
-  addLoadingMessage() {
-    this.loader = this.loading.create({
-      content: 'Please Wait...',
-    });
-    this.loader.present();
-  }
-
   refreshPage(refKey) {
     if (refKey != 0) {
       this.fnRemoveSchoolData('schoolList');
     }
-    this.addLoadingMessage();
+    this.myApp.addLoadingMessage();
     this.fnGetSchoolData();
   }
 
@@ -39,12 +32,12 @@ export class SchoolListPage {
         if (data) {
           this.schListTemp = data
           this.schList = data
-          this.loader.dismiss();
+          this.myApp.removeMessage()
         } else {
           this.getSchoolList()
         }
       }).catch(err => {
-        this.loader.dismiss();
+        this.myApp.removeMessage()
         this.onPresentToast(err.message);
         console.log(err);
       })
@@ -64,22 +57,18 @@ export class SchoolListPage {
     this.resProvider.getSchoolList()
       .then(data => {
         this.fnSetSchoolData(data);
-        this.loader.dismiss();
+        this.myApp.removeMessage()
       },
       error => {
         this.storage.clear();
         console.log(error);
-        this.loader.dismiss();
+        this.myApp.removeMessage()
         this.onPresentToast(error);
       }).catch(exception => {
         this.storage.clear();
-        this.loader.dismiss();
+        this.myApp.removeMessage()
         this.onPresentToast(exception.message);
       });
-  }
-
-  schoolClick(ev: any) {
-    console.log(ev);
   }
 
   onCancel(ev: any) {
@@ -103,8 +92,18 @@ export class SchoolListPage {
   }
 
   openSchoolInfo(items) {
+    this.myApp.addLoadingMessage();
+    
     this.storage.set('schoolInfo', items);
-    this.navCtrl.push('SchoolInfoPage', { item: items });
+    this.navCtrl.push('SchoolInfoPage', {item: items}).then(
+      response => {
+        //console.log('Response ' + response);
+      },
+      error => {
+        this.onPresentToast(error);
+      }).catch(exception => {
+        this.onPresentToast(exception);
+      });
   }
 
   onPresentToast(msgString: any) {

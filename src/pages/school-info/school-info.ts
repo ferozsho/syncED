@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import { MyApp } from './../../app/app.component';
 
 @IonicPage()
 @Component({
@@ -9,9 +10,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SchoolInfoPage {
   
-  session:any;
+  session: any;
     
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public toastCtrl: ToastController,
+    public myApp: MyApp) {
     this.session = this.navParams.get('item');
   }
 
@@ -23,15 +25,52 @@ export class SchoolInfoPage {
     } else {
       this.session = this.navParams.get('item');
     }
-    console.log('Enter SchoolInfoPage')
+    console.log('Enter School Information')
+    this.myApp.removeMessage();
   }
 
-  ionViewCanLeave() {
+  ionViewWillLeave() {
+    //this.myApp.removeMessage();
+  }
+  ionViewWillUnload() {
     this.storage.remove('schoolInfo');
-    console.log('Leave SchoolInfoPage');
+    console.log('Unload School Information and removed from storage');
   }
-  
-  registerApplication(siteID: any) {
-    console.log(siteID);
+
+  trackApplication() {
+    this.myApp.addLoadingMessage();
+    this.navCtrl.push('AppStatusPage', { siteInfo: this.session }).then(
+      response => {
+        //console.log('Response ' + response);
+      },
+      error => {
+        this.onPresentToast(error);
+      }).catch(exception => {
+        this.onPresentToast(exception);
+      });
   }
+  registerApplication() {
+    this.myApp.addLoadingMessage();
+    this.navCtrl.push('RegFormPage', { siteInfo: this.session }).then(
+      response => {
+        //console.log('Response ' + response);
+      },
+      error => {
+        this.onPresentToast(error);
+      }).catch(exception => {
+        this.onPresentToast(exception);
+      });
+  }
+
+  onPresentToast(msgString: any) {
+    const toast = this.toastCtrl.create({
+      message: msgString,
+      showCloseButton: true,
+      closeButtonText: 'Ok'
+    });
+    toast.onDidDismiss(() => {
+      console.log("Toast Dismiss!!!");
+    });;
+    toast.present();
+  }  
 }

@@ -6,8 +6,8 @@
 
 <ion-content>
   <div class="about-header" [attr.track]="session? session.tracks : 'default'">
-    <img src="assets/imgs/no-logo.svg" alt="SyncEd Logo" *ngIf="!session.siteLogo">
-    <img src="{{session.siteLogo}}" alt="{{session.siteName}} Logo" *ngIf="session.siteLogo">
+    <img *ngIf="!session.siteLogo" src="assets/imgs/no-logo.svg" alt="SyncEd Logo">
+    <img *ngIf="session.siteLogo" src="{{session.siteLogo}}" alt="{{session.siteName}} Logo">
   </div>
   <div padding class="about-info" *ngIf="session">
     <h4 text-capitalize>{{ session.siteName }}</h4>
@@ -15,10 +15,31 @@
     <p class="description">{{ session.siteDescription }}</p>
   </div>
 </ion-content>
+
 <ion-footer>
-  <ion-toolbar text-center>
-    <button ion-button color="primary" (click)="registerApplication(session.siteID)">
-       Register Now
-    </button>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col text-center>
+        <button ion-button color="primary" (click)="trackApplication()">Track Status</button>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button color="primary" (click)="registerApplication()">Register Now</button>
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-footer>
+
+
+<!-- <ion-footer>
+  <ion-toolbar>
+    <button float-start ion-button color="primary" (click)="()">
+       Register Now
+    </button>
+
+    <button float-end ion-button color="primary" (click)="registerApplication()">
+      Register Now
+    </button>
+   
+  </ion-toolbar>
+</ion-footer>
+-->

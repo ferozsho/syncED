@@ -4,8 +4,21 @@ import { FormControl, FormGroup } from '@angular/forms';
 @Injectable()
 export class ValidatorProvider {
 
+  public statusAppValidationMessages = {
+    'admissionNo': [
+      { type: 'minlength', message: 'Admission must be at least 5 characters long.' }
+    ],
+    'aadhaarNo': [
+      { type: 'minlength', message: 'Aadhaar must be at least 10 characters long.' }
+    ],
+    'findout_fill': [
+      { type: 'areAnyEqual', message: 'Please enter either Enrolment or Aadhaar number.' }
+    ],
+  };
+
   constructor() {
     console.log('Hello ValidatorProvider Provider');
+
   }
 
   validAadhaarNo(control: FormControl) {
@@ -33,4 +46,5 @@ export class ValidatorProvider {
       areAnyEqual: true
     };
   }
+ 
 }

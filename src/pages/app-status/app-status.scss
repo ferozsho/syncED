@@ -1,3 +1,10 @@
 page-app-status {
-  
+  p.sub-title{
+    padding:0px;
+    margin: 0px;
+    color: color($colors, synced)
+  }
+  .error {
+    color: color($colors, danger);
+  }
 }

@@ -1,10 +1,11 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>Registration Form</ion-title>
+    <ion-title>Registration : <span *ngIf="siteData.siteName">{{ siteData.siteName }}</span></ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-
+  <p>{{deviceInfo | json}}</p>
+  <button ion-button (click)="getInfo()">Default</button>
 </ion-content>

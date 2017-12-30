@@ -6,7 +6,8 @@
 
 <ion-content padding>
 
-  <h4>Track Your Application</h4>
+  <h4 no-padding>Track Your Application</h4>
+  <p class="sub-title">To know your application status, please provide the Enrolment or Aadhaar number.</p>
 
   <form [formGroup]="statusApp" (ngSubmit)="onSearchSubmit(statusApp.value)" novalidate>
 
@@ -20,7 +21,7 @@
         </ion-item>
 
         <ng-container *ngFor="let validation of validation_messages.admissionNo">
-          <div class="validator-error" *ngIf="statusApp.get('findout_fill').get('admissionNo').hasError(validation.type) && (statusApp.get('findout_fill').get('admissionNo').dirty || statusApp.get('findout_fill').get('admissionNo').touched)">
+          <div class="error" *ngIf="statusApp.get('findout_fill').get('admissionNo').hasError(validation.type) && (statusApp.get('findout_fill').get('admissionNo').dirty || statusApp.get('findout_fill').get('admissionNo').touched)">
             {{ validation.message }}
           </div>
         </ng-container>
@@ -31,7 +32,7 @@
         </ion-item>
 
         <ng-container *ngFor="let validation of validation_messages.aadhaarNo">
-          <div class="validator-error" *ngIf="statusApp.get('findout_fill').get('aadhaarNo').hasError(validation.type) && (statusApp.get('findout_fill').get('aadhaarNo').dirty || statusApp.get('findout_fill').get('aadhaarNo').touched)">
+          <div class="error" *ngIf="statusApp.get('findout_fill').get('aadhaarNo').hasError(validation.type) && (statusApp.get('findout_fill').get('aadhaarNo').dirty || statusApp.get('findout_fill').get('aadhaarNo').touched)">
             {{ validation.message }}
           </div>
         </ng-container>
@@ -40,7 +41,7 @@
 
       <!-- These validations are for the form group -->
       <ng-container *ngFor="let validation of validation_messages.findout_fill">
-        <div class="validator-error" *ngIf="statusApp.get('findout_fill').hasError(validation.type) && 
+        <div class="error" padding-top *ngIf="statusApp.get('findout_fill').hasError(validation.type) && 
           ((statusApp.get('findout_fill').get('admissionNo').dirty || statusApp.get('findout_fill').get('admissionNo').touched) || 
            (statusApp.get('findout_fill').get('aadhaarNo').dirty || statusApp.get('findout_fill').get('aadhaarNo').touched))
         ">
@@ -53,10 +54,10 @@
     <ion-footer>
       <ion-row>
         <ion-col no-padding>
-          <button no-margin ion-button full large color="synced" (click)="doCancel()">Back</button>
+          <button no-margin ion-button full large color="subtle" (click)="doCancel()">Back</button>
         </ion-col>
         <ion-col no-padding>
-          <button no-margin ion-button full large color="primary" type="submit">Search</button>
+          <button no-margin ion-button full large color="synced" type="submit">Search</button>
         </ion-col>
       </ion-row>
     </ion-footer>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup, FormControl, AbstractControl } from '@angular/forms';
+import { MyApp } from '../../app/app.component';
 import { ValidatorProvider } from './../../providers/validator/validator';
 
 @IonicPage()
@@ -9,18 +10,22 @@ import { ValidatorProvider } from './../../providers/validator/validator';
   templateUrl: 'app-status.html',
 })
 export class AppStatusPage {
+  session: any;
 
   statusApp: FormGroup;
   findout_fill_group: FormGroup;
   admissionNo: AbstractControl;
   aadhaarNo: AbstractControl;
+  validation_messages: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public formValidator: ValidatorProvider) {
-
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public formValidator: ValidatorProvider,
+    public myApp: MyApp) {
+    this.session = this.navParams.get('siteInfo');
   }
 
   ionViewWillLoad() {
-
+    this.validation_messages = this.formValidator.statusAppValidationMessages;
+    
     this.findout_fill_group = new FormGroup({
       admissionNo: new FormControl('', Validators.minLength(5)),
       aadhaarNo: new FormControl('', Validators.minLength(10))
@@ -34,18 +39,9 @@ export class AppStatusPage {
 
   }
 
-  validation_messages = {
-    'admissionNo': [
-      { type: 'minlength', message: 'Admission must be at least 5 characters long.' }
-    ],
-    'aadhaarNo': [
-      { type: 'minlength', message: 'Aadhaar must be at least 10 characters long.' }
-    ],
-    'findout_fill': [
-      { type: 'areAnyEqual', message: 'Invalid entry' }
-    ],
-  };
-
+  ionViewDidEnter() {
+    this.myApp.removeMessage();
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad AppStatusPage');
   }
@@ -59,7 +55,7 @@ export class AppStatusPage {
   }
 
   doCancel() {
-    this.navCtrl.popToRoot();
+    this.navCtrl.pop();
   }
 
 }

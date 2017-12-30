@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
@@ -9,9 +9,11 @@ import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 })
 
 export class MyApp {
-  rootPage: any = 'HomePage';
+  rootPage: any = 'SchoolListPage';
+  loader: any;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public androidFullScreen: AndroidFullScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public androidFullScreen: AndroidFullScreen,
+  public loading: LoadingController) {
 
     this.androidFullScreen.isSupported()
       .then(() => {
@@ -38,6 +40,18 @@ export class MyApp {
         this.splashScreen.hide();
       }, 100);
     }
+  }
+  
+  public addLoadingMessage() {
+    this.loader = this.loading.create({
+      content: 'Please Wait...',
+    });
+    this.loader.present();
+  }
+
+  public removeMessage() {
+    console.log('Loading Removed...');
+    this.loader.dismiss();
   }
   
 }

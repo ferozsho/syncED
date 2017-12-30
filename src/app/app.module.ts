@@ -29,9 +29,9 @@ import { ValidatorProvider } from '../providers/validator/validator';
     StatusBar,
     SplashScreen,
     AndroidFullScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
     RestProvider,
-    ValidatorProvider
+    ValidatorProvider,
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
 export class AppModule {}
