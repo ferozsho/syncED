@@ -5,33 +5,62 @@
 </ion-header>
 
 <ion-content padding>
+
   <h4>Track Your Application</h4>
-<ion-list>
 
-  <form [formGroup]="statusApp" (ngSubmit)="onSearchSubmit()" novalidate>
-    <ion-item>
-      <ion-label floating>Enrolment Number</ion-label>
-      <ion-input type="number" formControlName="admissionNo"></ion-input>
-    </ion-item>
+  <form [formGroup]="statusApp" (ngSubmit)="onSearchSubmit(statusApp.value)" novalidate>
 
-    <ion-item>
-      <ion-label floating>Aadhaar Number</ion-label>
-      <ion-input type="text" formControlName="aadhaarNo"></ion-input>
-    </ion-item>
+    <ion-list inset>
+
+      <div formGroupName="findout_fill">
+
+        <ion-item>
+          <ion-label floating>Enrolment Number</ion-label>
+          <ion-input type="number" formControlName="admissionNo"></ion-input>
+        </ion-item>
+
+        <ng-container *ngFor="let validation of validation_messages.admissionNo">
+          <div class="validator-error" *ngIf="statusApp.get('findout_fill').get('admissionNo').hasError(validation.type) && (statusApp.get('findout_fill').get('admissionNo').dirty || statusApp.get('findout_fill').get('admissionNo').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+
+        <ion-item>
+          <ion-label floating>Aadhaar Number</ion-label>
+          <ion-input type="text" formControlName="aadhaarNo"></ion-input>
+        </ion-item>
+
+        <ng-container *ngFor="let validation of validation_messages.aadhaarNo">
+          <div class="validator-error" *ngIf="statusApp.get('findout_fill').get('aadhaarNo').hasError(validation.type) && (statusApp.get('findout_fill').get('aadhaarNo').dirty || statusApp.get('findout_fill').get('aadhaarNo').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+
+      </div>
+
+      <!-- These validations are for the form group -->
+      <ng-container *ngFor="let validation of validation_messages.findout_fill">
+        <div class="validator-error" *ngIf="statusApp.get('findout_fill').hasError(validation.type) && 
+          ((statusApp.get('findout_fill').get('admissionNo').dirty || statusApp.get('findout_fill').get('admissionNo').touched) || 
+           (statusApp.get('findout_fill').get('aadhaarNo').dirty || statusApp.get('findout_fill').get('aadhaarNo').touched))
+        ">
+          {{ validation.message }}
+        </div>
+      </ng-container>
+
+    </ion-list>
 
     <ion-footer>
       <ion-row>
         <ion-col no-padding>
-          <button no-margin ion-button full large color="synced" (click)="doCancel()">Cancel</button>
+          <button no-margin ion-button full large color="synced" (click)="doCancel()">Back</button>
         </ion-col>
         <ion-col no-padding>
-          <button no-margin ion-button full large color="primary" type="submit" [disabled]="!statusApp.valid">Search</button>
+          <button no-margin ion-button full large color="primary" type="submit">Search</button>
         </ion-col>
       </ion-row>
     </ion-footer>
 
   </form>
-
-</ion-list>
 
 </ion-content>

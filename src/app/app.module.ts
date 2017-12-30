@@ -9,6 +9,7 @@ import { AndroidFullScreen } from "@ionic-native/android-full-screen";
 import { MyApp } from './app.component';
 import { RestProvider } from '../providers/rest/rest';
 import { HttpClientModule } from '@angular/common/http';
+import { ValidatorProvider } from '../providers/validator/validator';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { HttpClientModule } from '@angular/common/http';
     SplashScreen,
     AndroidFullScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    RestProvider
+    RestProvider,
+    ValidatorProvider
   ]
 })
 export class AppModule {}
