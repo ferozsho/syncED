@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 @IonicPage()
 @Component({
@@ -8,15 +9,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AppStatusPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public statusApp: FormGroup;
+  
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
+    this.statusApp = this.formBuilder.group({
+      admissionNo: ['', Validators.required],
+      aadhaarNo: [''],
+    });  
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AppStatusPage');
   }
 
-  onSearchSubmit(myForm) {
-    console.log(myForm);
+  onSearchSubmit() {
+    console.log(this.statusApp.value)
+  }
+
+  doCancel() {
+    
   }
 
 }

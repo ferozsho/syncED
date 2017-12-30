@@ -6,27 +6,26 @@
 
 <ion-content padding>
   <h4>Track Your Application</h4>
-
 <ion-list>
 
-  <form #myForm='ngForm' (ngSubmit)="onSearchSubmit(myForm)">
+  <form [formGroup]="statusApp" (ngSubmit)="onSearchSubmit()" novalidate>
     <ion-item>
       <ion-label floating>Enrolment Number</ion-label>
-      <ion-input type="number" name="admissionNo"></ion-input>
+      <ion-input type="number" formControlName="admissionNo"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating>Aadhaar Number</ion-label>
-      <ion-input type="text" name="aadhaarNo"></ion-input>
+      <ion-input type="text" formControlName="aadhaarNo"></ion-input>
     </ion-item>
 
     <ion-footer>
       <ion-row>
         <ion-col no-padding>
-          <button no-margin ion-button full large color="synced">Cancel</button>
+          <button no-margin ion-button full large color="synced" (click)="doCancel()">Cancel</button>
         </ion-col>
         <ion-col no-padding>
-          <button no-margin ion-button full large color="primary">Search</button>
+          <button no-margin ion-button full large color="primary" type="submit" [disabled]="!statusApp.valid">Search</button>
         </ion-col>
       </ion-row>
     </ion-footer>
