@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { MyApp } from '../../app/app.component';
 import { ValidatorProvider } from './../../providers/validator/validator';
+import { SchoolApi } from '../../providers/school-api/school-api';
 
 @IonicPage()
 @Component({
@@ -10,7 +11,7 @@ import { ValidatorProvider } from './../../providers/validator/validator';
   templateUrl: 'app-status.html',
 })
 export class AppStatusPage {
-  session: any;
+  schInfo: any;
 
   statusApp: FormGroup;
   findout_fill_group: FormGroup;
@@ -19,8 +20,8 @@ export class AppStatusPage {
   validation_messages: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public formValidator: ValidatorProvider,
-    public myApp: MyApp) {
-    this.session = this.navParams.get('siteInfo');
+    public myApp: MyApp, public schoolAPI: SchoolApi) {
+    this.schInfo = this.navParams.get('siteInfo');
   }
 
   ionViewWillLoad() {
@@ -40,13 +41,12 @@ export class AppStatusPage {
   }
 
   ionViewCanEnter() {
-    if (typeof this.session === 'undefined') {
-      this.session = null;
+    if (typeof this.schInfo === 'undefined') {
       this.myApp.onPresentToast('Sorry! We unable to get school information from server.')
       this.navCtrl.popToRoot();
       return false;
     } else {
-      this.session = this.navParams.get('item');
+      this.schInfo = this.navParams.get('siteInfo');
     }
     console.log('Enter School Information')
   }
@@ -54,15 +54,13 @@ export class AppStatusPage {
   ionViewDidEnter() {
     this.myApp.removeMessage();
   }
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AppStatusPage');
-  }
 
   onSearchSubmit() {
     if (this.statusApp.valid) {
-      console.log(this.statusApp.value)
+      console.log(this.statusApp.value.findout_fill)
+      this.myApp.onPresentToast(JSON.stringify(this.statusApp.value.findout_fill))
     } else {
-
+      this.myApp.onPresentToast('Invalid code, Please enter either Enrolment or Aadhaar number.')
     }
   }
 

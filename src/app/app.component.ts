@@ -71,14 +71,18 @@ export class MyApp {
   }
 
   public getDeviceInfo() {
-    this.deviceInfo.id = this.device.uuid;
-    this.deviceInfo.model = this.device.model;
-    this.deviceInfo.cordova = this.device.cordova;
-    this.deviceInfo.platform = this.device.platform;
-    this.deviceInfo.version = this.device.version;
-    this.deviceInfo.manufacturer = this.device.manufacturer;
-    this.deviceInfo.serial = this.device.serial;
-    this.deviceInfo.isVirtual = this.device.isVirtual;
+    try {
+      this.deviceInfo.id = this.device.uuid;
+      this.deviceInfo.model = this.device.model;
+      this.deviceInfo.cordova = this.device.cordova;
+      this.deviceInfo.platform = this.device.platform;
+      this.deviceInfo.version = this.device.version;
+      this.deviceInfo.manufacturer = this.device.manufacturer;
+      this.deviceInfo.serial = this.device.serial;
+      this.deviceInfo.isVirtual = this.device.isVirtual;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
 }

@@ -11,6 +11,7 @@ import { RestProvider } from '../providers/rest/rest';
 import { HttpClientModule } from '@angular/common/http';
 import { ValidatorProvider } from '../providers/validator/validator';
 import { Device } from '@ionic-native/device';
+import { SchoolApi } from '../providers/school-api/school-api';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,10 @@ import { Device } from '@ionic-native/device';
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot({
+      name: 'synced',
+      driverOrder: ['indexeddb', 'sqlite', 'websql']
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -32,6 +36,7 @@ import { Device } from '@ionic-native/device';
     AndroidFullScreen,
     RestProvider,
     ValidatorProvider,
+    SchoolApi,
     Device,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]

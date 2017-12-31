@@ -1,6 +1,10 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>Status</ion-title>
+    <ion-title>
+      <span *ngIf="schInfo">{{ schInfo.siteName }}</span>
+      <span>{{ schInfo.siteAddress }}</span>
+    </ion-title>
+
   </ion-navbar>
 </ion-header>
 
@@ -43,23 +47,14 @@
       <ng-container *ngFor="let validation of validation_messages.findout_fill">
         <div class="error" padding-top *ngIf="statusApp.get('findout_fill').hasError(validation.type) && 
           ((statusApp.get('findout_fill').get('admissionNo').dirty || statusApp.get('findout_fill').get('admissionNo').touched) || 
-           (statusApp.get('findout_fill').get('aadhaarNo').dirty || statusApp.get('findout_fill').get('aadhaarNo').touched))
-        ">
-          {{ validation.message }}
-        </div>
+          (statusApp.get('findout_fill').get('aadhaarNo').dirty || statusApp.get('findout_fill').get('aadhaarNo').touched))
+        ">{{ validation.message }}</div>
       </ng-container>
 
     </ion-list>
 
     <ion-footer>
-      <ion-row>
-        <ion-col no-padding>
-          <button no-margin ion-button full large color="subtle" (click)="doCancel()">Back</button>
-        </ion-col>
-        <ion-col no-padding>
-          <button no-margin ion-button full large color="synced" type="submit">Search</button>
-        </ion-col>
-      </ion-row>
+      <button no-margin ion-button full large color="synced" type="submit" [disabled]="!statusApp.valid">Search</button>
     </ion-footer>
 
   </form>
