@@ -31,4 +31,4 @@ A detailed description can be found in the [guide](https://ionicframework.com/ge
 ## ScreenShot
 
 ### Home Page
-<img src="github-images/home.png" alt="Home Page" width="350px" height="580px">
+<img src="github-images/school-list.png" alt="Home Page" width="350px" height="580px">
