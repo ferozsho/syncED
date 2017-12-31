@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams} from 'ionic-angular';
 import { MyApp } from './../../app/app.component';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -9,29 +9,29 @@ import { MyApp } from './../../app/app.component';
   templateUrl: 'school-info.html',
 })
 export class SchoolInfoPage {
-  
-  session: any;
-    
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public toastCtrl: ToastController,
-    public myApp: MyApp) {
+
+  session: Promise<any>;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public myApp: MyApp) {
     this.session = this.navParams.get('item');
   }
 
   ionViewCanEnter() {
-    if (this.session == null) {
-      this.storage.get('schoolInfo').then(data => {
-        this.session = data;
-      })
+    if (typeof this.session === 'undefined') {
+      this.session = null;
+      this.myApp.onPresentToast('Sorry! We unable to get school information from server.')
+      this.navCtrl.popToRoot();
+      return false;
     } else {
       this.session = this.navParams.get('item');
     }
     console.log('Enter School Information')
+  }
+
+  ionViewDidEnter() {
     this.myApp.removeMessage();
   }
 
-  ionViewWillLeave() {
-    //this.myApp.removeMessage();
-  }
   ionViewWillUnload() {
     this.storage.remove('schoolInfo');
     console.log('Unload School Information and removed from storage');
@@ -44,9 +44,9 @@ export class SchoolInfoPage {
         //console.log('Response ' + response);
       },
       error => {
-        this.onPresentToast(error);
+        this.myApp.onPresentToast(error);
       }).catch(exception => {
-        this.onPresentToast(exception);
+        this.myApp.onPresentToast(exception);
       });
   }
   registerApplication() {
@@ -56,21 +56,10 @@ export class SchoolInfoPage {
         //console.log('Response ' + response);
       },
       error => {
-        this.onPresentToast(error);
+        this.myApp.onPresentToast(error);
       }).catch(exception => {
-        this.onPresentToast(exception);
+        this.myApp.onPresentToast(exception);
       });
   }
 
-  onPresentToast(msgString: any) {
-    const toast = this.toastCtrl.create({
-      message: msgString,
-      showCloseButton: true,
-      closeButtonText: 'Ok'
-    });
-    toast.onDidDismiss(() => {
-      console.log("Toast Dismiss!!!");
-    });;
-    toast.present();
-  }  
 }

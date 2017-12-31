@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Platform, LoadingController } from 'ionic-angular';
+import { Platform, LoadingController, ToastController } from 'ionic-angular';
+import { Device } from '@ionic-native/device';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
@@ -9,11 +10,13 @@ import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 })
 
 export class MyApp {
+
   rootPage: any = 'SchoolListPage';
   loader: any;
+  public deviceInfo: deviceInterface = {};
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public androidFullScreen: AndroidFullScreen,
-  public loading: LoadingController) {
+    public loading: LoadingController, public toastCtrl: ToastController, public device: Device ) {
 
     this.androidFullScreen.isSupported()
       .then(() => {
@@ -30,6 +33,7 @@ export class MyApp {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleLightContent();
+      this.getDeviceInfo();
       this.hideSplashScreen();
     });
   }
@@ -53,5 +57,39 @@ export class MyApp {
     console.log('Loading Removed...');
     this.loader.dismiss();
   }
-  
+
+  public onPresentToast(msgString: any) {
+    const toast = this.toastCtrl.create({
+      message: msgString,
+      showCloseButton: true,
+      closeButtonText: 'Ok'
+    });
+    toast.onDidDismiss(() => {
+      console.log("Toast Dismiss!!!");
+    });;
+    toast.present();
+  }
+
+  public getDeviceInfo() {
+    this.deviceInfo.id = this.device.uuid;
+    this.deviceInfo.model = this.device.model;
+    this.deviceInfo.cordova = this.device.cordova;
+    this.deviceInfo.platform = this.device.platform;
+    this.deviceInfo.version = this.device.version;
+    this.deviceInfo.manufacturer = this.device.manufacturer;
+    this.deviceInfo.serial = this.device.serial;
+    this.deviceInfo.isVirtual = this.device.isVirtual;
+  }
+
+}
+
+interface deviceInterface {
+  id?: string,
+  model?: string,
+  cordova?: string,
+  platform?: string,
+  version?: string,
+  manufacturer?: string,
+  serial?: string,
+  isVirtual?: boolean,
 }

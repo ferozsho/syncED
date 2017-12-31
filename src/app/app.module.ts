@@ -10,6 +10,7 @@ import { MyApp } from './app.component';
 import { RestProvider } from '../providers/rest/rest';
 import { HttpClientModule } from '@angular/common/http';
 import { ValidatorProvider } from '../providers/validator/validator';
+import { Device } from '@ionic-native/device';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ValidatorProvider } from '../providers/validator/validator';
     AndroidFullScreen,
     RestProvider,
     ValidatorProvider,
+    Device,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

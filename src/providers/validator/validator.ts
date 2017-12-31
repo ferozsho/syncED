@@ -17,11 +17,10 @@ export class ValidatorProvider {
   };
 
   constructor() {
-    console.log('Hello ValidatorProvider Provider');
-
+    console.log('Init validator provider');
   }
 
-  validAadhaarNo(control: FormControl) {
+  validEmailAddress(control: FormControl) {
     return new Promise(resolve => {
       let emailPartten = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (!emailPartten.test(control.value)) {

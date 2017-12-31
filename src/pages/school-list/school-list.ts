@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RestProvider } from './../../providers/rest/rest';
 import { MyApp } from './../../app/app.component';
 
@@ -14,7 +14,7 @@ export class SchoolListPage {
   schList: any;
   schListTemp: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public myApp: MyApp, public resProvider: RestProvider, public toastCtrl: ToastController, public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public myApp: MyApp, public resProvider: RestProvider, public storage: Storage) {
     this.refreshPage(0);
   }
   
@@ -38,7 +38,7 @@ export class SchoolListPage {
         }
       }).catch(err => {
         this.myApp.removeMessage()
-        this.onPresentToast(err.message);
+        this.myApp.onPresentToast(err.message);
         console.log(err);
       })
     });
@@ -63,11 +63,11 @@ export class SchoolListPage {
         this.storage.clear();
         console.log(error);
         this.myApp.removeMessage()
-        this.onPresentToast(error);
+        this.myApp.onPresentToast(error);
       }).catch(exception => {
         this.storage.clear();
         this.myApp.removeMessage()
-        this.onPresentToast(exception.message);
+        this.myApp.onPresentToast(exception.message);
       });
   }
 
@@ -93,29 +93,16 @@ export class SchoolListPage {
 
   openSchoolInfo(items) {
     this.myApp.addLoadingMessage();
-    
     this.storage.set('schoolInfo', items);
     this.navCtrl.push('SchoolInfoPage', {item: items}).then(
       response => {
         //console.log('Response ' + response);
       },
       error => {
-        this.onPresentToast(error);
+        this.myApp.onPresentToast(error);
       }).catch(exception => {
-        this.onPresentToast(exception);
+        this.myApp.onPresentToast(exception);
       });
-  }
-
-  onPresentToast(msgString: any) {
-    const toast = this.toastCtrl.create({
-      message: msgString,
-      showCloseButton: true,
-      closeButtonText: 'Ok'
-    });
-    toast.onDidDismiss(() => {
-      console.log("Toast Dismiss!!!");
-    });;
-    toast.present();
   }
 
 }

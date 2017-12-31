@@ -1,11 +1,11 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>Registration : <span *ngIf="siteData.siteName">{{ siteData.siteName }}</span></ion-title>
+    <ion-title>Registration : <span *ngIf="siteData">{{ siteData.siteName }}</span></ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-  <p>{{deviceInfo | json}}</p>
-  <button ion-button (click)="getInfo()">Default</button>
+  <p *ngIf="deviceID">{{ deviceID }}</p>
+  <button ion-button (click)="getInfo()">Test Device Info</button>
 </ion-content>

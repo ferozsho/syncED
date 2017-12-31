@@ -39,6 +39,18 @@ export class AppStatusPage {
 
   }
 
+  ionViewCanEnter() {
+    if (typeof this.session === 'undefined') {
+      this.session = null;
+      this.myApp.onPresentToast('Sorry! We unable to get school information from server.')
+      this.navCtrl.popToRoot();
+      return false;
+    } else {
+      this.session = this.navParams.get('item');
+    }
+    console.log('Enter School Information')
+  }
+
   ionViewDidEnter() {
     this.myApp.removeMessage();
   }

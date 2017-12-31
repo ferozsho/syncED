@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { MyApp } from './../../app/app.component';
 
 @IonicPage()
 @Component({
@@ -8,12 +9,8 @@ import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angu
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public myApp: MyApp) {
 
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
   }
 
   onRegistration() {
@@ -30,21 +27,10 @@ export class HomePage {
         //console.log('Response ' + response);
       },
       error => {
-        this.onPresentToast(error);
+        this.myApp.onPresentToast(error);
       }).catch(exception => {
-        this.onPresentToast(exception);
+        this.myApp.onPresentToast(exception);
       });
   }
 
-  onPresentToast(msgString: any) {
-    const toast = this.toastCtrl.create({
-      message: msgString,
-      showCloseButton: true,
-      closeButtonText: 'Ok'
-    });
-    toast.onDidDismiss(() => { 
-      console.log("Toast Dismiss!!!");      
-    });;
-    toast.present();
-  }
 }
