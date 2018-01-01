@@ -1,11 +1,52 @@
 <ion-header>
-  <ion-navbar color="primary">
-    <ion-title>Registration : <span *ngIf="siteData">{{ siteData.siteName }}</span></ion-title>
+  <ion-navbar color="primary" no-border-bottom>
+    <ion-title>
+      <span *ngIf="siteData">{{ siteData.siteName }}</span>
+      <span>Registration From</span>
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)='doResetForm()'>
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
+
+  <ion-toolbar no-border-top color="primary">
+      <ion-segment [(ngModel)]="applicant" (ionChange)="tabChange()" color="light">
+        <ion-segment-button value="applicant">
+          Applicant
+        </ion-segment-button>
+        <ion-segment-button value="father">
+          Father
+        </ion-segment-button>
+        <ion-segment-button value="mother">
+          Mother
+        </ion-segment-button>
+      </ion-segment>
+  </ion-toolbar>
+
 </ion-header>
 
-
 <ion-content padding>
-  <p *ngIf="deviceID">{{ deviceID }}</p>
-  <button ion-button (click)="getInfo()">Test Device Info</button>
+  <form (ngSubmit)="onRegistrationSubmit(regForm.value)" novalidate>
+    
+    <div [ngSwitch]="applicant">
+      <ion-list *ngSwitchCase="'applicant'">
+        <ion-item>
+          <h4>Applicant</h4>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngSwitchCase="'father'">
+        <ion-item>
+          <h4>Father</h4>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngSwitchCase="'mother'">
+        <ion-item>
+          <h4>Mother</h4>
+        </ion-item>
+      </ion-list>
+    </div>
+
+  </form>
 </ion-content>

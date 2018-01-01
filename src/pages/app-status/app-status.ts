@@ -29,9 +29,9 @@ export class AppStatusPage {
     
     this.findout_fill_group = new FormGroup({
       admissionNo: new FormControl('', Validators.minLength(5)),
-      aadhaarNo: new FormControl('', Validators.minLength(10))
+      aadhaarNo: new FormControl('', Validators.minLength(12))
     }, (formGroup: FormGroup) => {
-      return this.formValidator.areAnyEqual(formGroup);
+      return this.formValidator.appStatusAreEqual(formGroup);
     });
 
     this.statusApp = this.formBuilder.group({
@@ -43,8 +43,8 @@ export class AppStatusPage {
   ionViewCanEnter() {
     if (typeof this.schInfo === 'undefined') {
       this.myApp.onPresentToast('Sorry! We unable to get school information from server.')
+      this.navCtrl.setRoot('SchoolListPage');
       this.navCtrl.popToRoot();
-      return false;
     } else {
       this.schInfo = this.navParams.get('siteInfo');
     }
@@ -57,15 +57,12 @@ export class AppStatusPage {
 
   onSearchSubmit() {
     if (this.statusApp.valid) {
-      console.log(this.statusApp.value.findout_fill)
-      this.myApp.onPresentToast(JSON.stringify(this.statusApp.value.findout_fill))
+      let formData = JSON.stringify(this.statusApp.value.findout_fill);
+      console.log(formData)
+      this.myApp.onPresentToast(formData)
     } else {
       this.myApp.onPresentToast('Invalid code, Please enter either Enrolment or Aadhaar number.')
     }
-  }
-
-  doCancel() {
-    this.navCtrl.pop();
   }
 
 }

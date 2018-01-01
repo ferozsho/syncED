@@ -6,13 +6,13 @@ export class ValidatorProvider {
 
   public statusAppValidationMessages = {
     'admissionNo': [
-      { type: 'minlength', message: 'Admission must be at least 5 characters long.' }
+      { type: 'minlength', message: 'Admission must be at least 5 digist number.' }
     ],
     'aadhaarNo': [
-      { type: 'minlength', message: 'Aadhaar must be at least 10 characters long.' }
+      { type: 'minlength', message: 'Aadhaar must be at least 12 digit number.' }
     ],
     'findout_fill': [
-      { type: 'areAnyEqual', message: 'Please enter either Enrolment or Aadhaar number.' }
+      { type: 'appStatusAreEqual', message: 'Please enter either Enrolment or Aadhaar number.' }
     ],
   };
 
@@ -31,7 +31,7 @@ export class ValidatorProvider {
     })
   }
 
-  areAnyEqual(formGroup: FormGroup) {
+  appStatusAreEqual(formGroup: FormGroup) {
     let valid = true;
     if (formGroup.controls['admissionNo'].value === '' && formGroup.controls['aadhaarNo'].value === '') {
       valid = false;

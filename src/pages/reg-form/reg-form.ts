@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Storage } from '@ionic/storage';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MyApp } from './../../app/app.component';
 
@@ -11,37 +10,49 @@ import { MyApp } from './../../app/app.component';
 
 export class RegFormPage {
   
-  siteData: Promise<any>
+  applicant: string = "applicant";
   deviceID: string
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public myApp: MyApp, public storage: Storage) {
-    this.siteData = this.navParams.get('siteInfo');
+  public siteData: schoolInterface = {};
+  
+  constructor(public navCtrl: NavController, public navParams: NavParams, public myApp: MyApp) {
+    this.localStorageSetData();
   }
 
-  ionViewCanEnter() {
+  ionViewWillLoad() {
     console.log('Enter school registration')
-    if (this.siteData == null) {
-      this.siteData = null;
+    if (typeof this.siteData === 'undefined') {
       this.myApp.onPresentToast('Sorry! We unable to get school information from server.')
       this.navCtrl.setRoot('SchoolListPage');
       this.navCtrl.popToRoot();
-    } else {
-      this.siteData = this.navParams.get('siteInfo');
     }
+  }
+
+  localStorageSetData() {
+    let stroageSchoolInfo = JSON.parse(localStorage.getItem('schoolInfo'));
+    this.siteData = stroageSchoolInfo;
   }
 
   ionViewDidEnter() {
     try {
-      this.myApp.removeMessage()  
+      this.myApp.removeMessage()
     } catch (error) {
-      console.log(error)
+      console.log(error.message)
     }
   }
 
+  doResetForm() {
+    
+  }
+  tabChange() {
+    console.log('Updated');
+  }
+  onRegistrationSubmit() {
+     this.myApp.onPresentToast('Invalid Application')
+  }
   getInfo() {
     this.deviceID = this.myApp.device.uuid;
     this.myApp.onPresentToast('Device ID: ' + this.deviceID)   
     //this.deviceInfo = this.myApp.getDeviceInfo();
   }
-  
+
 }

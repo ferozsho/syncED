@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams} from 'ionic-angular';
 import { MyApp } from './../../app/app.component';
-import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -10,36 +9,46 @@ import { Storage } from '@ionic/storage';
 })
 export class SchoolInfoPage {
 
-  session: Promise<any>;
+  public schInfo: schoolInterface = {};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public myApp: MyApp) {
-    this.session = this.navParams.get('item');
+  constructor(public navCtrl: NavController, public navParams: NavParams, public myApp: MyApp) {
+    this.localStorageSetData();
   }
 
   ionViewCanEnter() {
-    if (typeof this.session === 'undefined') {
-      this.session = null;
+    if (typeof this.schInfo === 'undefined') {
+      this.localStorageSetData();
+    }
+    console.log(this.schInfo.siteID)
+    if (this.schInfo === null) {
       this.myApp.onPresentToast('Sorry! We unable to get school information from server.')
+      this.navCtrl.push('SchoolListPage');
       this.navCtrl.popToRoot();
-      return false;
-    } else {
-      this.session = this.navParams.get('item');
     }
     console.log('Enter School Information')
   }
 
+  localStorageSetData() {
+    let stroageSchoolInfo = JSON.parse(localStorage.getItem('schoolInfo'));
+    this.schInfo = stroageSchoolInfo;
+  }
+
   ionViewDidEnter() {
-    this.myApp.removeMessage();
+    try {
+      this.myApp.removeMessage()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   ionViewWillUnload() {
-    this.storage.remove('schoolInfo');
+    localStorage.removeItem('schoolInfo');
     console.log('Unload School Information and removed from storage');
   }
 
   trackApplication() {
     this.myApp.addLoadingMessage();
-    this.navCtrl.push('AppStatusPage', { siteInfo: this.session }).then(
+    this.navCtrl.push('AppStatusPage', { siteInfo: this.schInfo }).then(
       response => {
         //console.log('Response ' + response);
       },
@@ -51,7 +60,7 @@ export class SchoolInfoPage {
   }
   registerApplication() {
     this.myApp.addLoadingMessage();
-    this.navCtrl.push('RegFormPage', { siteInfo: this.session }).then(
+    this.navCtrl.push('RegFormPage', { siteInfo: this.schInfo }).then(
       response => {
         //console.log('Response ' + response);
       },

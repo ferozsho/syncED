@@ -21,6 +21,8 @@ export class SchoolListPage {
   refreshPage(refKey) {
     if (refKey != 0) {
       this.fnRemoveSchoolData('schoolList');
+      this.fnRemoveSchoolData('schoolOptios');
+      localStorage.removeItem('schoolInfo');
     }
     this.myApp.addLoadingMessage();
     this.fnGetSchoolData();
@@ -45,12 +47,16 @@ export class SchoolListPage {
   }
 
   fnSetSchoolData(data) {
-    this.storage.set('schoolList', data);
-    this.schList = data;
-    this.schListTemp = data;
+    // School List
+    this.storage.set('schoolList', data.schools);
+    this.schList = data.schools;
+    this.schListTemp = data.schools;
+    // School Combo Options
+    this.storage.set('schoolOptios', data.schoolOptions);
   }
   fnRemoveSchoolData(name:string) {
     this.storage.remove(name);
+    localStorage.clear();
   }
 
   getSchoolList() {
@@ -93,8 +99,8 @@ export class SchoolListPage {
 
   openSchoolInfo(items) {
     this.myApp.addLoadingMessage();
-    this.storage.set('schoolInfo', items);
-    this.navCtrl.push('SchoolInfoPage', {item: items}).then(
+    localStorage.setItem("schoolInfo", JSON.stringify(items));
+    this.navCtrl.push('SchoolInfoPage').then(
       response => {
         //console.log('Response ' + response);
       },

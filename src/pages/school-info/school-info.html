@@ -5,18 +5,18 @@
 </ion-header>
 
 <ion-content>
-  <div class="about-header" [attr.track]="session? session.tracks : 'default'">
-    <img *ngIf="!session.siteLogo" src="assets/imgs/no-logo.svg" alt="SyncEd Logo">
-    <img *ngIf="session.siteLogo" src="{{session.siteLogo}}" alt="{{session.siteName}} Logo">
+  <div class="about-header" [attr.track]="schInfo? schInfo.tracks : 'default'">
+    <img *ngIf="!schInfo.siteLogo" src="assets/imgs/no-logo.svg" alt="SyncEd Logo">
+    <img *ngIf="schInfo.siteLogo" src="{{schInfo.siteLogo}}" alt="{{schInfo.siteName}} Logo">
   </div>
-  <div padding class="about-info" *ngIf="session">
-    <h4 text-capitalize>{{ session.siteName }}</h4>
-    <p>{{ session.siteAddress }}</p>
-    <p class="description">{{ session.siteDescription }}</p>
+  <div padding class="about-info" *ngIf="schInfo">
+    <h4 text-capitalize>{{ schInfo.siteName }}</h4>
+    <p>{{ schInfo.siteAddress }}</p>
+    <p class="description">{{ schInfo.siteDescription }}</p>
   </div>
 </ion-content>
 
-<ion-footer>
+<ion-footer no-border bar-light>
   <ion-toolbar>
     <ion-row>
       <ion-col text-center>

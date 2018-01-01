@@ -8,23 +8,4 @@ page-app-status {
   .error {
     color: color($colors, danger);
   }
-
-  ion-title {
-    span {
-      text-transform: capitalize;
-      display: block;
-      font-weight:400;
-      text-align: left;
-    }
-    span+span{
-      font-size:1.25rem;
-      font-weight:200;
-      letter-spacing: 0.1rem;
-    }
-    span em {
-      font-weight: 900;
-      font-style: normal;
-      margin-left:0.05em;
-    }
-  }
 }
