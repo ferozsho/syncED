@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { RegFormPage } from './reg-form';
+import { TooltipsModule } from 'ionic-tooltips';
 
 @NgModule({
   declarations: [
@@ -8,6 +9,7 @@ import { RegFormPage } from './reg-form';
   ],
   imports: [
     IonicPageModule.forChild(RegFormPage),
+    TooltipsModule
   ],
 })
 

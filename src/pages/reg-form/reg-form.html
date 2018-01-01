@@ -12,30 +12,76 @@
   </ion-navbar>
 
   <ion-toolbar no-border-top color="primary">
-      <ion-segment [(ngModel)]="applicant" (ionChange)="tabChange()" color="light">
-        <ion-segment-button value="applicant">
-          Applicant
-        </ion-segment-button>
-        <ion-segment-button value="father">
-          Father
-        </ion-segment-button>
-        <ion-segment-button value="mother">
-          Mother
-        </ion-segment-button>
-      </ion-segment>
+    <ion-segment [(ngModel)]="ApplicationForm" color="light">
+      <ion-segment-button value="applicant">Applicant</ion-segment-button>
+      <ion-segment-button value="father" [disabled]="btnFather">Father</ion-segment-button>
+      <ion-segment-button value="mother" [disabled]="btnMother">Mother</ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="outer-content">
+
   <form (ngSubmit)="onRegistrationSubmit(regForm.value)" novalidate>
-    
-    <div [ngSwitch]="applicant">
-      <ion-list *ngSwitchCase="'applicant'">
+
+    <div [ngSwitch]="ApplicationForm" [formGroup]="regForm">
+
+      <ion-list *ngSwitchCase="'applicant'" formGroupName="applicantGroup">
+
         <ion-item>
-          <h4>Applicant</h4>
+          <ion-label stacked>Name of the Applicant</ion-label>
+          <ion-input type="text" formControlName="applicantName" clearInput></ion-input>
+          <ion-icon name="help-circle" item-right tooltip="As in date of birth certificate" positionH="left" arrow></ion-icon>
         </ion-item>
+
+        <ng-container *ngFor="let validation of validationMessage.applicantName">
+          <div class="error" *ngIf="regForm.get('applicantGroup').get('applicantName').hasError(validation.type) && (regForm.get('applicantGroup').get('applicantName').dirty || regForm.get('applicantGroup').get('applicantName').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+
+        <ion-item>
+          <ion-label floating>Date of Birth</ion-label>
+          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="dob" formControlName="dob"></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked>Aadhaar Number</ion-label>
+          <ion-input type="text" formControlName="aadhaarNo" placeholder="ex: UID (333344445555)" max="12" [attr.maxlength]="12"></ion-input>
+        </ion-item>
+        <ng-container *ngFor="let validation of validationMessage.aadhaarNo">
+          <div class="error" *ngIf="regForm.get('applicantGroup').get('aadhaarNo').hasError(validation.type) && (regForm.get('applicantGroup').get('aadhaarNo').dirty || regForm.get('applicantGroup').get('aadhaarNo').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+
+
+        <ion-item>
+          <ion-label floating>Gender</ion-label>
+          <ion-select [(ngModel)]="sex" formControlName="sex">
+            <ion-option value="Female">Female</ion-option>
+            <ion-option value="Male">Male</ion-option>
+          </ion-select>
+        </ion-item>
+
+
+        <div>
+          <ion-grid>
+            <ion-row>
+              <ion-col col-6>
+                <button type="button" ion-button full color="synced" disabled >Back</button>
+              </ion-col>
+              <ion-col col-6>
+                <button type="button" ion-button full color="synced" (click)="gotoNext('father')">Next</button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        
+
       </ion-list>
+
       <ion-list *ngSwitchCase="'father'">
         <ion-item>
           <h4>Father</h4>

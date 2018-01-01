@@ -5,6 +5,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AndroidFullScreen } from "@ionic-native/android-full-screen";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MyApp } from './app.component';
 import { RestProvider } from '../providers/rest/rest';
@@ -24,7 +25,8 @@ import { SchoolApi } from '../providers/school-api/school-api';
     IonicStorageModule.forRoot({
       name: 'synced',
       driverOrder: ['indexeddb', 'sqlite', 'websql']
-    })
+    }),
+    BrowserAnimationsModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

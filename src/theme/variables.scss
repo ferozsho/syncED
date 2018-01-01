@@ -14,32 +14,6 @@ $app-direction: ltr;
 
 @import "ionic.globals";
 
-
-// Shared Variables
-// --------------------------------------------------
-// To customize the look and feel of this app, you can override
-// the Sass variables found in Ionic's source scss files.
-// To view all the possible Ionic variables, see:
-// http://ionicframework.com/docs/theming/overriding-ionic-variables/
-  ion-title {
-    span {
-      text-transform: capitalize;
-      display: block;
-      font-weight:400;
-      text-align: left;
-    }
-    span+span{
-      font-size:1.25rem;
-      font-weight:200;
-      letter-spacing: 0.1rem;
-    }
-    span em {
-      font-weight: 900;
-      font-style: normal;
-      margin-left:0.05em;
-    }
-  }
-
 // Named Color Variables
 // --------------------------------------------------
 // Named colors makes it easy to reuse colors on various components.
@@ -70,6 +44,37 @@ $categories-colors: (
   low: #FD8B2D
 );
 
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/theming/overriding-ionic-variables/
+  ion-title {
+    span {
+      text-transform: capitalize;
+      display: block;
+      font-weight:400;
+      text-align: left;
+    }
+    span+span{
+      font-size:1.25rem;
+      font-weight:200;
+      letter-spacing: 0.1rem;
+    }
+    span em {
+      font-weight: 900;
+      font-style: normal;
+      margin-left:0.05em;
+    }
+  }
+  .error {
+    color: color($colors, danger);
+  }
+  .toast-error .toast-message{
+    background-color: color($colors, danger);
+  }
+
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
@@ -83,6 +88,9 @@ $text-input-ios-show-focus-highlight: false;
 // Material Design only Sass variables can go here
 $item-md-detail-push-show: true;
 $text-input-md-show-focus-highlight: false;
+$text-input-placeholder-color:#cccccc;
+$text-input-md-show-success-highlight:      true !default;
+$text-input-md-show-error-highlight:        true !default;
 
 // App Windows Variables
 // --------------------------------------------------

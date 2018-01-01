@@ -58,15 +58,28 @@ export class MyApp {
     this.loader.dismiss();
   }
 
-  public onPresentToast(msgString: any) {
-    const toast = this.toastCtrl.create({
-      message: msgString,
-      showCloseButton: true,
-      closeButtonText: 'Ok'
-    });
+  public onPresentToast(msgString: any, timeOut: boolean = false) {
+    let toast = null;
+    if (timeOut){
+      toast = this.toastCtrl.create({
+        message: msgString,
+        showCloseButton: false,
+        cssClass: 'toast-error',
+        dismissOnPageChange: true,
+        duration:3000
+      });
+    } else {
+      toast = this.toastCtrl.create({
+        message: msgString,
+        showCloseButton: true,
+        cssClass: 'toast-error',
+        dismissOnPageChange: true,
+        closeButtonText: 'Ok'
+      });
+    }  
     toast.onDidDismiss(() => {
       console.log("Toast Dismiss!!!");
-    });;
+    });
     toast.present();
   }
 
