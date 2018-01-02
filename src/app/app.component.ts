@@ -55,7 +55,10 @@ export class MyApp {
 
   public removeMessage() {
     console.log('Loading Removed...');
-    this.loader.dismiss();
+    if (this.loader) {
+      this.loader.dismiss();
+      this.loader = null;
+    }
   }
 
   public onPresentToast(msgString: any, timeOut: boolean = false) {

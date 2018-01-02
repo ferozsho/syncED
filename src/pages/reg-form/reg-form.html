@@ -30,9 +30,9 @@
       <ion-list *ngSwitchCase="'applicant'" formGroupName="applicantGroup">
 
         <ion-item>
-          <ion-label stacked>Name of the Applicant</ion-label>
-          <ion-input type="text" formControlName="applicantName" clearInput></ion-input>
-          <ion-icon name="help-circle" item-right tooltip="As in date of birth certificate" positionH="left" arrow></ion-icon>
+          <ion-label stacked>Name of the Applicant <em class="cm-required">*</em></ion-label>
+          <ion-input type="text" [(ngModel)]="applicantName" formControlName="applicantName" autocapitalize="sentences" clearInput></ion-input>
+          <ion-icon name="help-circle" item-right tooltip="As in (date of birth) certificate" positionH="left" arrow></ion-icon>
         </ion-item>
 
         <ng-container *ngFor="let validation of validationMessage.applicantName">
@@ -47,15 +47,14 @@
         </ion-item>
 
         <ion-item>
-          <ion-label stacked>Aadhaar Number</ion-label>
-          <ion-input type="text" formControlName="aadhaarNo" placeholder="ex: UID (333344445555)" max="12" [attr.maxlength]="12"></ion-input>
+          <ion-label stacked>Aadhaar Number <em class="cm-required">*</em></ion-label>
+          <ion-input type="number" pattern="\\d*" [(ngModel)]="aadhaarNo" formControlName="aadhaarNo" placeholder="ex: UID (333344445555)" max="12" [attr.maxlength]="12" clearInput></ion-input>
         </ion-item>
         <ng-container *ngFor="let validation of validationMessage.aadhaarNo">
           <div class="error" *ngIf="regForm.get('applicantGroup').get('aadhaarNo').hasError(validation.type) && (regForm.get('applicantGroup').get('aadhaarNo').dirty || regForm.get('applicantGroup').get('aadhaarNo').touched)">
             {{ validation.message }}
           </div>
         </ng-container>
-
 
         <ion-item>
           <ion-label floating>Gender</ion-label>
@@ -65,15 +64,18 @@
           </ion-select>
         </ion-item>
 
+        <ion-item>
+          <ion-label stacked>Class applied for <em class="cm-required">*</em></ion-label>
+            <ion-select [(ngModel)]="classesID" formControlName="classesID">
+              <ion-option *ngFor="let classOption of classOptionsFormatted" [value]="classOption.abbr">{{ classOption.name }}</ion-option>
+            </ion-select>
+        </ion-item>
 
         <div>
           <ion-grid>
             <ion-row>
-              <ion-col col-6>
-                <button type="button" ion-button full color="synced" disabled >Back</button>
-              </ion-col>
-              <ion-col col-6>
-                <button type="button" ion-button full color="synced" (click)="gotoNext('father')">Next</button>
+              <ion-col col-6 offset-6>
+                <button type="button" ion-button full color="synced" [disabled]="!applicantGroup.valid" (click)="gotoNext('father')">Next</button>
               </ion-col>
             </ion-row>
           </ion-grid>

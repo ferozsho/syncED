@@ -12,7 +12,6 @@ import { RestProvider } from '../providers/rest/rest';
 import { HttpClientModule } from '@angular/common/http';
 import { ValidatorProvider } from '../providers/validator/validator';
 import { Device } from '@ionic-native/device';
-import { SchoolApi } from '../providers/school-api/school-api';
 
 @NgModule({
   declarations: [
@@ -38,7 +37,6 @@ import { SchoolApi } from '../providers/school-api/school-api';
     AndroidFullScreen,
     RestProvider,
     ValidatorProvider,
-    SchoolApi,
     Device,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]

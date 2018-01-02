@@ -9,18 +9,17 @@ import { MyApp } from './../../app/app.component';
 })
 export class SchoolInfoPage {
 
-  public schInfo: schoolInterface = {};
+  private siteInfo: siteInformation = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public myApp: MyApp) {
     this.localStorageSetData();
   }
 
   ionViewCanEnter() {
-    if (typeof this.schInfo === 'undefined') {
+    if (typeof this.siteInfo === 'undefined') {
       this.localStorageSetData();
     }
-    console.log(this.schInfo.siteID)
-    if (this.schInfo === null) {
+    if (this.siteInfo === null) {
       this.myApp.onPresentToast('Sorry! We unable to get school information from server.')
       this.navCtrl.push('SchoolListPage');
       this.navCtrl.popToRoot();
@@ -29,8 +28,7 @@ export class SchoolInfoPage {
   }
 
   localStorageSetData() {
-    let stroageSchoolInfo = JSON.parse(localStorage.getItem('schoolInfo'));
-    this.schInfo = stroageSchoolInfo;
+    this.siteInfo = JSON.parse(localStorage.getItem('schoolInfo'))
   }
 
   ionViewDidEnter() {
@@ -43,12 +41,13 @@ export class SchoolInfoPage {
 
   ionViewWillUnload() {
     localStorage.removeItem('schoolInfo');
+    localStorage.removeItem('schoolOptions');
     console.log('Unload School Information and removed from storage');
   }
 
   trackApplication() {
     this.myApp.addLoadingMessage();
-    this.navCtrl.push('AppStatusPage', { siteInfo: this.schInfo }).then(
+    this.navCtrl.push('AppStatusPage', { siteInfo: this.siteInfo }).then(
       response => {
         //console.log('Response ' + response);
       },
@@ -60,7 +59,7 @@ export class SchoolInfoPage {
   }
   registerApplication() {
     this.myApp.addLoadingMessage();
-    this.navCtrl.push('RegFormPage', { siteInfo: this.schInfo }).then(
+    this.navCtrl.push('RegFormPage', { siteInfo: this.siteInfo }).then(
       response => {
         //console.log('Response ' + response);
       },
@@ -71,4 +70,15 @@ export class SchoolInfoPage {
       });
   }
 
+}
+
+interface siteInformation {
+  siteID?: number,
+  siteName?: string,
+  siteAddress?: string,
+  siteLogo?: string,
+  apiURL?: string,
+  tracks?: string,
+  status?: number,
+  priority?: number,
 }

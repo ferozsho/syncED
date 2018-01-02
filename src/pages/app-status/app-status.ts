@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { MyApp } from '../../app/app.component';
 import { ValidatorProvider } from './../../providers/validator/validator';
-import { SchoolApi } from '../../providers/school-api/school-api';
 
 @IonicPage()
 @Component({
@@ -20,7 +19,7 @@ export class AppStatusPage {
   validation_messages: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public formValidator: ValidatorProvider,
-    public myApp: MyApp, public schoolAPI: SchoolApi) {
+    public myApp: MyApp) {
     this.schInfo = this.navParams.get('siteInfo');
   }
 

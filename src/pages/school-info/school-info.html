@@ -5,14 +5,14 @@
 </ion-header>
 
 <ion-content>
-  <div class="about-header" [attr.track]="schInfo? schInfo.tracks : 'default'">
-    <img *ngIf="!schInfo.siteLogo" src="assets/imgs/no-logo.svg" alt="SyncEd Logo">
-    <img *ngIf="schInfo.siteLogo" src="{{schInfo.siteLogo}}" alt="{{schInfo.siteName}} Logo">
+  <div class="about-header" [attr.track]="siteInfo? siteInfo.tracks : 'default'">
+    <img *ngIf="!siteInfo.siteLogo" src="assets/imgs/no-logo.svg" alt="SyncEd Logo">
+    <img *ngIf="siteInfo.siteLogo" src="{{siteInfo.siteLogo}}" alt="{{siteInfo.siteName}} Logo">
   </div>
-  <div padding class="about-info" *ngIf="schInfo">
-    <h4 text-capitalize>{{ schInfo.siteName }}</h4>
-    <p>{{ schInfo.siteAddress }}</p>
-    <p class="description">{{ schInfo.siteDescription }}</p>
+  <div padding class="about-info" *ngIf="siteInfo">
+    <h4 text-capitalize>{{ siteInfo.siteName }}</h4>
+    <p>{{ siteInfo.siteAddress }}</p>
+    <p class="description">{{ siteInfo.siteDescription }}</p>
   </div>
 </ion-content>
 

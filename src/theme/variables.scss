@@ -74,7 +74,13 @@ $categories-colors: (
   .toast-error .toast-message{
     background-color: color($colors, danger);
   }
-
+  .cm-required {
+    color: color($colors, danger);
+    font-style: normal;
+    font-size: 2.2rem;
+    position: relative;
+    top: 3px;
+  }
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here

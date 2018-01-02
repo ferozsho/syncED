@@ -9,7 +9,7 @@ import { TooltipsModule } from 'ionic-tooltips';
   ],
   imports: [
     IonicPageModule.forChild(RegFormPage),
-    TooltipsModule
+    TooltipsModule,
   ],
 })
 

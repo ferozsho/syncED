@@ -19,11 +19,15 @@ export class ValidatorProvider {
   public regFormMessages = {
     'aadhaarNo': [
       { type: 'required', message: 'Aadhaar is requried.' },
-      { type: 'minlength', message: 'Aadhaar must be at least 12 digit number.' }
+      { type: 'minlength', message: 'Must be at least 12 digit number.' },
+      { type: 'maxlength', message: 'Maximum length 12 digits.' },
     ],
     'applicantName': [
       { type: 'required', message: 'Applicant name is requried.' },
       { type: 'minlength', message: 'Invalid, provide the full applicant name.' },
+    ],
+    'classesID': [
+      { type: 'required', message: 'Applicant name is requried.' },
     ],
   };
 
