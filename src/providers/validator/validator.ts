@@ -29,6 +29,9 @@ export class ValidatorProvider {
     'classesID': [
       { type: 'required', message: 'Applicant name is requried.' },
     ],
+    'nationality': [
+      { type: 'required', message: 'This field is required.'}
+    ]
   };
 
 

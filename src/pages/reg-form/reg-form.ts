@@ -27,6 +27,7 @@ export class RegFormPage {
 
   btnFather: boolean = true
   btnMother: boolean = true
+  btnContact: boolean = true
 
   applicantName: string
   sex: string
@@ -99,16 +100,22 @@ export class RegFormPage {
   loadDefaultValues() {
     this.ApplicationForm = 'applicant'
     this.validationMessage = this.formValidator.regFormMessages
-    //this.applicantName = 'Sofiya Shaik'
-    //this.aadhaarNo = '444455556666'
+    this.applicantName = 'Sofiya Shaik'
+    this.aadhaarNo = '444455556666'
     this.dob = new Date().toISOString()
     this.sex = 'Male'
-    //this.classesID = '1'
-    //this.caste = 'OC'
-    //this.religion = 'Islam'
-    //this.mother_tongue = 'Hindi'
+    this.classesID = '1'
+    this.caste = 'OC'
+    this.religion = 'Islam'
+    this.mother_tongue = 'Hindi'
     this.nationality = 'Indian'
-    this.bloodgroup = ''
+    this.bloodgroup = 'A+'
+    this.id_marks_one = 'A mole on right hand arm'
+    this.id_marks_two = ''
+    console.log('Default Loaded...')
+    setTimeout(() => {
+      this.gotoNext('father')
+    }, 300);
   }
 
   localStorageSetData() {
@@ -195,12 +202,19 @@ export class RegFormPage {
     if (pageName === 'father') {
       this.btnFather = false
       this.btnMother = true
+      this.btnContact = true
     } else if (pageName === 'mother') {
       this.btnFather = false
       this.btnMother = false
+      this.btnContact = true
+    } else if (pageName === 'contact') {
+      this.btnFather = false
+      this.btnMother = false
+      this.btnContact = false
     } else {
       this.btnFather = true
       this.btnMother = true
+      this.btnContact = true
     }
   }
   gotoNext(pageName: string) {
@@ -217,6 +231,9 @@ export class RegFormPage {
       return false
     }
   }
+  gotoBack(pageName: string) {
+    this.ApplicationForm = pageName
+  }
 
   getInfo() {
     this.deviceID = this.myApp.device.uuid;
@@ -226,6 +243,10 @@ export class RegFormPage {
 
   doResetForm() {
     
+  }
+
+  onRegistrationSubmit(formValues) {
+    console.log(formValues)
   }
   
 }
