@@ -100,7 +100,7 @@ export class RegFormPage {
   loadDefaultValues() {
     this.ApplicationForm = 'applicant'
     this.validationMessage = this.formValidator.regFormMessages
-    this.applicantName = 'Sofiya Shaik'
+    this.applicantName = 'Shaik'
     this.aadhaarNo = '444455556666'
     this.dob = new Date().toISOString()
     this.sex = 'Male'
@@ -112,10 +112,7 @@ export class RegFormPage {
     this.bloodgroup = 'A+'
     this.id_marks_one = 'A mole on right hand arm'
     this.id_marks_two = ''
-    console.log('Default Loaded...')
-    setTimeout(() => {
-      this.gotoNext('father')
-    }, 300);
+    console.log('Default form data loaded...')
   }
 
   localStorageSetData() {

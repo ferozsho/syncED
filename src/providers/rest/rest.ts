@@ -6,8 +6,8 @@ import 'rxjs/add/operator/map';
 export class RestProvider {
 
   apiKey: string = "X-API-KEY=synced-9908313427"
-  //apiUrl: string = "http://synced.intellibiz.in/api/schools";
-  apiUrl: string = "http://localhost/synced/api/schools";
+  apiUrl: string = "http://synced.intellibiz.in/api/schools";
+  //apiUrl: string = "http://localhost/synced/api/schools";
 
   constructor(public http: HttpClient) {
     console.log('Rest Provider Conncected:', this.apiUrl);

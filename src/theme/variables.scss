@@ -79,7 +79,10 @@ $categories-colors: (
     content:"*";
     color:red;
   }
-// App iOS Variables
+
+$text-input-highlight-color-invalid: color($colors, danger);
+
+  // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
 $item-ios-detail-push-show: true;
@@ -91,10 +94,13 @@ $text-input-ios-show-focus-highlight: false;
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 $item-md-detail-push-show: true;
-$text-input-md-show-focus-highlight: false;
 $text-input-placeholder-color:#cccccc;
-$text-input-md-show-success-highlight:      true !default;
-$text-input-md-show-error-highlight:        true !default;
+
+$text-input-md-show-focus-highlight: false;
+$text-input-md-show-success-highlight: false;
+$text-input-md-show-invalid-highlight: true;
+$text-input-md-show-valid-highlight:false;
+$text-input-md-show-error-highlight: true;
 
 // App Windows Variables
 // --------------------------------------------------

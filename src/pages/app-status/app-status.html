@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="primary">
+  <ion-navbar color="synced">
     <ion-title>
       <span *ngIf="schInfo">{{ schInfo.siteName }}</span>
       <span>{{ schInfo.siteAddress }}</span>
@@ -31,7 +31,7 @@
 
         <ion-item>
           <ion-label floating>Aadhaar Number</ion-label>
-          <ion-input type="text" formControlName="aadhaarNo"></ion-input>
+          <ion-input type="number" pattern="\\d*" formControlName="aadhaarNo" max="12" [attr.maxlength]="12"></ion-input>
         </ion-item>
 
         <ng-container *ngFor="let validation of validation_messages.aadhaarNo">

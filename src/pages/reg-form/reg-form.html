@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="primary" no-border-bottom>
+  <ion-navbar color="synced" no-border-bottom>
     <ion-title>
       <span *ngIf="siteData">{{ siteData.siteName }}</span>
       <span>Registration From</span>
@@ -11,7 +11,7 @@
     </ion-buttons>
   </ion-navbar>
 
-  <ion-toolbar no-border-top color="primary">
+  <ion-toolbar no-border-top color="synced">
     <ion-segment [(ngModel)]="ApplicationForm" color="light" (ionChange)="onSegmentChange($event)">
       <ion-segment-button value="applicant">Applicant</ion-segment-button>
       <ion-segment-button value="father" [disabled]="btnFather">Father</ion-segment-button>
@@ -32,7 +32,7 @@
 
         <ion-item>
           <ion-label stacked class="required">Name of the Applicant </ion-label>
-          <ion-input type="text" [(ngModel)]="applicantName" formControlName="applicantName" autocapitalize="sentences" clearInput></ion-input>
+          <ion-input type="text" [(ngModel)]="applicantName" formControlName="applicantName" autocapitalize="sentences"></ion-input>
           <ion-icon name="help-circle" class="helpcircle" item-right tooltip="As in (date of birth) certificate" positionH="left" arrow></ion-icon>
         </ion-item>
 
@@ -44,7 +44,7 @@
 
         <ion-item>
           <ion-label stacked class="required">Aadhaar Number </ion-label>
-          <ion-input type="number" pattern="\\d*" [(ngModel)]="aadhaarNo" formControlName="aadhaarNo" placeholder="ex: UID (333344445555)" max="12" [attr.maxlength]="12" clearInput></ion-input>
+          <ion-input type="number" pattern="\\d*" [(ngModel)]="aadhaarNo" formControlName="aadhaarNo" placeholder="ex: UID (333344445555)" max="12" [attr.maxlength]="12"></ion-input>
         </ion-item>
         <ng-container *ngFor="let validation of validationMessage.aadhaarNo">
           <div class="error" *ngIf="regForm.get('applicantGroup').get('aadhaarNo').hasError(validation.type) && (regForm.get('applicantGroup').get('aadhaarNo').dirty || regForm.get('applicantGroup').get('aadhaarNo').touched)">
@@ -53,7 +53,7 @@
         </ng-container>
 
         <ion-item>
-          <ion-label>Date of Birth</ion-label>
+          <ion-label stacked>Date of Birth</ion-label>
           <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="dob" formControlName="dob"></ion-datetime>
         </ion-item>
 
@@ -156,8 +156,8 @@
 
       <ion-list *ngSwitchCase="'father'">
         <ion-item>
-          <h4>Father</h4>
-          <p text-wrap>{{viewApplicantGroup | json}}</p>
+          
+          
         </ion-item>
 
         <div>
@@ -205,7 +205,7 @@
                 <button type="button" ion-button full color="synced" (click)="gotoBack('mother')">Back</button>
               </ion-col>
               <ion-col col-6>
-                <button type="submit" ion-button full color="synced">Submit</button>
+                <button type="submit" ion-button full color="primary">Submit</button>
               </ion-col>
             </ion-row>
           </ion-grid>

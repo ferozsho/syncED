@@ -1,13 +1,33 @@
 page-reg-form {
-  .label[stacked] {
-      font-size: 1.5rem;
+  .list-md .item-input:last-child {
+    border-bottom:none;
   }
-  .error {
-    padding-top: 4px;
-    padding-left: 16px;
+  ion-input, ion-datetime .datetime-text, ion-select .select-text {
+    color: #757373;
+  }
+  ion-item.item {
+    padding-left: 0;
+  }  
+  ion-datetime {
+    padding:8px 0px 8px 0px !important;
   }
   ion-icon.helpcircle {
     position: relative;
     top:2vh;
+  }
+  .label[stacked] {
+    font-size: 1.5rem;
+  }
+  .error {
+    padding-top: 4px;
+  }
+  .text-input::-moz-placeholder {
+    font-size: 85%;
+  }
+  .text-input:-ms-input-placeholder {
+    font-size: 85%;
+  }
+  .text-input::-webkit-input-placeholder {
+    font-size: 85%;
   }
 }
