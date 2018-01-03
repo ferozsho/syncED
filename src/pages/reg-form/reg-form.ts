@@ -14,12 +14,17 @@ import { RestProvider } from '../../providers/rest/rest';
 export class RegFormPage {
   
   public siteData: schoolInterface = {}
+  public siteOptions: optionsInterface = {}
+
+  viewApplicantGroup: any
   validationMessage: any
   ApplicationForm: string
   deviceID: string
 
   regForm: FormGroup
   applicantGroup: FormGroup
+  fatherGroup: FormGroup
+
   btnFather: boolean = true
   btnMother: boolean = true
 
@@ -37,22 +42,16 @@ export class RegFormPage {
   id_marks_two: string
 
   classOptionsFormatted: Array<Object> = [];
+  casteOptionsFormatted: Array<Object> = [];
+  religionOptionsFormatted: Array<Object> = [];
+  mtOptionsFormatted: Array<Object> = [];
+  bgOptionsFormatted: Array<Object> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public myApp: MyApp, public formBuilder: FormBuilder,
     public formValidator: ValidatorProvider, public resProvider: RestProvider ) {
     this.localStorageSetData();
     this.loadSchoolClassesAPI();
     this.loadDefaultValues();
-  }
-
-  loadDefaultValues() {
-    this.ApplicationForm = 'applicant'
-    this.validationMessage = this.formValidator.regFormMessages
-    this.applicantName = 'Sofiya'
-    this.aadhaarNo = '444455556666'
-    this.dob = new Date().toISOString();
-    this.sex = 'Female';
-    this.classesID = '';
   }
 
   ionViewWillLoad() {
@@ -66,10 +65,23 @@ export class RegFormPage {
       aadhaarNo: new FormControl('', Validators.compose([Validators.required, Validators.minLength(12), Validators.maxLength(12)])),
       dob: new FormControl(),
       sex: new FormControl(),
-      classesID: new FormControl('', Validators.compose([Validators.required])),
+      classesID: new FormControl('', Validators.required),
+      caste: new FormControl('', Validators.required),
+      religion: new FormControl('', Validators.required),
+      mother_tongue: new FormControl('', Validators.required),
+      nationality: new FormControl('', Validators.required),
+      bloodgroup: new FormControl(),
+      id_marks_one: new FormControl(),
+      id_marks_two: new FormControl(),
     })
+
+    this.fatherGroup = new FormGroup({
+
+    })
+
     this.regForm = this.formBuilder.group({
-      applicantGroup: this.applicantGroup
+      applicantGroup: this.applicantGroup,
+      fatherGroup: this.fatherGroup
     });
     console.log('Enter school registration')
   }
@@ -84,8 +96,73 @@ export class RegFormPage {
     }
   }
 
+  loadDefaultValues() {
+    this.ApplicationForm = 'applicant'
+    this.validationMessage = this.formValidator.regFormMessages
+    //this.applicantName = 'Sofiya Shaik'
+    //this.aadhaarNo = '444455556666'
+    this.dob = new Date().toISOString()
+    this.sex = 'Male'
+    //this.classesID = '1'
+    //this.caste = 'OC'
+    //this.religion = 'Islam'
+    //this.mother_tongue = 'Hindi'
+    this.nationality = 'Indian'
+    this.bloodgroup = ''
+  }
+
   localStorageSetData() {
     this.siteData = JSON.parse(localStorage.getItem('schoolInfo'))
+    this.siteOptions = JSON.parse(localStorage.getItem('schoolOptions'))
+
+    // prepre caste select box
+    this.casteOptionsFormatted.push({
+      abbr: '',
+      name: 'None'
+    });
+    for (var cKey in this.siteOptions.Caste) {
+      this.casteOptionsFormatted.push({
+        abbr: cKey,
+        name: this.siteOptions.Caste[cKey],
+      });
+    }
+
+    // prepre religion select box
+    this.religionOptionsFormatted.push({
+      abbr: '',
+      name: 'None'
+    });
+    for (var rKey in this.siteOptions.Religion) {
+      this.religionOptionsFormatted.push({
+        abbr: rKey,
+        name: this.siteOptions.Religion[rKey],
+      });
+    }
+
+    // prepre Mother Tongue select box
+    this.mtOptionsFormatted.push({
+      abbr: '',
+      name: 'None'
+    });
+    for (var mtKey in this.siteOptions.MotherTongue) {
+      this.mtOptionsFormatted.push({
+        abbr: mtKey,
+        name: this.siteOptions.MotherTongue[mtKey],
+      });
+    }
+
+    // prepre bloodGroup select box
+    this.bgOptionsFormatted.push({
+      abbr: '',
+      name: 'None'
+    });
+    for (var bgKey in this.siteOptions.Bloodgroup) {
+      this.bgOptionsFormatted.push({
+        abbr: bgKey,
+        name: this.siteOptions.Bloodgroup[bgKey],
+      });
+    }
+
   }
 
   loadSchoolClassesAPI() {
@@ -94,7 +171,7 @@ export class RegFormPage {
         //this.fnSetSchoolData(data);
         this.classOptionsFormatted.push({
           abbr: '',
-          name: '- Select Class -'
+          name: 'None'
         });
         for (var key in data) {
           this.classOptionsFormatted.push({
@@ -113,24 +190,34 @@ export class RegFormPage {
       });
   }
 
-  gotoNext(pageName: string) {
-    if (!this.applicantGroup.valid) {
-      this.myApp.onPresentToast('This form contains error', true)
+  onSegmentChange($event) {
+    let pageName = $event.value;
+    if (pageName === 'father') {
+      this.btnFather = false
+      this.btnMother = true
+    } else if (pageName === 'mother') {
+      this.btnFather = false
+      this.btnMother = false
     } else {
-      console.log(this.regForm.value)
-      this.ApplicationForm = pageName;
+      this.btnFather = true
+      this.btnMother = true
+    }
+  }
+  gotoNext(pageName: string) {
+    let nexPage = true
+    if (!this.applicantGroup.valid) {
+      this.myApp.onPresentToast('Application form contains error', true)
+      nexPage = false
+    }
+    if (nexPage) {
+      console.log(JSON.stringify(this.regForm.value))
+      this.viewApplicantGroup = this.regForm.value
+      this.ApplicationForm = pageName
+    } else {
+      return false
     }
   }
 
-  onRegistrationSubmit() {
-    if (this.regForm.valid) {
-      let formData = JSON.stringify(this.regForm.value);
-      console.log(formData)
-      this.myApp.onPresentToast(formData)
-    } else {
-      this.myApp.onPresentToast('Invalid Application')
-    }
-  }
   getInfo() {
     this.deviceID = this.myApp.device.uuid;
     this.myApp.onPresentToast('Device ID: ' + this.deviceID)   
@@ -141,6 +228,14 @@ export class RegFormPage {
     
   }
   
+}
+
+interface optionsInterface {
+  Bloodgroup?: Array<Object>,
+  Caste?: Array<Object>,
+  Country?: Array<Object>,
+  MotherTongue?: Array<Object>,
+  Religion?: Array<Object>,
 }
 
 interface schoolInterface {

@@ -12,7 +12,7 @@
   </ion-navbar>
 
   <ion-toolbar no-border-top color="primary">
-    <ion-segment [(ngModel)]="ApplicationForm" color="light">
+    <ion-segment [(ngModel)]="ApplicationForm" color="light" (ionChange)="onSegmentChange($event)">
       <ion-segment-button value="applicant">Applicant</ion-segment-button>
       <ion-segment-button value="father" [disabled]="btnFather">Father</ion-segment-button>
       <ion-segment-button value="mother" [disabled]="btnMother">Mother</ion-segment-button>
@@ -30,7 +30,7 @@
       <ion-list *ngSwitchCase="'applicant'" formGroupName="applicantGroup">
 
         <ion-item>
-          <ion-label stacked>Name of the Applicant <em class="cm-required">*</em></ion-label>
+          <ion-label stacked class="required">Name of the Applicant </ion-label>
           <ion-input type="text" [(ngModel)]="applicantName" formControlName="applicantName" autocapitalize="sentences" clearInput></ion-input>
           <ion-icon name="help-circle" item-right tooltip="As in (date of birth) certificate" positionH="left" arrow></ion-icon>
         </ion-item>
@@ -42,12 +42,12 @@
         </ng-container>
 
         <ion-item>
-          <ion-label floating>Date of Birth</ion-label>
+          <ion-label>Date of Birth</ion-label>
           <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="dob" formControlName="dob"></ion-datetime>
         </ion-item>
 
         <ion-item>
-          <ion-label stacked>Aadhaar Number <em class="cm-required">*</em></ion-label>
+          <ion-label stacked class="required">Aadhaar Number </ion-label>
           <ion-input type="number" pattern="\\d*" [(ngModel)]="aadhaarNo" formControlName="aadhaarNo" placeholder="ex: UID (333344445555)" max="12" [attr.maxlength]="12" clearInput></ion-input>
         </ion-item>
         <ng-container *ngFor="let validation of validationMessage.aadhaarNo">
@@ -57,7 +57,7 @@
         </ng-container>
 
         <ion-item>
-          <ion-label floating>Gender</ion-label>
+          <ion-label>Gender</ion-label>
           <ion-select [(ngModel)]="sex" formControlName="sex">
             <ion-option value="Female">Female</ion-option>
             <ion-option value="Male">Male</ion-option>
@@ -65,17 +65,50 @@
         </ion-item>
 
         <ion-item>
-          <ion-label stacked>Class applied for <em class="cm-required">*</em></ion-label>
+          <ion-label class="required">Class applied for </ion-label>
             <ion-select [(ngModel)]="classesID" formControlName="classesID">
               <ion-option *ngFor="let classOption of classOptionsFormatted" [value]="classOption.abbr">{{ classOption.name }}</ion-option>
             </ion-select>
         </ion-item>
 
+        <ion-item>
+          <ion-label class="required">Caste </ion-label>
+          <ion-select [(ngModel)]="caste" formControlName="caste">
+            <ion-option *ngFor="let casteOption of casteOptionsFormatted" [value]="casteOption.abbr">{{ casteOption.name }}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="required">Religion </ion-label>
+          <ion-select [(ngModel)]="religion" formControlName="religion">
+            <ion-option *ngFor="let religionOption of religionOptionsFormatted" [value]="religionOption.abbr">{{ religionOption.name }}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="required">Mother Tongue </ion-label>
+          <ion-select [(ngModel)]="mother_tongue" formControlName="mother_tongue">
+            <ion-option *ngFor="let mtOption of mtOptionsFormatted" [value]="mtOption.abbr">{{ mtOption.name }}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked class="required">Nationality </ion-label>
+          <ion-input type="text" [(ngModel)]="nationality" formControlName="nationality" clearInput></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Blood Group </ion-label>
+          <ion-select [(ngModel)]="bloodgroup" formControlName="bloodgroup">
+            <ion-option *ngFor="let bgOption of bgOptionsFormatted" [value]="bgOption.abbr">{{ bgOption.name }}</ion-option>
+          </ion-select>
+        </ion-item>
+        
         <div>
           <ion-grid>
             <ion-row>
               <ion-col col-6 offset-6>
-                <button type="button" ion-button full color="synced" [disabled]="!applicantGroup.valid" (click)="gotoNext('father')">Next</button>
+                <button type="submit" ion-button full color="synced" [disabled]="!applicantGroup.valid" (click)="gotoNext('father')">Next</button>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -87,7 +120,19 @@
       <ion-list *ngSwitchCase="'father'">
         <ion-item>
           <h4>Father</h4>
+          <p text-wrap>{{viewApplicantGroup | json}}</p>
         </ion-item>
+
+        <div>
+          <ion-grid>
+            <ion-row>
+              <ion-col col-6 offset-6>
+                <button type="submit" ion-button full color="synced" [disabled]="!fatherGroup.valid" (click)="gotoNext('mother')">Next</button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+
       </ion-list>
       <ion-list *ngSwitchCase="'mother'">
         <ion-item>
