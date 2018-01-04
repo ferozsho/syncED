@@ -31,7 +31,7 @@
       <ion-list *ngSwitchCase="'applicant'" formGroupName="applicantGroup">
 
         <ion-item>
-          <ion-label stacked class="required">Name of the Applicant </ion-label>
+          <ion-label stacked>Name of the Applicant </ion-label>
           <ion-input type="text" [(ngModel)]="applicantName" formControlName="applicantName" autocapitalize="sentences"></ion-input>
           <ion-icon name="help-circle" class="helpcircle" item-right tooltip="As in (date of birth) certificate" positionH="left" arrow></ion-icon>
         </ion-item>
@@ -43,7 +43,7 @@
         </ng-container>
 
         <ion-item>
-          <ion-label stacked class="required">Aadhaar Number </ion-label>
+          <ion-label stacked>Aadhaar Number </ion-label>
           <ion-input type="number" pattern="\\d*" [(ngModel)]="aadhaarNo" formControlName="aadhaarNo" placeholder="ex: UID (333344445555)" max="12" [attr.maxlength]="12"></ion-input>
         </ion-item>
         <ng-container *ngFor="let validation of validationMessage.aadhaarNo">
@@ -70,7 +70,7 @@
             </ion-col>
             <ion-col col-6>
                 <ion-item>
-                  <ion-label stacked class="required">Class applied for </ion-label>
+                  <ion-label stacked>Class applied for </ion-label>
                   <ion-select [(ngModel)]="classesID" formControlName="classesID">
                     <ion-option *ngFor="let classOption of classOptionsFormatted" [value]="classOption.abbr">{{ classOption.name }}</ion-option>
                   </ion-select>
@@ -83,7 +83,7 @@
           <ion-row no-padding>
             <ion-col col-6>
               <ion-item>
-                <ion-label stacked class="required">Caste </ion-label>
+                <ion-label stacked>Caste </ion-label>
                 <ion-select [(ngModel)]="caste" formControlName="caste">
                   <ion-option *ngFor="let casteOption of casteOptionsFormatted" [value]="casteOption.abbr">{{ casteOption.name }}</ion-option>
                 </ion-select>
@@ -91,7 +91,7 @@
             </ion-col>
             <ion-col col-6>
               <ion-item>
-                <ion-label stacked class="required">Religion </ion-label>
+                <ion-label stacked>Religion </ion-label>
                 <ion-select [(ngModel)]="religion" formControlName="religion">
                   <ion-option *ngFor="let religionOption of religionOptionsFormatted" [value]="religionOption.abbr">{{ religionOption.name }}</ion-option>
                 </ion-select>
@@ -104,7 +104,7 @@
           <ion-row no-padding>
             <ion-col col-6>
               <ion-item>
-                <ion-label stacked class="required">Mother Tongue </ion-label>
+                <ion-label stacked>Mother Tongue </ion-label>
                 <ion-select [(ngModel)]="mother_tongue" formControlName="mother_tongue">
                   <ion-option *ngFor="let mtOption of mtOptionsFormatted" [value]="mtOption.abbr">{{ mtOption.name }}</ion-option>
                 </ion-select>
@@ -123,7 +123,7 @@
 
 
         <ion-item>
-          <ion-label stacked class="required">Nationality </ion-label>
+          <ion-label stacked>Nationality </ion-label>
           <ion-input type="text" [(ngModel)]="nationality" formControlName="nationality" clearInput></ion-input>
         </ion-item>
         <ng-container *ngFor="let validation of validationMessage.nationality">

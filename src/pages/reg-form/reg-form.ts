@@ -113,6 +113,9 @@ export class RegFormPage {
     this.id_marks_one = 'A mole on right hand arm'
     this.id_marks_two = ''
     console.log('Default form data loaded...')
+    setTimeout(() => {
+      this.ApplicationForm = 'father'
+    }, 500);
   }
 
   localStorageSetData() {
