@@ -188,27 +188,27 @@ export class RegFormPage {
 
     this.dob = new Date().toISOString();
     this.sex = 'Male';
-    this.applicantName = 'Sofiya Shaik';
-    this.aadhaarNo = '444455556666';
-    this.classesID = '13';
-    this.caste = 'OC';
-    this.religion = 'Islam';
-    this.mother_tongue = 'Urdu';
+    this.applicantName = '';
+    this.aadhaarNo = '';
+    this.classesID = '';
+    this.caste = '';
+    this.religion = '';
+    this.mother_tongue = '';
     this.nationality = 'Indian';
-    this.bloodgroup = 'A+';
-    this.id_marks_one = 'A mole on right hand';
+    this.bloodgroup = '';
+    this.id_marks_one = '';
     this.id_marks_two = '';
 
-    this.father_name = 'Mohammed Feroz Shaik';
-    this.father_qualification = 'B.Sc';
-    this.father_profession = 'System Analyst';
-    this.monthly_income = 5000;
-    this.father_phone = 9908313427;
+    this.father_name = '';
+    this.father_qualification = '';
+    this.father_profession = '';
+    this.monthly_income = null;
+    this.father_phone = null;
 
-    this.mother_name = 'Asiya Nazima';
-    this.mother_qualification = 'M.A';
-    this.mother_profession = 'Housewife';
-    this.mother_phone = 9908313427;
+    this.mother_name = '';
+    this.mother_qualification = '';
+    this.mother_profession = '';
+    this.mother_phone = null;
 
     console.log('Loading default data...')
   }
