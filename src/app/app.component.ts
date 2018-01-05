@@ -18,14 +18,14 @@ export class MyApp {
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public androidFullScreen: AndroidFullScreen,
     public loading: LoadingController, public toastCtrl: ToastController, public device: Device ) {
 
-    this.androidFullScreen.isSupported()
-      .then(() => {
-        this.androidFullScreen.showSystemUI();
-      })
-      .catch((error: any) => console.log(error));    
-
+    if (this.platform.is('android')){
+      this.androidFullScreen.isSupported()
+        .then(() => {
+          this.androidFullScreen.showSystemUI();
+        })
+        .catch((error: any) => console.log(error));    
+    }
     //this.androidFullScreen.isSupported().then(() => this.androidFullScreen.showSystemUI());
-
     this.initializeApp();
 
   }

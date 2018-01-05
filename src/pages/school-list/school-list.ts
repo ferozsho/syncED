@@ -16,6 +16,7 @@ export class SchoolListPage {
   schOptions: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public myApp: MyApp, public resProvider: RestProvider, public storage: Storage) {
+    //his.barColor = platform.is('android') ? 'primary' : 'light';
     this.refreshPage(0);
   }
 

@@ -31,7 +31,18 @@ export class ValidatorProvider {
     ],
     'nationality': [
       { type: 'required', message: 'This field is required.'}
-    ]
+    ],
+    'father_name': [
+      { type: 'required', message: 'Father name is requried.' },
+      { type: 'pattern',  message: 'Invalid full name!'},
+      { type: 'minlength', message: 'Invalid, provide the full name.' },
+      { type: 'maxlength', message: 'Maximum length 60 digits.' },
+    ],
+    'father_qualification': [
+      { type: 'required', message: 'Father name is requried.' },
+      { type: 'minlength', message: 'Invalid qualification!.' },
+      { type: 'maxlength', message: 'Maximum length 60 digits.' },
+    ],
   };
 
 

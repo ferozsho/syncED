@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { MyApp } from './../../app/app.component';
 import { ValidatorProvider } from './../../providers/validator/validator';
@@ -41,6 +41,11 @@ export class RegFormPage {
   bloodgroup: string
   id_marks_one: string
   id_marks_two: string
+  father_name: string
+  father_qualification: string
+  father_profession: string
+  father_phone: number
+  monthly_income: number
 
   classOptionsFormatted: Array<Object> = [];
   casteOptionsFormatted: Array<Object> = [];
@@ -49,7 +54,7 @@ export class RegFormPage {
   bgOptionsFormatted: Array<Object> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public myApp: MyApp, public formBuilder: FormBuilder,
-    public formValidator: ValidatorProvider, public resProvider: RestProvider ) {
+    public formValidator: ValidatorProvider, public resProvider: RestProvider, public alertCtrl: AlertController) {
     this.localStorageSetData();
     this.loadSchoolClassesAPI();
     this.loadDefaultValues();
@@ -62,7 +67,7 @@ export class RegFormPage {
       this.navCtrl.popToRoot();
     }
     this.applicantGroup = new FormGroup({
-      applicantName: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4)])),
+      applicantName: new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z ]*'), Validators.minLength(4)])),
       aadhaarNo: new FormControl('', Validators.compose([Validators.required, Validators.minLength(12), Validators.maxLength(12)])),
       dob: new FormControl(),
       sex: new FormControl(),
@@ -77,7 +82,43 @@ export class RegFormPage {
     })
 
     this.fatherGroup = new FormGroup({
-
+      father_name: new FormControl('',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern('[a-zA-Z ]*'),
+          Validators.minLength(4),
+          Validators.maxLength(60)
+        ])
+      ),
+      father_qualification: new FormControl('',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern('[a-zA-Z ]*'),
+          Validators.maxLength(100),
+        ])
+      ),
+      father_profession: new FormControl('',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern('[a-zA-Z ]*'),
+          Validators.maxLength(40),
+        ])
+      ),
+      father_phone: new FormControl('',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern('[0-9]*'),
+          Validators.minLength(10),
+          Validators.maxLength(10),
+        ])  
+      ),
+      monthly_income: new FormControl('',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern('[0-9]*'),
+          Validators.maxLength(10),
+        ])
+      ),
     })
 
     this.regForm = this.formBuilder.group({
@@ -98,24 +139,33 @@ export class RegFormPage {
   }
 
   loadDefaultValues() {
-    this.ApplicationForm = 'applicant'
-    this.validationMessage = this.formValidator.regFormMessages
-    this.applicantName = 'Shaik'
-    this.aadhaarNo = '444455556666'
-    this.dob = new Date().toISOString()
-    this.sex = 'Male'
-    this.classesID = '1'
-    this.caste = 'OC'
-    this.religion = 'Islam'
-    this.mother_tongue = 'Hindi'
-    this.nationality = 'Indian'
-    this.bloodgroup = 'A+'
-    this.id_marks_one = 'A mole on right hand arm'
-    this.id_marks_two = ''
+    this.ApplicationForm = 'applicant';
+    this.validationMessage = this.formValidator.regFormMessages;
+    this.dob = new Date().toISOString();
+    this.sex = 'Male';
+    /*
+    this.applicantName = 'Sofiya Shaik';
+    this.aadhaarNo = '444455556666';
+    this.classesID = '13';
+    this.caste = 'OC';
+    this.religion = 'Islam';
+    this.mother_tongue = 'Urdu';
+    this.nationality = 'Indian';
+    this.bloodgroup = 'A+';
+    this.id_marks_one = 'A mole on right hand';
+    this.id_marks_two = '';
+    this.father_name = 'Mohammed Feroz Shaik';
+    this.father_qualification = 'B.Sc';
+    this.father_profession = 'System Analyst';
+    this.monthly_income = 5000;
+    this.father_phone = 9908313427;
+    */
     console.log('Default form data loaded...')
+    /*
     setTimeout(() => {
       this.ApplicationForm = 'father'
     }, 500);
+    */
   }
 
   localStorageSetData() {
@@ -219,7 +269,12 @@ export class RegFormPage {
   }
   gotoNext(pageName: string) {
     let nexPage = true
-    if (!this.applicantGroup.valid) {
+    console.log(pageName)
+    if (!this.applicantGroup.valid && pageName === 'father') {
+      this.myApp.onPresentToast('Application form contains error', true)
+      nexPage = false
+    }
+    if (!this.fatherGroup.valid && pageName === 'mother') {
       this.myApp.onPresentToast('Application form contains error', true)
       nexPage = false
     }
@@ -237,18 +292,37 @@ export class RegFormPage {
 
   getInfo() {
     this.deviceID = this.myApp.device.uuid;
-    this.myApp.onPresentToast('Device ID: ' + this.deviceID)   
+    this.myApp.onPresentToast('Device ID: ' + this.deviceID)
     //this.deviceInfo = this.myApp.getDeviceInfo();
   }
 
   doResetForm() {
-    
+    let confirm = this.alertCtrl.create({
+      title: 'Rest Form!',
+      message: "Are you sure you want to rest form?",
+      enableBackdropDismiss: false,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'button-primary'
+        },
+        {
+          text: 'Yes',
+          cssClass: 'button-royal',
+          handler: data => {
+            console.log('form Reset...')
+            return true
+          }
+        }
+      ]
+    });
+    confirm.present()
   }
 
   onRegistrationSubmit(formValues) {
     console.log(formValues)
   }
-  
 }
 
 interface optionsInterface {

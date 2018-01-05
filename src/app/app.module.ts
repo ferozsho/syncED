@@ -20,7 +20,11 @@ import { Device } from '@ionic-native/device';
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      scrollPadding: false,
+      scrollAssist: true,
+      autoFocusAssist: false //scroll issue on ios device ref: https://github.com/ionic-team/ionic/issues/6228
+    }),
     IonicStorageModule.forRoot({
       name: 'synced',
       driverOrder: ['indexeddb', 'sqlite', 'websql']

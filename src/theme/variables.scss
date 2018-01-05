@@ -68,6 +68,11 @@ $categories-colors: (
       margin-left:0.05em;
     }
   }
+  ion-title.title-ios {
+    span {
+      text-align: center;
+    }
+  }
   .error {
     color: color($colors, danger);
   }
@@ -87,7 +92,11 @@ $text-input-highlight-color-invalid: color($colors, danger);
 // iOS only Sass variables can go here
 $item-ios-detail-push-show: true;
 $text-input-ios-show-focus-highlight: false;
-
+$text-input-ios-show-focus-highlight: false;
+$text-input-ios-show-success-highlight: false;
+$text-input-ios-show-invalid-highlight: true;
+$text-input-ios-show-valid-highlight:false;
+$text-input-ios-show-error-highlight: true;
 
 
 // App Material Design Variables
