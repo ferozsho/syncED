@@ -30,8 +30,11 @@ export class ValidatorProvider {
       { type: 'required', message: 'Applicant name is requried.' },
     ],
     'nationality': [
-      { type: 'required', message: 'This field is required.'}
+      { type: 'required', message: 'This field is required.' }
     ],
+  };
+
+  public regFormFatherMessages = {
     'father_name': [
       { type: 'required', message: 'Father name is requried.' },
       { type: 'pattern',  message: 'Invalid full name!'},
@@ -40,11 +43,51 @@ export class ValidatorProvider {
     ],
     'father_qualification': [
       { type: 'required', message: 'Father name is requried.' },
-      { type: 'minlength', message: 'Invalid qualification!.' },
+      { type: 'pattern', message: 'Invalid qualification!.' },
       { type: 'maxlength', message: 'Maximum length 60 digits.' },
+    ],
+    'father_profession': [
+      { type: 'required', message: 'Profession/Occupation is requried.' },
+      { type: 'pattern', message: 'Invalid input!' },
+      { type: 'maxlength', message: 'Maximum length 60 digits.' },
+    ],
+    'father_phone': [
+      { type: 'required', message: 'Contact number is requried.' },
+      { type: 'pattern', message: 'This entry can only contain numbers from 0 to 9.' },
+      { type: 'minlength', message: 'Invalid contact number.' },
+      { type: 'maxlength', message: 'Maximum length 10 digits.' },
+    ],
+    'monthly_income': [
+      { type: 'required', message: 'The monthly income is required.'},
+      { type: 'pattern', message: 'This entry can only contain numbers from 0 to 9.' },
+      { type: 'maxlength', message: 'Maximum length 10 digits.' },
     ],
   };
 
+  public regFormMotherMessages = {
+    'mother_name': [
+      { type: 'required', message: 'Name is requried.' },
+      { type: 'pattern', message: 'Invalid full name!' },
+      { type: 'minlength', message: 'Invalid, provide the full name.' },
+      { type: 'maxlength', message: 'Maximum length 60 digits.' },
+    ],
+    'mother_qualification': [
+      { type: 'required', message: 'Father name is requried.' },
+      { type: 'pattern', message: 'Invalid qualification!.' },
+      { type: 'maxlength', message: 'Maximum length 60 digits.' },
+    ],
+    'mother_profession': [
+      { type: 'required', message: 'Profession/Occupation is requried.' },
+      { type: 'pattern', message: 'Invalid input!' },
+      { type: 'maxlength', message: 'Maximum length 60 digits.' },
+    ],
+    'mother_phone': [
+      { type: 'required', message: 'Contact number is requried.' },
+      { type: 'pattern', message: 'This entry can only contain numbers from 0 to 9.' },
+      { type: 'minlength', message: 'Invalid contact number.' },
+      { type: 'maxlength', message: 'Maximum length 10 digits.' },
+    ],
+  };
 
   constructor() {
     console.log('Init validator provider');

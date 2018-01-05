@@ -16,14 +16,18 @@ export class RegFormPage {
   public siteData: schoolInterface = {}
   public siteOptions: optionsInterface = {}
 
-  viewApplicantGroup: any
+  regFormData: any
   validationMessage: any
+  validationFatherMessage: any
+  validationMotherMessage: any
   ApplicationForm: string
   deviceID: string
 
   regForm: FormGroup
   applicantGroup: FormGroup
   fatherGroup: FormGroup
+  motherGroup: FormGroup
+  contactGroup: FormGroup
 
   btnFather: boolean = true
   btnMother: boolean = true
@@ -46,6 +50,10 @@ export class RegFormPage {
   father_profession: string
   father_phone: number
   monthly_income: number
+  mother_name: string
+  mother_qualification: string
+  mother_profession: string
+  mother_phone: number
 
   classOptionsFormatted: Array<Object> = [];
   casteOptionsFormatted: Array<Object> = [];
@@ -93,14 +101,14 @@ export class RegFormPage {
       father_qualification: new FormControl('',
         Validators.compose([
           Validators.required,
-          Validators.pattern('[a-zA-Z ]*'),
+          Validators.pattern('^[ A-Za-z.,()]*$'),
           Validators.maxLength(100),
         ])
       ),
       father_profession: new FormControl('',
         Validators.compose([
           Validators.required,
-          Validators.pattern('[a-zA-Z ]*'),
+          Validators.pattern('^[ A-Za-z.,()]*$'),
           Validators.maxLength(40),
         ])
       ),
@@ -110,9 +118,9 @@ export class RegFormPage {
           Validators.pattern('[0-9]*'),
           Validators.minLength(10),
           Validators.maxLength(10),
-        ])  
+        ])
       ),
-      monthly_income: new FormControl('',
+      monthly_income: new FormControl(null,
         Validators.compose([
           Validators.required,
           Validators.pattern('[0-9]*'),
@@ -121,9 +129,43 @@ export class RegFormPage {
       ),
     })
 
+    this.motherGroup = new FormGroup({
+      mother_name: new FormControl('',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern('[a-zA-Z ]*'),
+          Validators.minLength(4),
+          Validators.maxLength(60)
+        ])
+      ),
+      mother_qualification: new FormControl('',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern('^[ A-Za-z.,()]*$'),
+          Validators.maxLength(100),
+        ])
+      ),
+      mother_profession: new FormControl('',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern('^[ A-Za-z.,()]*$'),
+          Validators.maxLength(40),
+        ])
+      ),
+      mother_phone: new FormControl('',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern('[0-9]*'),
+          Validators.minLength(10),
+          Validators.maxLength(10),
+        ])
+      ),
+    })
+
     this.regForm = this.formBuilder.group({
       applicantGroup: this.applicantGroup,
-      fatherGroup: this.fatherGroup
+      fatherGroup: this.fatherGroup,
+      motherGroup: this.motherGroup
     });
     console.log('Enter school registration')
   }
@@ -141,9 +183,11 @@ export class RegFormPage {
   loadDefaultValues() {
     this.ApplicationForm = 'applicant';
     this.validationMessage = this.formValidator.regFormMessages;
+    this.validationFatherMessage = this.formValidator.regFormFatherMessages;
+    this.validationMotherMessage = this.formValidator.regFormMotherMessages;
+
     this.dob = new Date().toISOString();
     this.sex = 'Male';
-    /*
     this.applicantName = 'Sofiya Shaik';
     this.aadhaarNo = '444455556666';
     this.classesID = '13';
@@ -154,18 +198,19 @@ export class RegFormPage {
     this.bloodgroup = 'A+';
     this.id_marks_one = 'A mole on right hand';
     this.id_marks_two = '';
+
     this.father_name = 'Mohammed Feroz Shaik';
     this.father_qualification = 'B.Sc';
     this.father_profession = 'System Analyst';
     this.monthly_income = 5000;
     this.father_phone = 9908313427;
-    */
-    console.log('Default form data loaded...')
-    /*
-    setTimeout(() => {
-      this.ApplicationForm = 'father'
-    }, 500);
-    */
+
+    this.mother_name = 'Asiya Nazima';
+    this.mother_qualification = 'M.A';
+    this.mother_profession = 'Housewife';
+    this.mother_phone = 9908313427;
+
+    console.log('Loading default data...')
   }
 
   localStorageSetData() {
@@ -267,9 +312,9 @@ export class RegFormPage {
       this.btnContact = true
     }
   }
+
   gotoNext(pageName: string) {
     let nexPage = true
-    console.log(pageName)
     if (!this.applicantGroup.valid && pageName === 'father') {
       this.myApp.onPresentToast('Application form contains error', true)
       nexPage = false
@@ -278,49 +323,28 @@ export class RegFormPage {
       this.myApp.onPresentToast('Application form contains error', true)
       nexPage = false
     }
+    if (!this.motherGroup.valid && pageName === 'contact') {
+      this.myApp.onPresentToast('Application form contains error', true)
+      nexPage = false
+    }
     if (nexPage) {
-      console.log(JSON.stringify(this.regForm.value))
-      this.viewApplicantGroup = this.regForm.value
       this.ApplicationForm = pageName
     } else {
       return false
     }
   }
+
   gotoBack(pageName: string) {
     this.ApplicationForm = pageName
   }
 
   getInfo() {
     this.deviceID = this.myApp.device.uuid;
-    this.myApp.onPresentToast('Device ID: ' + this.deviceID)
     //this.deviceInfo = this.myApp.getDeviceInfo();
   }
 
-  doResetForm() {
-    let confirm = this.alertCtrl.create({
-      title: 'Rest Form!',
-      message: "Are you sure you want to rest form?",
-      enableBackdropDismiss: false,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'button-primary'
-        },
-        {
-          text: 'Yes',
-          cssClass: 'button-royal',
-          handler: data => {
-            console.log('form Reset...')
-            return true
-          }
-        }
-      ]
-    });
-    confirm.present()
-  }
-
   onRegistrationSubmit(formValues) {
+    this.regFormData = formValues;
     console.log(formValues)
   }
 }

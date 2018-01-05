@@ -4,11 +4,6 @@
       <span *ngIf="siteData">{{ siteData.siteName }}</span>
       <span>Registration From</span>
     </ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)='doResetForm()'>
-        <ion-icon name="refresh"></ion-icon>
-      </button>
-    </ion-buttons>
   </ion-navbar>
 
   <ion-toolbar no-border-top color="synced">
@@ -157,7 +152,7 @@
           <ion-label stacked>Name </ion-label>
           <ion-input type="text" [(ngModel)]="father_name" formControlName="father_name" autocapitalize="sentences" placeholder="Father's or guardian name"></ion-input>
         </ion-item>
-        <ng-container *ngFor="let validation of validationMessage.father_name">
+        <ng-container *ngFor="let validation of validationFatherMessage.father_name">
           <div class="error" *ngIf="regForm.get('fatherGroup').get('father_name').hasError(validation.type) && (regForm.get('fatherGroup').get('father_name').dirty || regForm.get('fatherGroup').get('father_name').touched)">
             {{ validation.message }}
           </div>
@@ -167,7 +162,7 @@
           <ion-label stacked>Qualification </ion-label>
           <ion-input type="text" [(ngModel)]="father_qualification" formControlName="father_qualification" autocapitalize="sentences"></ion-input>
         </ion-item>
-        <ng-container *ngFor="let validation of validationMessage.father_qualification">
+        <ng-container *ngFor="let validation of validationFatherMessage.father_qualification">
           <div class="error" *ngIf="regForm.get('fatherGroup').get('father_qualification').hasError(validation.type) && (regForm.get('fatherGroup').get('father_qualification').dirty || regForm.get('fatherGroup').get('father_qualification').touched)">
             {{ validation.message }}
           </div>
@@ -177,77 +172,103 @@
           <ion-label stacked>Profession / Occupation </ion-label>
           <ion-input type="text" [(ngModel)]="father_profession" formControlName="father_profession" spellcheck="false" autocapitalize="off"></ion-input>
         </ion-item>
-        <ng-container *ngFor="let validation of validationMessage.father_profession">
+        <ng-container *ngFor="let validation of validationFatherMessage.father_profession">
           <div class="error" *ngIf="regForm.get('fatherGroup').get('father_profession').hasError(validation.type) && (regForm.get('fatherGroup').get('father_profession').dirty || regForm.get('fatherGroup').get('father_profession').touched)">
             {{ validation.message }}
           </div>
         </ng-container>
 
-        <ion-grid no-padding>
-          <ion-row no-padding>
+        <ion-item>
+          <ion-label stacked>Mobile</ion-label>
+          <ion-input type="number" [(ngModel)]="father_phone" formControlName="father_phone" pattern="\\d*" placeholder="ex: 9908xxxxxx"></ion-input>
+        </ion-item>
+        <ng-container *ngFor="let validation of validationFatherMessage.father_phone">
+          <div class="error" *ngIf="regForm.get('fatherGroup').get('father_phone').hasError(validation.type) && (regForm.get('fatherGroup').get('father_phone').dirty || regForm.get('fatherGroup').get('father_phone').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+
+        <ion-item>
+          <ion-label stacked>Monthly Income</ion-label>
+          <ion-input type="number" [(ngModel)]="monthly_income" formControlName="monthly_income" pattern="\\d*"></ion-input>
+        </ion-item>
+        <ng-container *ngFor="let validation of validationFatherMessage.monthly_income">
+          <div class="error" *ngIf="regForm.get('fatherGroup').get('monthly_income').hasError(validation.type) && (regForm.get('fatherGroup').get('monthly_income').dirty || regForm.get('fatherGroup').get('monthly_income').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+
+        <ion-grid>
+          <ion-row>
             <ion-col col-6>
-              <ion-item>
-                <ion-label stacked>Mobile</ion-label>
-                <ion-input type="tel" [(ngModel)]="father_phone" formControlName="father_phone" pattern="\\d*"></ion-input>
-                <ng-container *ngFor="let validation of validationMessage.father_phone">
-                  <div class="error" *ngIf="regForm.get('fatherGroup').get('father_phone').hasError(validation.type) && (regForm.get('fatherGroup').get('father_phone').dirty || regForm.get('fatherGroup').get('father_phone').touched)">
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </ion-item>
+              <button type="button" ion-button full color="synced" (click)="gotoBack('applicant')">Back</button>
             </ion-col>
             <ion-col col-6>
-              <ion-item>
-                <ion-label stacked>Monthly Income</ion-label>
-                <ion-input type="number" [(ngModel)]="monthly_income" formControlName="monthly_income" pattern="[0-9]*"></ion-input>
-                <ng-container *ngFor="let validation of validationMessage.monthly_income">
-                  <div class="error" *ngIf="regForm.get('fatherGroup').get('monthly_income').hasError(validation.type) && (regForm.get('fatherGroup').get('monthly_income').dirty || regForm.get('fatherGroup').get('monthly_income').touched)">
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </ion-item>
+              <button type="submit" ion-button full color="synced" [disabled]="!fatherGroup.valid" (click)="gotoNext('mother')">Next</button>
             </ion-col>
           </ion-row>
         </ion-grid>
 
-
-        <div>
-          <ion-grid>
-            <ion-row>
-              <ion-col col-6>
-                <button type="button" ion-button full color="synced" (click)="gotoBack('applicant')">Back</button>
-              </ion-col>
-              <ion-col col-6>
-                <button type="submit" ion-button full color="synced" [disabled]="!fatherGroup.valid" (click)="gotoNext('mother')">Next</button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </div>
-
       </ion-list>
 
-      <ion-list *ngSwitchCase="'mother'">
+      <ion-list *ngSwitchCase="'mother'" formGroupName="motherGroup">
+
         <ion-item>
-          <h4>Mother</h4>
+          <ion-label stacked>Name </ion-label>
+          <ion-input type="text" [(ngModel)]="mother_name" formControlName="mother_name" autocapitalize="sentences"></ion-input>
         </ion-item>
-        <div>
-          <ion-grid>
-            <ion-row>
-              <ion-col col-6>
-                <button type="button" ion-button full color="synced" (click)="gotoBack('father')">Back</button>
-              </ion-col>
-              <ion-col col-6>
-                <button type="submit" ion-button full color="synced" (click)="gotoNext('contact')">Next</button>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </div>
+        <ng-container *ngFor="let validation of validationMotherMessage.mother_name">
+          <div class="error" *ngIf="regForm.get('motherGroup').get('mother_name').hasError(validation.type) && (regForm.get('motherGroup').get('mother_name').dirty || regForm.get('motherGroup').get('mother_name').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+
+        <ion-item>
+          <ion-label stacked>Qualification </ion-label>
+          <ion-input type="text" [(ngModel)]="mother_qualification" formControlName="mother_qualification" autocapitalize="sentences"></ion-input>
+        </ion-item>
+        <ng-container *ngFor="let validation of validationMotherMessage.mother_qualification">
+          <div class="error" *ngIf="regForm.get('motherGroup').get('mother_qualification').hasError(validation.type) && (regForm.get('motherGroup').get('mother_qualification').dirty || regForm.get('motherGroup').get('mother_qualification').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+
+        <ion-item>
+          <ion-label stacked>Profession / Occupation </ion-label>
+          <ion-input type="text" [(ngModel)]="mother_profession" formControlName="mother_profession" spellcheck="false" autocapitalize="off"></ion-input>
+        </ion-item>
+        <ng-container *ngFor="let validation of validationMotherMessage.mother_profession">
+          <div class="error" *ngIf="regForm.get('motherGroup').get('mother_profession').hasError(validation.type) && (regForm.get('motherGroup').get('mother_profession').dirty || regForm.get('motherGroup').get('mother_profession').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+
+        <ion-item>
+          <ion-label stacked>Mobile</ion-label>
+          <ion-input type="number" [(ngModel)]="mother_phone" formControlName="mother_phone" pattern="\\d*" placeholder="ex: 9908xxxxxx"></ion-input>
+        </ion-item>
+        <ng-container *ngFor="let validation of validationMotherMessage.mother_phone">
+          <div class="error" *ngIf="regForm.get('motherGroup').get('mother_phone').hasError(validation.type) && (regForm.get('motherGroup').get('mother_phone').dirty || regForm.get('motherGroup').get('mother_phone').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col col-6>
+              <button type="button" ion-button full color="synced" (click)="gotoBack('father')">Back</button>
+            </ion-col>
+            <ion-col col-6>
+              <button type="submit" ion-button full color="synced" [disabled]="!motherGroup.valid" (click)="gotoNext('contact')">Next</button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
 
       </ion-list>
 
       <ion-list *ngSwitchCase="'contact'">
         <ion-item>
-          <h4>Contact Information</h4>
+          <div text-wrap>{{regFormData | json}}</div>
         </ion-item>
         <div>
           <ion-grid>
