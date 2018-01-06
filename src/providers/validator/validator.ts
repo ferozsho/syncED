@@ -4,6 +4,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 @Injectable()
 export class ValidatorProvider {
 
+  public pureEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
   public statusAppValidationMessages = {
     'admissionNo': [
       { type: 'minlength', message: 'Admission must be at least 5 digist number.' }
@@ -27,7 +29,10 @@ export class ValidatorProvider {
       { type: 'minlength', message: 'Invalid, provide the full applicant name.' },
     ],
     'classesID': [
-      { type: 'required', message: 'Applicant name is requried.' },
+      { type: 'required', message: 'This field is required.' },
+    ],
+    'caste': [
+      { type: 'required', message: 'This field is required.'}
     ],
     'nationality': [
       { type: 'required', message: 'This field is required.' }
@@ -56,6 +61,9 @@ export class ValidatorProvider {
       { type: 'pattern', message: 'This entry can only contain numbers from 0 to 9.' },
       { type: 'minlength', message: 'Invalid contact number.' },
       { type: 'maxlength', message: 'Maximum length 10 digits.' },
+    ],
+    'father_email': [
+      { type: 'pattern', message: 'Invalid mail address ex: yourname@domain.com' },
     ],
     'monthly_income': [
       { type: 'required', message: 'The monthly income is required.'},
@@ -87,21 +95,13 @@ export class ValidatorProvider {
       { type: 'minlength', message: 'Invalid contact number.' },
       { type: 'maxlength', message: 'Maximum length 10 digits.' },
     ],
+    'mother_email': [
+      { type: 'pattern', message: 'Invalid mail address ex: yourname@domain.com' },
+    ],
   };
 
   constructor() {
     console.log('Init validator provider');
-  }
-
-  validEmailAddress(control: FormControl) {
-    return new Promise(resolve => {
-      let emailPartten = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      if (!emailPartten.test(control.value)) {
-        resolve({ aadhaarNo: true });
-      } else {
-        resolve(null);
-      }  
-    })
   }
 
   appStatusAreEqual(formGroup: FormGroup) {

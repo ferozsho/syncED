@@ -39,7 +39,7 @@
 
         <ion-item>
           <ion-label stacked>Aadhaar Number </ion-label>
-          <ion-input type="number" pattern="\\d*" [(ngModel)]="aadhaarNo" formControlName="aadhaarNo" placeholder="ex: UID (333344445555)" max="12" [attr.maxlength]="12"></ion-input>
+          <ion-input type="tel" pattern="\\d*" [(ngModel)]="aadhaarNo" formControlName="aadhaarNo" placeholder="ex: UID (333344445555)" max="12" [attr.maxlength]="12"></ion-input>
         </ion-item>
         <ng-container *ngFor="let validation of validationMessage.aadhaarNo">
           <div class="error" *ngIf="regForm.get('applicantGroup').get('aadhaarNo').hasError(validation.type) && (regForm.get('applicantGroup').get('aadhaarNo').dirty || regForm.get('applicantGroup').get('aadhaarNo').touched)">
@@ -189,6 +189,16 @@
         </ng-container>
 
         <ion-item>
+          <ion-label stacked>Email</ion-label>
+          <ion-input type="text" [(ngModel)]="father_email" formControlName="father_email"></ion-input>
+        </ion-item>
+        <ng-container *ngFor="let validation of validationFatherMessage.father_email">
+          <div class="error" *ngIf="regForm.get('fatherGroup').get('father_email').hasError(validation.type) && (regForm.get('fatherGroup').get('father_email').dirty || regForm.get('fatherGroup').get('father_email').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+
+        <ion-item>
           <ion-label stacked>Monthly Income</ion-label>
           <ion-input type="number" [(ngModel)]="monthly_income" formControlName="monthly_income" pattern="\\d*"></ion-input>
         </ion-item>
@@ -249,6 +259,16 @@
         </ion-item>
         <ng-container *ngFor="let validation of validationMotherMessage.mother_phone">
           <div class="error" *ngIf="regForm.get('motherGroup').get('mother_phone').hasError(validation.type) && (regForm.get('motherGroup').get('mother_phone').dirty || regForm.get('motherGroup').get('mother_phone').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+
+        <ion-item>
+          <ion-label stacked>Email</ion-label>
+          <ion-input type="text" [(ngModel)]="mother_email" formControlName="mother_email"></ion-input>
+        </ion-item>
+        <ng-container *ngFor="let validation of validationMotherMessage.mother_email">
+          <div class="error" *ngIf="regForm.get('motherGroup').get('mother_email').hasError(validation.type) && (regForm.get('motherGroup').get('mother_email').dirty || regForm.get('motherGroup').get('mother_email').touched)">
             {{ validation.message }}
           </div>
         </ng-container>

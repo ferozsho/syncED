@@ -49,11 +49,13 @@ export class RegFormPage {
   father_qualification: string
   father_profession: string
   father_phone: number
+  father_email: string
   monthly_income: number
   mother_name: string
   mother_qualification: string
   mother_profession: string
   mother_phone: number
+  mother_email: string
 
   classOptionsFormatted: Array<Object> = [];
   casteOptionsFormatted: Array<Object> = [];
@@ -69,6 +71,8 @@ export class RegFormPage {
   }
 
   ionViewWillLoad() {
+    const pureEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
     if (typeof this.siteData === 'undefined') {
       this.myApp.onPresentToast('Sorry! We unable to get school information from server.')
       this.navCtrl.setRoot('SchoolListPage');
@@ -114,10 +118,13 @@ export class RegFormPage {
       ),
       father_phone: new FormControl('',
         Validators.compose([
-          Validators.required,
           Validators.pattern('[0-9]*'),
-          Validators.minLength(10),
           Validators.maxLength(10),
+        ])
+      ),
+      father_email: new FormControl('',
+        Validators.compose([
+          Validators.pattern(this.formValidator.pureEmail)
         ])
       ),
       monthly_income: new FormControl(null,
@@ -154,10 +161,13 @@ export class RegFormPage {
       ),
       mother_phone: new FormControl('',
         Validators.compose([
-          Validators.required,
           Validators.pattern('[0-9]*'),
-          Validators.minLength(10),
           Validators.maxLength(10),
+        ])
+      ),
+      mother_email: new FormControl('',
+        Validators.compose([
+          Validators.pattern(this.formValidator.pureEmail)
         ])
       ),
     })
@@ -187,28 +197,30 @@ export class RegFormPage {
     this.validationMotherMessage = this.formValidator.regFormMotherMessages;
 
     this.dob = new Date().toISOString();
-    this.sex = 'Male';
-    this.applicantName = '';
-    this.aadhaarNo = '';
-    this.classesID = '';
-    this.caste = '';
-    this.religion = '';
-    this.mother_tongue = '';
+    this.sex = 'Female';
+    this.applicantName = 'Sofya Sahaik';
+    this.aadhaarNo = '444455556666';
+    this.classesID = '13';
+    this.caste = 'OC';
+    this.religion = 'Islam';
+    this.mother_tongue = 'Urdu';
     this.nationality = 'Indian';
-    this.bloodgroup = '';
+    this.bloodgroup = 'A+';
     this.id_marks_one = '';
     this.id_marks_two = '';
 
-    this.father_name = '';
-    this.father_qualification = '';
-    this.father_profession = '';
-    this.monthly_income = null;
+    this.father_name = 'Mohammed Feroz Shaik';
+    this.father_qualification = 'B.Sc';
+    this.father_profession = 'IT';
+    this.monthly_income = 5000;
     this.father_phone = null;
+    this.father_email = '';
 
-    this.mother_name = '';
-    this.mother_qualification = '';
-    this.mother_profession = '';
+    this.mother_name = 'Asiya Nazima';
+    this.mother_qualification = 'M.A';
+    this.mother_profession = 'Housewife';
     this.mother_phone = null;
+    this.mother_email = '';
 
     console.log('Loading default data...')
   }
