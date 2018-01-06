@@ -12,7 +12,7 @@
   <div padding class="about-info" *ngIf="siteInfo">
     <h4 text-capitalize>{{ siteInfo.siteName }}</h4>
     <p>{{ siteInfo.siteAddress }}</p>
-    <p class="description">{{ siteInfo.siteDescription }}</p>
+    <div class="description" [innerHTML]="siteInfo.siteDescription"></div>
   </div>
 </ion-content>
 

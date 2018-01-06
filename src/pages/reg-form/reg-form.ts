@@ -20,6 +20,7 @@ export class RegFormPage {
   validationMessage: any
   validationFatherMessage: any
   validationMotherMessage: any
+  validationContactMessage: any
   ApplicationForm: string
   deviceID: string
 
@@ -56,12 +57,19 @@ export class RegFormPage {
   mother_profession: string
   mother_phone: number
   mother_email: string
+  email: string
+  address: string
+  city: string
+  pincode: number
+  country: string
+  phone: number
 
   classOptionsFormatted: Array<Object> = [];
   casteOptionsFormatted: Array<Object> = [];
   religionOptionsFormatted: Array<Object> = [];
   mtOptionsFormatted: Array<Object> = [];
   bgOptionsFormatted: Array<Object> = [];
+  countryOptionsFormatted: Array<Object> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public myApp: MyApp, public formBuilder: FormBuilder,
     public formValidator: ValidatorProvider, public resProvider: RestProvider, public alertCtrl: AlertController) {
@@ -71,8 +79,6 @@ export class RegFormPage {
   }
 
   ionViewWillLoad() {
-    const pureEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
     if (typeof this.siteData === 'undefined') {
       this.myApp.onPresentToast('Sorry! We unable to get school information from server.')
       this.navCtrl.setRoot('SchoolListPage');
@@ -172,10 +178,20 @@ export class RegFormPage {
       ),
     })
 
+    this.contactGroup = new FormGroup({
+      email: new FormControl('', Validators.compose([Validators.required, Validators.pattern(this.formValidator.pureEmail)])),
+      address: new FormControl('', Validators.required),
+      city: new FormControl('', Validators.required),
+      pincode: new FormControl('', Validators.compose([Validators.required, Validators.pattern('[0-9]*')])),
+      country: new FormControl('', Validators.required),
+      phone: new FormControl('', Validators.compose([Validators.required, Validators.pattern('[0-9]*')]))
+    })
+
     this.regForm = this.formBuilder.group({
       applicantGroup: this.applicantGroup,
       fatherGroup: this.fatherGroup,
-      motherGroup: this.motherGroup
+      motherGroup: this.motherGroup,
+      contactGroup: this.contactGroup
     });
     console.log('Enter school registration')
   }
@@ -195,10 +211,11 @@ export class RegFormPage {
     this.validationMessage = this.formValidator.regFormMessages;
     this.validationFatherMessage = this.formValidator.regFormFatherMessages;
     this.validationMotherMessage = this.formValidator.regFormMotherMessages;
+    this.validationContactMessage = this.formValidator.regFormContactMessages;
 
     this.dob = new Date().toISOString();
     this.sex = 'Female';
-    this.applicantName = 'Sofya Sahaik';
+    this.applicantName = 'Sofya Shaik';
     this.aadhaarNo = '444455556666';
     this.classesID = '13';
     this.caste = 'OC';
@@ -213,14 +230,31 @@ export class RegFormPage {
     this.father_qualification = 'B.Sc';
     this.father_profession = 'IT';
     this.monthly_income = 5000;
-    this.father_phone = null;
-    this.father_email = '';
+    this.father_phone = 9908313427;
+    this.father_email = 'ferozsho@yahoo.com';
 
     this.mother_name = 'Asiya Nazima';
     this.mother_qualification = 'M.A';
     this.mother_profession = 'Housewife';
     this.mother_phone = null;
     this.mother_email = '';
+
+    this.email = '';
+    this.address = '391/54/18, SN - 2';
+    this.city = 'Hyderabad';
+    this.pincode = 500035;
+    this.country = 'IN';
+    this.phone = null;
+
+    setTimeout(() => {
+      this.gotoNext('father')
+      setTimeout(() => {
+        this.gotoNext('mother')
+        setTimeout(() => {
+          this.gotoNext('contact')
+        }, 2500);
+      }, 2000);
+    }, 1500);
 
     console.log('Loading default data...')
   }
@@ -277,6 +311,17 @@ export class RegFormPage {
       });
     }
 
+    // prepre bloodGroup select box
+    this.countryOptionsFormatted.push({
+      abbr: '',
+      name: 'None'
+    });
+    for (var cyKey in this.siteOptions.Country) {
+      this.countryOptionsFormatted.push({
+        abbr: cyKey,
+        name: this.siteOptions.Country[cyKey],
+      });
+    }
   }
 
   loadSchoolClassesAPI() {
@@ -339,6 +384,28 @@ export class RegFormPage {
       this.myApp.onPresentToast('Application form contains error', true)
       nexPage = false
     }
+    if (pageName === 'contact') {
+      //check Phone field
+      if (this.phone == null) {
+        if (this.father_phone !== null && this.father_phone.toString() !== "") {
+          this.phone = this.father_phone;
+        } else {
+          if (this.mother_phone !== null && this.mother_phone.toString() !== "") {
+            this.phone = this.mother_phone;
+          }
+        }
+      }
+      //check Email field
+      if (this.email.toString() === "") {
+        if (this.father_email !== null && this.father_email.toString() !== "") {
+          this.email = this.father_email;
+        } else {
+          if (this.mother_email !== null && this.mother_email.toString() !== "") {
+            this.email = this.mother_email;
+          }
+        }
+      }
+    }
     if (nexPage) {
       this.ApplicationForm = pageName
     } else {
@@ -350,12 +417,17 @@ export class RegFormPage {
     this.ApplicationForm = pageName
   }
 
-  getInfo() {
+  getDeviceInfo() {
     this.deviceID = this.myApp.device.uuid;
-    //this.deviceInfo = this.myApp.getDeviceInfo();
+    if (this.deviceID === null || this.deviceID === '') {
+      console.log('Browser Access')
+    } else {
+      console.log(this.deviceID)
+    }
   }
 
   onRegistrationSubmit(formValues) {
+    this.getDeviceInfo();
     this.regFormData = formValues;
     console.log(formValues)
   }

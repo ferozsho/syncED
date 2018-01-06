@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 @Injectable()
 export class ValidatorProvider {
@@ -98,6 +98,28 @@ export class ValidatorProvider {
     'mother_email': [
       { type: 'pattern', message: 'Invalid mail address ex: yourname@domain.com' },
     ],
+  };
+
+  public regFormContactMessages = {
+    'email': [
+      { type: 'required', message: 'this field is requried.' },
+      { type: 'pattern', message: 'Invalid mail address ex: yourname@domain.com' },
+    ],
+    'address': [
+      { type: 'required', message: 'This field is requried.' },
+    ],
+    'city': [
+      { type: 'required', message: 'This field is requried.' },
+    ],
+    'pincode': [
+      { type: 'required', message: 'This field is requried.' },
+    ],
+    'country': [
+      { type: 'required', message: 'This field is requried.' },
+    ],
+    'phone': [
+      { type: 'required', message: 'Please provide contact number for Father or Mother !'},
+    ]
   };
 
   constructor() {

@@ -28,12 +28,14 @@ page-school-info {
     font-weight: 300;
   }
 
-  .about-info p {
+  .about-info p,
+  .about-info div {
     color: #697072;
     text-align: left;
   }
 
-  .about-info p.description {
+  .about-info p.description, 
+  .about-info div.description {
     font-family: "Noto Sans";
     text-align: justify;
     line-height: 1.75em;
