@@ -6,11 +6,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AndroidFullScreen } from "@ionic-native/android-full-screen";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MyApp } from './app.component';
 import { RestProvider } from '../providers/rest/rest';
-import { HttpClientModule } from '@angular/common/http';
 import { ValidatorProvider } from '../providers/validator/validator';
+import { schoolHttpInterceptor } from './../providers/rest/interceptor';
 import { Device } from '@ionic-native/device';
 
 @NgModule({
@@ -42,6 +43,7 @@ import { Device } from '@ionic-native/device';
     RestProvider,
     ValidatorProvider,
     Device,
+    { provide: HTTP_INTERCEPTORS, useClass: schoolHttpInterceptor, multi: true},
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

@@ -79,6 +79,9 @@ $categories-colors: (
   .toast-error .toast-message{
     background-color: color($colors, danger);
   }
+  .toast-success .toast-message{
+    background-color: color($colors, synced);
+  }
 
   ion-label.required:after {
     content:"*";

@@ -61,13 +61,13 @@ export class MyApp {
     }
   }
 
-  public onPresentToast(msgString: any, timeOut: boolean = false) {
+  public onPresentToast(msgString: any, timeOut: boolean = false, className: string = 'error') {
     let toast = null;
     if (timeOut){
       toast = this.toastCtrl.create({
         message: msgString,
         showCloseButton: false,
-        cssClass: 'toast-error',
+        cssClass: 'toast-' + className,
         dismissOnPageChange: true,
         duration:3000
       });
@@ -75,7 +75,7 @@ export class MyApp {
       toast = this.toastCtrl.create({
         message: msgString,
         showCloseButton: true,
-        cssClass: 'toast-error',
+        cssClass: 'toast-' + className,
         dismissOnPageChange: true,
         closeButtonText: 'Ok'
       });

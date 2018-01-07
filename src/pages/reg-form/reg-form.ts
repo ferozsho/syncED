@@ -15,6 +15,7 @@ export class RegFormPage {
   
   public siteData: schoolInterface = {}
   public siteOptions: optionsInterface = {}
+  private serverRes: serverResponse = {}
 
   regFormData: any
   validationMessage: any
@@ -252,9 +253,9 @@ export class RegFormPage {
         this.gotoNext('mother')
         setTimeout(() => {
           this.gotoNext('contact')
-        }, 2500);
-      }, 2000);
-    }, 1500);
+        }, 250);
+      }, 200);
+    }, 200);
 
     console.log('Loading default data...')
   }
@@ -420,6 +421,8 @@ export class RegFormPage {
   getDeviceInfo() {
     this.deviceID = this.myApp.device.uuid;
     if (this.deviceID === null || this.deviceID === '') {
+      let currentTime = new Date().getTime();
+      this.deviceID = 'synced' + currentTime
       console.log('Browser Access')
     } else {
       console.log(this.deviceID)
@@ -427,10 +430,36 @@ export class RegFormPage {
   }
 
   onRegistrationSubmit(formValues) {
+    this.myApp.addLoadingMessage()
     this.getDeviceInfo();
     this.regFormData = formValues;
-    console.log(formValues)
+    this.saveRegForm()
   }
+
+  saveRegForm() {
+    console.info(this.deviceID)
+    console.info(this.regFormData)
+    this.resProvider.postNewAdminssion(this.deviceID, this.regFormData)
+      .then(data => {
+        this.serverRes = data
+        if (this.serverRes.status == false) {
+          this.myApp.onPresentToast('Server response: ' + this.serverRes.message, false)
+          this.regFormData = null;
+        } else {
+          this.myApp.onPresentToast('Your enrolment number is : ' + this.serverRes.message, false, 'success')
+          this.ApplicationForm = 'applicant'
+        }
+        this.myApp.removeMessage()
+      },
+      error => {
+        this.myApp.removeMessage()
+        this.myApp.onPresentToast(error)
+      }).catch(exception => {
+        this.myApp.removeMessage()
+        this.myApp.onPresentToast(exception.message)
+    });
+  }
+
 }
 
 interface optionsInterface {
@@ -450,4 +479,9 @@ interface schoolInterface {
   tracks?: string,
   status?: number,
   priority?: number,
+}
+
+interface serverResponse {
+  status?: Boolean,
+  message?: any
 }
