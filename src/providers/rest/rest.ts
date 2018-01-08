@@ -17,7 +17,9 @@ export class RestProvider {
     console.log('Loading schools from server: ' + newAPI);
 
     return new Promise((resolve, reject) => {
-      this.http.get(newAPI)
+      this.http.get(newAPI, {
+        headers: { 'Content-Type': 'application/json', 'X-API-KEY': 'synced-9908313427' }
+      })
         .subscribe(data => {
           resolve(data);
         }, (err: HttpErrorResponse) => {
@@ -43,7 +45,9 @@ export class RestProvider {
     }
     console.log('Loading classes from server: ' + newAPI);
     return new Promise((resolve, reject) => {
-      this.http.get(newAPI)
+      this.http.get(newAPI, {
+        headers: { 'Content-Type': 'application/json', 'X-API-KEY': 'synced-9908313427' }
+      })
         .subscribe(data => {
           resolve(data);
         }, (err: HttpErrorResponse) => {
@@ -67,7 +71,7 @@ export class RestProvider {
     return new Promise((resolve, reject) => {
       this.http.post(this.apiUrl + '/admissions', targetData,
         {
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-API-KEY':'synced-9908313427' }
         }).subscribe(res => {
           resolve(res)
         }, (err: HttpErrorResponse) => {

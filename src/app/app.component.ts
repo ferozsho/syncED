@@ -61,14 +61,14 @@ export class MyApp {
     }
   }
 
-  public onPresentToast(msgString: any, timeOut: boolean = false, className: string = 'error') {
+  public onPresentToast(msgString: any, timeOut: boolean = false, isDismiss: boolean = true, className: string = 'error') {
     let toast = null;
     if (timeOut){
       toast = this.toastCtrl.create({
         message: msgString,
         showCloseButton: false,
         cssClass: 'toast-' + className,
-        dismissOnPageChange: true,
+        dismissOnPageChange: isDismiss,
         duration:3000
       });
     } else {
@@ -76,7 +76,7 @@ export class MyApp {
         message: msgString,
         showCloseButton: true,
         cssClass: 'toast-' + className,
-        dismissOnPageChange: true,
+        dismissOnPageChange: isDismiss,
         closeButtonText: 'Ok'
       });
     }  

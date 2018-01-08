@@ -13,9 +13,10 @@ import { RestProvider } from '../../providers/rest/rest';
 
 export class RegFormPage {
   
-  public siteData: schoolInterface = {}
-  public siteOptions: optionsInterface = {}
+  private siteData: schoolInterface = {}
+  private siteOptions: optionsInterface = {}
   private serverRes: serverResponse = {}
+  private hideForm: boolean = false;
 
   regFormData: any
   validationMessage: any
@@ -23,7 +24,7 @@ export class RegFormPage {
   validationMotherMessage: any
   validationContactMessage: any
   ApplicationForm: string
-  deviceID: string
+  deviceInfo: any
 
   regForm: FormGroup
   applicantGroup: FormGroup
@@ -418,36 +419,23 @@ export class RegFormPage {
     this.ApplicationForm = pageName
   }
 
-  getDeviceInfo() {
-    this.deviceID = this.myApp.device.uuid;
-    if (this.deviceID === null || this.deviceID === '') {
-      let currentTime = new Date().getTime();
-      this.deviceID = 'synced' + currentTime
-      console.log('Browser Access')
-    } else {
-      console.log(this.deviceID)
-    }
-  }
-
   onRegistrationSubmit(formValues) {
     this.myApp.addLoadingMessage()
-    this.getDeviceInfo();
+    this.deviceInfo = this.myApp.deviceInfo
     this.regFormData = formValues;
     this.saveRegForm()
   }
 
   saveRegForm() {
-    console.info(this.deviceID)
-    console.info(this.regFormData)
-    this.resProvider.postNewAdminssion(this.deviceID, this.regFormData)
+    this.resProvider.postNewAdminssion(this.deviceInfo, this.regFormData)
       .then(data => {
         this.serverRes = data
         if (this.serverRes.status == false) {
           this.myApp.onPresentToast('Server response: ' + this.serverRes.message, false)
-          this.regFormData = null;
+          this.regFormData = null
         } else {
-          this.myApp.onPresentToast('Your enrolment number is : ' + this.serverRes.message, false, 'success')
-          this.ApplicationForm = 'applicant'
+          this.myApp.onPresentToast('Your enrolment number is : ' + this.serverRes.message, false, false, 'success')
+          this.hideForm = true
         }
         this.myApp.removeMessage()
       },
@@ -459,7 +447,27 @@ export class RegFormPage {
         this.myApp.onPresentToast(exception.message)
     });
   }
+  doTrack(trackID: string) {
+    console.log(trackID)
+    //app-status
 
+  }
+  goBack() {
+    if (this.navCtrl.canGoBack()) {
+      this.navCtrl.pop()  
+    } else {
+      this.navCtrl.setRoot('SchoolListPage');
+      this.navCtrl.push('SchoolInfoPage').then(
+        response => {
+          //console.log('Response ' + response);
+        },
+        error => {
+          this.myApp.onPresentToast(error);
+        }).catch(exception => {
+          this.myApp.onPresentToast(exception);
+        });
+    }
+  }
 }
 
 interface optionsInterface {
