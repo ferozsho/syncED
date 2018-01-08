@@ -5,8 +5,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class RestProvider {
 
-  apiUrl: string = "http://synced.intellibiz.in/api/schools";
-  //apiUrl: string = "http://localhost/synced/api/schools";
+  //apiUrl: string = "http://synced.intellibiz.in/api/schools";
+  apiUrl: string = "http://localhost/synced/api/schools";
 
   constructor(private http: HttpClient) {
     console.log('Rest Provider Conncected:', this.apiUrl);
@@ -19,19 +19,18 @@ export class RestProvider {
     return new Promise((resolve, reject) => {
       this.http.get(newAPI, {
         headers: { 'Content-Type': 'application/json', 'X-API-KEY': 'synced-9908313427' }
-      })
-        .subscribe(data => {
+      }).subscribe(data => {
           resolve(data);
-        }, (err: HttpErrorResponse) => {
-          if (err.error instanceof Error) {
-            reject("Client response: " + err.message);
-          } else {
-            if (err.status) {
-              reject("Server response: " + err.error.error);
-            }
-            reject("Server response: " + err.message);
+      }, (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          reject("Client response: " + err.message);
+        } else {
+          if (err.status) {
+            reject("Server response: " + err.error.error);
           }
-        });
+          reject("Server response: " + err.message);
+        }
+      });
     });
 
   }

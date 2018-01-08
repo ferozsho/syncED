@@ -47,7 +47,7 @@ export class SchoolInfoPage {
 
   trackApplication() {
     this.myApp.addLoadingMessage();
-    this.navCtrl.push('AppStatusPage', { siteInfo: this.siteInfo }).then(
+    this.navCtrl.push('AppStatusPage').then(
       response => {
         //console.log('Response ' + response);
       },
@@ -59,7 +59,7 @@ export class SchoolInfoPage {
   }
   registerApplication() {
     this.myApp.addLoadingMessage();
-    this.navCtrl.push('RegFormPage', { siteInfo: this.siteInfo }).then(
+    this.navCtrl.push('RegFormPage').then(
       response => {
         //console.log('Response ' + response);
       },

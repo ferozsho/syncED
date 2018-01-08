@@ -1,8 +1,8 @@
 <ion-header>
   <ion-navbar color="synced">
     <ion-title>
-      <span *ngIf="schInfo">{{ schInfo.siteName }}</span>
-      <span>{{ schInfo.siteAddress }}</span>
+      <span *ngIf="siteData">{{ siteData.siteName }}</span>
+      <span *ngIf="siteData">{{ siteData.siteAddress }}</span>
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -20,7 +20,7 @@
 
         <ion-item>
           <ion-label floating>Enrolment Number</ion-label>
-          <ion-input type="number" formControlName="admissionNo"></ion-input>
+          <ion-input type="number" pattern="\\d*" [(ngModel)]="admissionNo" formControlName="admissionNo"></ion-input>
         </ion-item>
 
         <ng-container *ngFor="let validation of validation_messages.admissionNo">
@@ -31,7 +31,7 @@
 
         <ion-item>
           <ion-label floating>Aadhaar Number</ion-label>
-          <ion-input type="number" pattern="\\d*" formControlName="aadhaarNo" max="12" [attr.maxlength]="12"></ion-input>
+          <ion-input type="number" pattern="\\d*" [(ngModel)]="aadhaarNo" formControlName="aadhaarNo" max="12" [attr.maxlength]="12"></ion-input>
         </ion-item>
 
         <ng-container *ngFor="let validation of validation_messages.aadhaarNo">

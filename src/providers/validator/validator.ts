@@ -4,11 +4,13 @@ import { FormGroup } from '@angular/forms';
 @Injectable()
 export class ValidatorProvider {
 
+  /*
   public pureEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  */
 
   public statusAppValidationMessages = {
     'admissionNo': [
-      { type: 'minlength', message: 'Admission must be at least 5 digist number.' }
+      { type: 'minlength', message: 'Admission must be at least 7 digist number.' }
     ],
     'aadhaarNo': [
       { type: 'minlength', message: 'Aadhaar must be at least 12 digit number.' }
@@ -128,17 +130,18 @@ export class ValidatorProvider {
 
   appStatusAreEqual(formGroup: FormGroup) {
     let valid = true;
-    if (formGroup.controls['admissionNo'].value === '' && formGroup.controls['aadhaarNo'].value === '') {
+    var admissionNo = formGroup.controls['admissionNo']
+    var aadhaarNo = formGroup.controls['aadhaarNo']
+    if ((admissionNo.value === '' || admissionNo.value === null) && (aadhaarNo.value === '' || aadhaarNo.value === null)) {
       valid = false;
     }
 
     if (valid) {
       return null;
     }
-
     return {
-      areAnyEqual: true
+      appStatusAreEqual: true
     };
   }
- 
+
 }

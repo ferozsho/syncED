@@ -18,6 +18,8 @@ export class MyApp {
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public androidFullScreen: AndroidFullScreen,
     public loading: LoadingController, public toastCtrl: ToastController, public device: Device ) {
 
+    console.log('Starting SyncEd Application')
+
     if (this.platform.is('android')){
       this.androidFullScreen.isSupported()
         .then(() => {

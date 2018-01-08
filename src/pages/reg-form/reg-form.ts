@@ -12,7 +12,7 @@ import { RestProvider } from '../../providers/rest/rest';
 })
 
 export class RegFormPage {
-  
+
   private siteData: schoolInterface = {}
   private siteOptions: optionsInterface = {}
   private serverRes: serverResponse = {}
@@ -445,16 +445,12 @@ export class RegFormPage {
       }).catch(exception => {
         this.myApp.removeMessage()
         this.myApp.onPresentToast(exception.message)
-    });
+      });
   }
-  doTrack(trackID: string) {
-    console.log(trackID)
-    //app-status
 
-  }
   goBack() {
     if (this.navCtrl.canGoBack()) {
-      this.navCtrl.pop()  
+      this.navCtrl.pop()
     } else {
       this.navCtrl.setRoot('SchoolListPage');
       this.navCtrl.push('SchoolInfoPage').then(
@@ -463,9 +459,10 @@ export class RegFormPage {
         },
         error => {
           this.myApp.onPresentToast(error);
-        }).catch(exception => {
-          this.myApp.onPresentToast(exception);
-        });
+        }
+      ).catch(exception => {
+        this.myApp.onPresentToast(exception);
+      });
     }
   }
 }

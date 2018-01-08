@@ -378,15 +378,10 @@
         <p *ngIf="!serverRes">Invalid application, contact support team.</p>
       </ion-card-content>
       <ion-row no-padding>
-        <ion-col>
+        <ion-col text-right>
           <button ion-button clear color="danger" icon-start (click)="goBack()" >
             <ion-icon name='ios-arrow-back'></ion-icon>
             Back 
-          </button>
-        </ion-col>
-        <ion-col text-right>
-          <button ion-button clear color="danger" icon-end (click)="doTrack(serverRes.message)" >
-            Track Application
           </button>
         </ion-col>
       </ion-row>
