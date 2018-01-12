@@ -340,7 +340,6 @@ export class RegFormPage {
             name: data[key]['classes']
           });
         }
-        this.myApp.removeMessage()
       },
       error => {
         this.myApp.removeMessage()

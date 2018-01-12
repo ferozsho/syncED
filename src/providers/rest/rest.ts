@@ -5,8 +5,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class RestProvider {
 
-  //apiUrl: string = "http://synced.intellibiz.in/api/schools";
-  apiUrl: string = "http://localhost/synced/api/schools";
+  apiUrl: string = "http://synced.intellibiz.in/api/schools";
+  //apiUrl: string = "http://localhost/synced/api/schools";
 
   constructor(private http: HttpClient) {
     console.log('Rest Provider Conncected:', this.apiUrl);
