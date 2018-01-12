@@ -13,10 +13,10 @@ import { RestProvider } from '../../providers/rest/rest';
 
 export class RegFormPage {
 
-  private siteData: schoolInterface = {}
+  public siteData: schoolInterface = {}
   private siteOptions: optionsInterface = {}
-  private serverRes: serverResponse = {}
-  private hideForm: boolean = false;
+  public serverRes: serverResponse = {}
+  public hideForm: boolean = false;
 
   regFormData: any
   validationMessage: any

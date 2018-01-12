@@ -11,7 +11,7 @@ import { ValidatorProvider } from './../../providers/validator/validator';
 })
 export class AppStatusPage {
 
-  private siteData: schoolInterface = {}
+  siteData: schoolInterface = {}
   statusApp: FormGroup
   findout_fill_group: FormGroup
   validation_messages: any
@@ -62,9 +62,9 @@ export class AppStatusPage {
   }
 
   onSearchSubmit() {
-    console.log(this.statusApp.valid);
-    if (this.statusApp.valid) {
-      let formData = this.statusApp.value.findout_fill
+    console.log(this.findout_fill_group.valid);
+    if (this.findout_fill_group.valid) {
+      let formData = JSON.stringify(this.findout_fill_group.value)
       console.log(formData)
       if (formData !== '{}') {
         this.myApp.onPresentToast(formData)

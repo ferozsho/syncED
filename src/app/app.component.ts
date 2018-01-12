@@ -28,8 +28,7 @@ export class MyApp {
         .catch((error: any) => console.log(error));    
     }
     //this.androidFullScreen.isSupported().then(() => this.androidFullScreen.showSystemUI());
-    this.initializeApp();
-
+    this.initializeApp()
   }
 
   initializeApp() {
@@ -63,23 +62,26 @@ export class MyApp {
     }
   }
 
-  public onPresentToast(msgString: any, timeOut: boolean = false, isDismiss: boolean = true, className: string = 'error') {
+
+  public onPresentToast(msgString: any, timeOut: boolean = false, isDismiss: boolean = true, clsName: string = 'error', position: string = 'bottom') {
     let toast = null;
     if (timeOut){
       toast = this.toastCtrl.create({
         message: msgString,
         showCloseButton: false,
-        cssClass: 'toast-' + className,
+        cssClass: 'toast-' + clsName,
         dismissOnPageChange: isDismiss,
-        duration:3000
+        duration: 3000,
+        position: position
       });
     } else {
       toast = this.toastCtrl.create({
         message: msgString,
         showCloseButton: true,
-        cssClass: 'toast-' + className,
+        cssClass: 'toast-' + clsName,
         dismissOnPageChange: isDismiss,
-        closeButtonText: 'Ok'
+        closeButtonText: 'Ok',
+        position: position
       });
     }  
     toast.onDidDismiss(() => {
