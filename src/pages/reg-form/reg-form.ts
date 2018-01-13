@@ -340,6 +340,7 @@ export class RegFormPage {
             name: data[key]['classes']
           });
         }
+        this.myApp.removeMessage()
       },
       error => {
         this.myApp.removeMessage()
@@ -426,7 +427,12 @@ export class RegFormPage {
   }
 
   saveRegForm() {
-    this.resProvider.postNewAdminssion(this.deviceInfo, this.regFormData)
+    let targetData = {
+      'deviceInfo': this.deviceInfo,
+      'siteInfo': this.siteData,
+      'formData': this.regFormData
+    }
+    this.resProvider.postNewAdminssion(targetData)
       .then(data => {
         this.serverRes = data
         if (this.serverRes.status == false) {

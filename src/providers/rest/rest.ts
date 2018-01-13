@@ -5,8 +5,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class RestProvider {
 
-  apiUrl: string = "http://synced.intellibiz.in/api/schools";
-  //apiUrl: string = "http://localhost/synced/api/schools";
+  //apiUrl: string = "http://synced.intellibiz.in/api/schools";
+  apiUrl: string = "http://localhost/synced/api/schools";
 
   constructor(private http: HttpClient) {
     console.log('Rest Provider Conncected:', this.apiUrl);
@@ -62,11 +62,7 @@ export class RestProvider {
     });
   }
 
-  postNewAdminssion(deviceInfo: any, formData: any) {
-    let targetData = {
-      'deviceInfo': deviceInfo,
-      'formData': formData
-    }
+  postNewAdminssion(targetData: any) {
     return new Promise((resolve, reject) => {
       this.http.post(this.apiUrl + '/admissions', targetData,
         {
