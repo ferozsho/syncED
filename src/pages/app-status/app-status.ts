@@ -25,7 +25,7 @@ export class AppStatusPage {
 
   localStorageSetData() {
     this.siteData = JSON.parse(localStorage.getItem('schoolInfo'))
-    this.admissionNo = null;
+    this.admissionNo = 1801151;
     this.aadhaarNo = null;
     if (this.navParams.get('admissionNo')) {
       this.admissionNo = this.navParams.get('admissionNo');
@@ -66,9 +66,7 @@ export class AppStatusPage {
     if (this.findout_fill_group.valid) {
       let formData = JSON.stringify(this.findout_fill_group.value)
       console.log(formData)
-      if (formData !== '{}') {
-        this.myApp.onPresentToast(formData)
-      }
+      this.myApp.onPresentToast(formData, true)
     } else {
       this.myApp.onPresentToast('Invalid code, Please enter either Enrolment or Aadhaar number.')
     }

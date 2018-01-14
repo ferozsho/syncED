@@ -1,26 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import 'rxjs/add/operator/map';
 
 @Injectable()
 export class RestProvider {
 
-  apiUrl: string = "http://synced.intellibiz.in/api/schools";
-  //apiUrl: string = "http://localhost/synced/api/schools";
+  //apiUrl: string = "http://synced.intellibiz.in/api/schools";
+  apiUrl: string = "http://localhost/synced/api/schools";
 
   constructor(private http: HttpClient) {
-    console.log('Rest Provider Conncected:', this.apiUrl);
+    console.log('Rest Provider Conncected:', this.apiUrl)
   }
 
   getSchoolList() {
-    let newAPI = this.apiUrl + '/schlist';
+    let newAPI = this.apiUrl + '/schlist'
     console.log('Loading schools from server: ' + newAPI);
-
     return new Promise((resolve, reject) => {
       this.http.get(newAPI, {
         headers: { 'Content-Type': 'application/json', 'X-API-KEY': 'synced-9908313427' }
       }).subscribe(data => {
-          resolve(data);
+          resolve(data)
       }, (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           reject("Cnt.Response: " + err.message);
@@ -43,6 +41,7 @@ export class RestProvider {
       newAPI = this.apiUrl + '/classes?siteID=' + siteID;
     }
     console.log('Loading classes from server: ' + newAPI);
+    
     return new Promise((resolve, reject) => {
       this.http.get(newAPI, {
         headers: { 'Content-Type': 'application/json', 'X-API-KEY': 'synced-9908313427' }
