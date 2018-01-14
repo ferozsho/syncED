@@ -217,46 +217,36 @@ export class RegFormPage {
 
     this.dob = new Date().toISOString();
     this.sex = 'Female';
-    this.applicantName = 'Sofya Shaik';
-    this.aadhaarNo = '444455556666';
-    this.classesID = '13';
-    this.caste = 'OC';
-    this.religion = 'Islam';
-    this.mother_tongue = 'Urdu';
+    this.applicantName = '';
+    this.aadhaarNo = '';
+    this.classesID = '';
+    this.caste = '';
+    this.religion = '';
+    this.mother_tongue = '';
     this.nationality = 'Indian';
-    this.bloodgroup = 'A+';
+    this.bloodgroup = '';
     this.id_marks_one = '';
     this.id_marks_two = '';
 
-    this.father_name = 'Mohammed Feroz Shaik';
-    this.father_qualification = 'B.Sc';
-    this.father_profession = 'IT';
-    this.monthly_income = 5000;
-    this.father_phone = 9908313427;
-    this.father_email = 'ferozsho@yahoo.com';
+    this.father_name = '';
+    this.father_qualification = '';
+    this.father_profession = '';
+    this.monthly_income = 0;
+    this.father_phone = null;
+    this.father_email = '';
 
-    this.mother_name = 'Asiya Nazima';
-    this.mother_qualification = 'M.A';
-    this.mother_profession = 'Housewife';
+    this.mother_name = '';
+    this.mother_qualification = '';
+    this.mother_profession = '';
     this.mother_phone = null;
     this.mother_email = '';
 
     this.email = '';
-    this.address = '391/54/18, SN - 2';
-    this.city = 'Hyderabad';
-    this.pincode = 500035;
+    this.address = '';
+    this.city = '';
+    this.pincode = null;
     this.country = 'IN';
     this.phone = null;
-
-    setTimeout(() => {
-      this.gotoNext('father')
-      setTimeout(() => {
-        this.gotoNext('mother')
-        setTimeout(() => {
-          this.gotoNext('contact')
-        }, 250);
-      }, 200);
-    }, 200);
 
     console.log('Loading default data...')
   }

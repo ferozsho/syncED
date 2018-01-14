@@ -5,8 +5,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class RestProvider {
 
-  //apiUrl: string = "http://synced.intellibiz.in/api/schools";
-  apiUrl: string = "http://localhost/synced/api/schools";
+  apiUrl: string = "http://synced.intellibiz.in/api/schools";
+  //apiUrl: string = "http://localhost/synced/api/schools";
 
   constructor(private http: HttpClient) {
     console.log('Rest Provider Conncected:', this.apiUrl);
@@ -23,12 +23,12 @@ export class RestProvider {
           resolve(data);
       }, (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          reject("Client response: " + err.message);
+          reject("Cnt.Response: " + err.message);
         } else {
           if (err.status) {
-            reject("Server response: " + err.error.error);
+            reject("Srv.Error: " + err.error.error);
           }
-          reject("Server response: " + err.message);
+          reject("Srv.Error: " + err.message);
         }
       });
     });
@@ -51,12 +51,12 @@ export class RestProvider {
           resolve(data);
         }, (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            reject("Client response: " + err.message);
+            reject("Cnt.Response: " + err.message);
           } else {
             if (err.status) {
-              reject("Server response: " + err.error.error);
+              reject("Srv.Error: " + err.error.error);
             }
-            reject("Server response: " + err.message);
+            reject("Srv.Error: " + err.message);
           }
         });
     });
@@ -71,12 +71,12 @@ export class RestProvider {
           resolve(res)
         }, (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            reject("Client response: " + err.message);
+            reject("Cnt.Response: " + err.message);
           } else {
             if (err.status) {
-              reject("Server response: " + err.error.error);
+              reject("Srv.Error: " + err.error.message);
             }
-            reject("Server response: " + err.message);
+            reject("Srv.Error: " + err.message);
           }
         })
     });
