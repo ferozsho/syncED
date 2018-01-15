@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "503450208695",
+    "firebase_url": "https://india-firebase-7f1cc.firebaseio.com",
+    "project_id": "india-firebase-7f1cc",
+    "storage_bucket": "india-firebase-7f1cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:503450208695:android:fbb7df9a115436c5",
+        "android_client_info": {
+          "package_name": "com.intellibiz.synced"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "503450208695-8hqc0si7kgsjket7h113hsf7ms1la936.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.intellibiz.synced",
+            "certificate_hash": "d9cb78ec0244dc1cdc53b9aa081810cffb6cb38e"
+          }
+        },
+        {
+          "client_id": "503450208695-6qil8bd22sk84l55rtff4vhl6p8ajmgf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5r3-GCQ2DFalb8E3UKaop3sTPtW0ADTw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "503450208695-6qil8bd22sk84l55rtff4vhl6p8ajmgf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

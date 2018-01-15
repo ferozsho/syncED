@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.intellibiz.SyncEd" version="0.0.1" versionCode="1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.intellibiz.synced" version="0.0.1" versionCode="1" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>SyncEd</name>
     <description>Synchronize Educational Activities</description>
     <author email="info@intellibiz.in" href="http://intellibiz.in/">IntelliBiz Team</author>
@@ -102,5 +102,5 @@
     <plugin name="cordova-plugin-statusbar" spec="^2.4.0" />
     <plugin name="cordova-plugin-fullscreen" spec="^1.2.0" />
     <engine name="ios" spec="^4.5.4" />
-    <engine name="android" spec="7.0.0" />
+    <engine name="android" spec="~7.0.0" />
 </widget>

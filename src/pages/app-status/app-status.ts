@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
+import { IonicPage, NavController, NavParams, ModalController, ModalOptions } from 'ionic-angular';
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { MyApp } from '../../app/app.component';
 import { ValidatorProvider } from './../../providers/validator/validator';
+import { RestProvider } from './../../providers/rest/rest';
 
 @IonicPage()
 @Component({
@@ -11,15 +12,15 @@ import { ValidatorProvider } from './../../providers/validator/validator';
 })
 export class AppStatusPage {
 
-  siteData: schoolInterface = {}
-  statusApp: FormGroup
-  findout_fill_group: FormGroup
-  validation_messages: any
-  admissionNo: number
-  aadhaarNo: number
+  siteData: schoolInterface = {};
+  statusApp: FormGroup;
+  findout_fill_group: FormGroup;
+  validation_messages: any;
+  admissionNo: number;
+  aadhaarNo: number;
+  serverRes: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public formValidator: ValidatorProvider,
-    public myApp: MyApp) {
+  constructor(private navCtrl: NavController, private navParams: NavParams, private formBuilder: FormBuilder, private formValidator: ValidatorProvider, private myApp: MyApp, private modal: ModalController, private resProvider: RestProvider) {
     this.localStorageSetData();
   }
 
@@ -62,14 +63,33 @@ export class AppStatusPage {
   }
 
   onSearchSubmit() {
-    console.log(this.findout_fill_group.valid);
     if (this.findout_fill_group.valid) {
-      let formData = JSON.stringify(this.findout_fill_group.value)
-      console.log(formData)
-      this.myApp.onPresentToast(formData, true)
+      this.resProvider.trackApplication(this.findout_fill_group.value)
+        .then(data => {
+          this.serverRes = data
+          if (this.serverRes.status == false) {
+            this.myApp.onPresentToast('Srv.Response: ' + this.serverRes.message, false);
+          } else {
+            this.createModalTrack(this.serverRes);
+          }
+          this.myApp.removeMessage();
+        }, error => {
+          this.myApp.removeMessage();
+          this.myApp.onPresentToast(error);
+        }).catch(exception => {
+          this.myApp.removeMessage();
+          this.myApp.onPresentToast(exception.message);
+        });
     } else {
-      this.myApp.onPresentToast('Invalid code, Please enter either Enrolment or Aadhaar number.')
+      this.myApp.onPresentToast('Invalid code, Please enter either Enrolment or Aadhaar number.');
     }
+  }
+  createModalTrack(formData: any) {
+    const myModalOptions: ModalOptions = {
+      enableBackdropDismiss: false
+    };
+    const myTrackModal = this.modal.create('ModalTrackPage', { mData: formData }, myModalOptions);
+    myTrackModal.present();
   }
 }
 
