@@ -1,12 +1,50 @@
 <ion-header>
   <ion-navbar color="synced">
-    <ion-title>Application Status</ion-title>
+    <ion-title>Status</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="closeModal()">Close</button>
+      <button ion-button icon-only (click)="closeModal()">
+        <ion-icon item-right name="close"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+  <ion-list>
+    <h4 no-padding text-center>Application : {{ trackData.admissionNo}}</h4>
+    <div class="hr"></div>
+
+    <ion-item>
+      <ion-label stacked>Applicant Name</ion-label>
+      <ion-input type="text" readonly [disabled]=true value="{{trackData.applicantName}}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Class</ion-label>
+      <ion-input type="text" readonly [disabled]=true value="{{trackData.className}}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Enrolment Number</ion-label>
+      <ion-input type="text" readonly [disabled]=true value="{{trackData.admissionNo}}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Aadhaar Number</ion-label>
+      <ion-input type="text" readonly [disabled]=true value="{{trackData.aadhaarNo}}"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Application Date</ion-label>
+      <ion-input type="text" readonly [disabled]=true value="{{trackData.jod}}"></ion-input>
+    </ion-item>
+
+    <div text-center>
+        <h1 ion-text padding margin color="danger" *ngIf="trackData.active == '0'">Pending</h1>
+        <h1 ion-text padding margin color="secondary" *ngIf="trackData.active == '1'">Active</h1>
+        <h1 ion-text padding margin color="subtle" *ngIf="trackData.active == '2'">Suspended</h1>
+    </div>    
+
+  </ion-list>
 
 </ion-content>

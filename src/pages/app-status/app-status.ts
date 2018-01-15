@@ -12,13 +12,13 @@ import { RestProvider } from './../../providers/rest/rest';
 })
 export class AppStatusPage {
 
+  private serverRes: serverResponse = {};
   siteData: schoolInterface = {};
   statusApp: FormGroup;
   findout_fill_group: FormGroup;
   validation_messages: any;
   admissionNo: number;
   aadhaarNo: number;
-  serverRes: any;
 
   constructor(private navCtrl: NavController, private navParams: NavParams, private formBuilder: FormBuilder, private formValidator: ValidatorProvider, private myApp: MyApp, private modal: ModalController, private resProvider: RestProvider) {
     this.localStorageSetData();
@@ -26,7 +26,7 @@ export class AppStatusPage {
 
   localStorageSetData() {
     this.siteData = JSON.parse(localStorage.getItem('schoolInfo'))
-    this.admissionNo = 1801151;
+    this.admissionNo = null;
     this.aadhaarNo = null;
     if (this.navParams.get('admissionNo')) {
       this.admissionNo = this.navParams.get('admissionNo');
@@ -50,7 +50,6 @@ export class AppStatusPage {
     this.statusApp = this.formBuilder.group({
       findout_fill: this.findout_fill_group
     });
-
     console.log('Enter Tracking Information')
   }
 
@@ -65,20 +64,20 @@ export class AppStatusPage {
   onSearchSubmit() {
     if (this.findout_fill_group.valid) {
       this.resProvider.trackApplication(this.findout_fill_group.value)
-        .then(data => {
-          this.serverRes = data
-          if (this.serverRes.status == false) {
-            this.myApp.onPresentToast('Srv.Response: ' + this.serverRes.message, false);
+        .then(resData => {
+          this.serverRes = resData;
+          if (typeof this.serverRes.status == "undefined") {
+            this.createModalTrack(resData);
           } else {
-            this.createModalTrack(this.serverRes);
+            this.myApp.onPresentToast(this.serverRes.message, true, true, 'error', 'top', true, 5000);
           }
           this.myApp.removeMessage();
         }, error => {
+          this.myApp.onPresentToast(error, true, true, 'error', 'top');
           this.myApp.removeMessage();
-          this.myApp.onPresentToast(error);
         }).catch(exception => {
-          this.myApp.removeMessage();
           this.myApp.onPresentToast(exception.message);
+          this.myApp.removeMessage();
         });
     } else {
       this.myApp.onPresentToast('Invalid code, Please enter either Enrolment or Aadhaar number.');
@@ -102,4 +101,8 @@ interface schoolInterface {
   tracks?: string,
   status?: number,
   priority?: number,
+}
+interface serverResponse {
+  status?: Boolean,
+  message?: any
 }

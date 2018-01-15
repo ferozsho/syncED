@@ -4,8 +4,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 @Injectable()
 export class RestProvider {
 
-  //apiUrl: string = "http://synced.intellibiz.in/api/schools";
-  apiUrl: string = "http://localhost/synced/api/schools";
+  apiUrl: string = "http://synced.intellibiz.in/api/schools";
+  //apiUrl: string = "http://localhost/synced/api/schools";
   private _trackData: trackData = {}
 
   constructor(private http: HttpClient) {
@@ -22,12 +22,12 @@ export class RestProvider {
           resolve(data)
       }, (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
-          reject("Cnt.Response: " + err.message);
+          reject(err.message);
         } else {
           if (err.status) {
-            reject("Srv.Error: " + err.error.error);
+            reject(err.error.error);
           }
-          reject("Srv.Error: " + err.message);
+          reject(err.message);
         }
       });
     });
@@ -51,12 +51,12 @@ export class RestProvider {
           resolve(data);
         }, (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            reject("Cnt.Response: " + err.message);
+            reject(err.message);
           } else {
             if (err.status) {
-              reject("Srv.Error: " + err.error.error);
+              reject(err.error.message);
             }
-            reject("Srv.Error: " + err.message);
+            reject(err.message);
           }
         });
     });
@@ -71,12 +71,12 @@ export class RestProvider {
           resolve(res)
         }, (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            reject("Cnt.Response: " + err.message);
+            reject(err.message);
           } else {
             if (err.status) {
-              reject("Srv.Error: " + err.error.message);
+              reject(err.error.message);
             }
-            reject("Srv.Error: " + err.message);
+            reject(err.message);
           }
         })
     });
@@ -97,7 +97,7 @@ export class RestProvider {
         newAPI = this.apiUrl + '/trackApplication?admissionNo=' + this._trackData.admissionNo;
       }
     }
-    console.log('Loading classes from server: ' + newAPI);
+    console.log('Loading track information from server: ' + newAPI);
     
     return new Promise((resolve, reject) => {
       this.http.get(newAPI, {
@@ -107,12 +107,12 @@ export class RestProvider {
           resolve(data);
         }, (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
-            reject("Cnt.Response: " + err.message);
+            reject(err.message);
           } else {
             if (err.status) {
-              reject("Srv.Error: " + err.error.error);
+              reject(err.error.message);
             }
-            reject("Srv.Error: " + err.message);
+            reject(err.message);
           }
         });
     });

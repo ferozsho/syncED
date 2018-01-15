@@ -63,15 +63,16 @@ export class MyApp {
   }
 
 
-  public onPresentToast(msgString: any, timeOut: boolean = false, isDismiss: boolean = true, clsName: string = 'error', position: string = 'bottom') {
+  public onPresentToast(msgString: any, timeOut: boolean = false, isDismiss: boolean = true, clsName: string = 'error', position: string = 'bottom', showClosedBtn: boolean = false, timetostay: number = 3000) {
     let toast = null;
     if (timeOut){
       toast = this.toastCtrl.create({
         message: msgString,
-        showCloseButton: false,
+        showCloseButton: showClosedBtn,
         cssClass: 'toast-' + clsName,
         dismissOnPageChange: isDismiss,
-        duration: 3000,
+        closeButtonText: 'Ok',
+        duration: timetostay,
         position: position
       });
     } else {

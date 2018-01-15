@@ -1,3 +1,15 @@
 page-modal-track {
 
+    ion-label.label-md[stacked], ion-label.label-ios[stacked]{
+        font-size: 0.95em;
+    }
+    .text-input[disabled]{
+        opacity:1;
+        color: #5d5b5b;
+    }
+    .hr {
+        border-bottom: 1px dashed rgba(59, 141, 218, 0.50);
+        margin: 10px auto;
+        width: 60%;
+    }
 }
