@@ -15,12 +15,10 @@ export class MyApp {
   loader: any;
   public deviceInfo: deviceInterface = {};
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public androidFullScreen: AndroidFullScreen,
-    public loading: LoadingController, public toastCtrl: ToastController, public device: Device ) {
-
-    console.log('Starting SyncEd Application')
-
-    if (this.platform.is('android')){
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public androidFullScreen: AndroidFullScreen, public loading: LoadingController, public toastCtrl: ToastController, public device: Device ) {
+    console.log('Starting SyncEd Application');
+    this.setDefaultDeviceInfo();
+    if (this.platform.is('cordova') && this.platform.is('android')){
       this.androidFullScreen.isSupported()
         .then(() => {
           this.androidFullScreen.showSystemUI();
@@ -28,7 +26,9 @@ export class MyApp {
         .catch((error: any) => console.log(error));    
     }
     //this.androidFullScreen.isSupported().then(() => this.androidFullScreen.showSystemUI());
-    this.initializeApp()
+    if (this.platform.is('cordova')) {
+      this.initializeApp();
+    }  
   }
 
   initializeApp() {
@@ -39,6 +39,11 @@ export class MyApp {
     });
   }
 
+  setDefaultDeviceInfo() {
+    this.deviceInfo.id = 'local';
+    this.deviceInfo.platform = 'Browser';
+  }
+  
   hideSplashScreen() {
     if (this.splashScreen) {
       setTimeout(() => {

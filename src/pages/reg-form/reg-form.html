@@ -53,8 +53,8 @@
           </ion-item>
 
           <ion-grid no-padding>
-            <ion-row no-padding>
-              <ion-col col-6>
+            <ion-row>
+              <ion-col col-5>
                   <ion-item>
                     <ion-label stacked>Gender</ion-label>
                     <ion-select [(ngModel)]="sex" formControlName="sex">
@@ -63,10 +63,10 @@
                     </ion-select>
                   </ion-item>
               </ion-col>
-              <ion-col col-6>
-                  <ion-item>
+              <ion-col col-6 offset-1>
+                  <ion-item [class.ng-invalid]="!regForm.get('applicantGroup').get('classesID').valid">
                     <ion-label stacked>Class applied for </ion-label>
-                    <ion-select [(ngModel)]="classesID" formControlName="classesID">
+                    <ion-select [(ngModel)]="classesID" formControlName="classesID" (ionChange)="ctrlValid(regForm.get('applicantGroup'),'classesID')">
                       <ion-option *ngFor="let classOption of classOptionsFormatted" [value]="classOption.abbr">{{ classOption.name }}</ion-option>
                     </ion-select>
                   </ion-item>
@@ -75,19 +75,19 @@
           </ion-grid>
 
           <ion-grid no-padding>
-            <ion-row no-padding>
-              <ion-col col-6>
-                <ion-item>
+            <ion-row>
+              <ion-col col-5>
+                <ion-item [class.ng-invalid]="!regForm.get('applicantGroup').get('caste').valid">
                   <ion-label stacked>Caste </ion-label>
-                  <ion-select [(ngModel)]="caste" formControlName="caste">
+                  <ion-select [(ngModel)]="caste" formControlName="caste" (ionChange)="ctrlValid(regForm.get('applicantGroup'),'caste')">
                     <ion-option *ngFor="let casteOption of casteOptionsFormatted" [value]="casteOption.abbr">{{ casteOption.name }}</ion-option>
                   </ion-select>
                 </ion-item>
               </ion-col>
-              <ion-col col-6>
-                <ion-item>
+              <ion-col col-6 offset-1>
+                <ion-item [class.ng-invalid]="!regForm.get('applicantGroup').get('religion').valid">
                   <ion-label stacked>Religion </ion-label>
-                  <ion-select [(ngModel)]="religion" formControlName="religion">
+                  <ion-select [(ngModel)]="religion" formControlName="religion" (ionChange)="ctrlValid(regForm.get('applicantGroup'),'religion')">
                     <ion-option *ngFor="let religionOption of religionOptionsFormatted" [value]="religionOption.abbr">{{ religionOption.name }}</ion-option>
                   </ion-select>
                 </ion-item>
@@ -96,16 +96,16 @@
           </ion-grid>
 
           <ion-grid no-padding>
-            <ion-row no-padding>
-              <ion-col col-6>
-                <ion-item>
+            <ion-row>
+              <ion-col col-5>
+                <ion-item [class.ng-invalid]="!regForm.get('applicantGroup').get('mother_tongue').valid">
                   <ion-label stacked>Mother Tongue </ion-label>
-                  <ion-select [(ngModel)]="mother_tongue" formControlName="mother_tongue">
+                  <ion-select [(ngModel)]="mother_tongue" formControlName="mother_tongue" (ionChange)="ctrlValid(regForm.get('applicantGroup'),'mother_tongue')">
                     <ion-option *ngFor="let mtOption of mtOptionsFormatted" [value]="mtOption.abbr">{{ mtOption.name }}</ion-option>
                   </ion-select>
                 </ion-item>
               </ion-col>
-              <ion-col col-6>
+              <ion-col col-6 offset-1>
                 <ion-item>
                   <ion-label stacked>Blood Group </ion-label>
                   <ion-select [(ngModel)]="bloodgroup" formControlName="bloodgroup">
@@ -139,7 +139,7 @@
           <ion-grid>
             <ion-row>
               <ion-col col-12>
-                <button type="submit" ion-button block color="synced" [disabled]="!applicantGroup.valid" (click)="gotoNext('father')">Next</button>
+                <button type="submit" ion-button block color="synced" (click)="gotoNext('father')">Next</button>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -214,7 +214,7 @@
                 <button type="button" ion-button full color="synced" (click)="gotoBack('applicant')">Back</button>
               </ion-col>
               <ion-col col-6>
-                <button type="submit" ion-button full color="synced" [disabled]="!fatherGroup.valid" (click)="gotoNext('mother')">Next</button>
+                <button type="submit" ion-button full color="synced" (click)="gotoNext('mother')">Next</button>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -279,7 +279,7 @@
                 <button type="button" ion-button full color="synced" (click)="gotoBack('father')">Back</button>
               </ion-col>
               <ion-col col-6>
-                <button type="submit" ion-button full color="synced" [disabled]="!motherGroup.valid" (click)="gotoNext('contact')">Next</button>
+                <button type="submit" ion-button full color="synced" (click)="gotoNext('contact')">Next</button>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -338,7 +338,7 @@
                     [attr.maxlength]="10"></ion-input>
                 </ion-item>
                 <ng-container *ngFor="let validation of validationMessage.pincode">
-                  <div class="error" *ngIf="regForm.get('applicantGroup').get('pincode').hasError(validation.type) && (regForm.get('applicantGroup').get('pincode').dirty || regForm.get('applicantGroup').get('pincode').touched)">
+                  <div class="error" *ngIf="regForm.get('contactGroup').get('pincode').hasError(validation.type) && (regForm.get('contactGroup').get('pincode').dirty || regForm.get('contactGroup').get('pincode').touched)">
                     {{ validation.message }}
                   </div>
                 </ng-container>
@@ -346,9 +346,9 @@
             </ion-row>
           </ion-grid>
 
-          <ion-item>
+          <ion-item [class.ng-invalid]="!regForm.get('contactGroup').get('country').valid">
             <ion-label stacked>Country </ion-label>
-            <ion-select [(ngModel)]="country" formControlName="country">
+            <ion-select [(ngModel)]="country" formControlName="country" (ionChange)="ctrlValid(regForm.get('contactGroup'),'country')">
               <ion-option *ngFor="let countryOption of countryOptionsFormatted" [value]="countryOption.abbr">{{ countryOption.name }}</ion-option>
             </ion-select>
           </ion-item>
@@ -359,7 +359,7 @@
                 <button type="button" ion-button full color="synced" (click)="gotoBack('mother')">Back</button>
               </ion-col>
               <ion-col col-6>
-                <button type="submit" ion-button full color="primary" [disabled]="!contactGroup.valid">Submit</button>
+                <button type="submit" ion-button full color="primary">Submit</button>
               </ion-col>
             </ion-row>
           </ion-grid>

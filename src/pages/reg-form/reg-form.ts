@@ -18,6 +18,7 @@ export class RegFormPage {
   public serverRes: serverResponse = {}
   public hideForm: boolean = false;
 
+  inputsInvalid: formInterface = {};
   regFormData: any
   validationMessage: any
   validationFatherMessage: any
@@ -82,7 +83,7 @@ export class RegFormPage {
 
   ionViewWillLoad() {
     if (typeof this.siteData === 'undefined') {
-      this.myApp.onPresentToast('Sorry! We unable to get school information from server.')
+      this.myApp.onPresentToast('Sorry! We unable to get school information from server.', false, false, 'error', 'top', true);
       this.navCtrl.setRoot('SchoolListPage');
       this.navCtrl.popToRoot();
     }
@@ -203,6 +204,7 @@ export class RegFormPage {
       if (this.classOptionsFormatted.length != 0) {
         this.myApp.removeMessage()
       }
+      //this.ctrlOnChangeEvent();
     } catch (error) {
       console.log(error.message)
     }
@@ -217,38 +219,49 @@ export class RegFormPage {
 
     this.dob = new Date().toISOString();
     this.sex = 'Female';
-    this.applicantName = '';
-    this.aadhaarNo = '';
-    this.classesID = '';
-    this.caste = '';
-    this.religion = '';
-    this.mother_tongue = '';
+    this.applicantName = 'Sofiya Shaik';
+    this.aadhaarNo = '333344445555';
+    this.classesID = '13';
+    this.caste = 'OC';
+    this.religion = 'Islam';
+    this.mother_tongue = 'Urdu';
     this.nationality = 'Indian';
-    this.bloodgroup = '';
+    this.bloodgroup = 'A+';
     this.id_marks_one = '';
     this.id_marks_two = '';
 
-    this.father_name = '';
-    this.father_qualification = '';
-    this.father_profession = '';
-    this.monthly_income = 0;
+    this.father_name = 'Feroz Shaik';
+    this.father_qualification = 'BSc';
+    this.father_profession = 'IT';
+    this.monthly_income = 5000;
     this.father_phone = null;
     this.father_email = '';
 
-    this.mother_name = '';
-    this.mother_qualification = '';
-    this.mother_profession = '';
+    this.mother_name = 'Asiya Nazima';
+    this.mother_qualification = 'M.A';
+    this.mother_profession = 'HMaker';
     this.mother_phone = null;
     this.mother_email = '';
 
-    this.email = '';
-    this.address = '';
-    this.city = '';
-    this.pincode = null;
+    this.email = 'feroz.shaik@3pillarstc.com';
+    this.address = '391-54/18, SN -2';
+    this.city = 'Hyderabad';
+    this.pincode = 500034;
     this.country = 'IN';
-    this.phone = null;
+    this.phone = 9908313427;
 
     console.log('Loading default data...')
+    
+    setTimeout(() => {
+      this.ApplicationForm = 'father';
+      setTimeout(() => {
+        this.ApplicationForm = 'mother';
+        setTimeout(() => {
+          this.ApplicationForm = 'contact';
+        }, 1000);
+      }, 1000);
+    }, 1000);
+    
   }
 
   localStorageSetData() {
@@ -334,10 +347,10 @@ export class RegFormPage {
       },
       error => {
         this.myApp.removeMessage()
-        this.myApp.onPresentToast(error);
+        this.myApp.onPresentToast(error, false, false, 'error', 'bottom', true);
       }).catch(exception => {
         this.myApp.removeMessage()
-        this.myApp.onPresentToast(exception.message);
+        this.myApp.onPresentToast(exception.message, false, false, 'error', 'bottom', true);
       });
   }
 
@@ -365,15 +378,18 @@ export class RegFormPage {
   gotoNext(pageName: string) {
     let nexPage = true
     if (!this.applicantGroup.valid && pageName === 'father') {
-      this.myApp.onPresentToast('Application form contains error', true)
+      this.validateAllFormFields(this.applicantGroup);
+      this.myApp.onPresentToast('Application form contains error', true, false, 'error', 'top', true);
       nexPage = false
     }
     if (!this.fatherGroup.valid && pageName === 'mother') {
-      this.myApp.onPresentToast('Application form contains error', true)
+      this.validateAllFormFields(this.fatherGroup);
+      this.myApp.onPresentToast('Application form contains error', true, false, 'error', 'top', true);
       nexPage = false
     }
     if (!this.motherGroup.valid && pageName === 'contact') {
-      this.myApp.onPresentToast('Application form contains error', true)
+      this.validateAllFormFields(this.motherGroup);
+      this.myApp.onPresentToast('Application form contains error', true, false, 'error', 'top', true);
       nexPage = false
     }
     if (pageName === 'contact') {
@@ -410,10 +426,15 @@ export class RegFormPage {
   }
 
   onRegistrationSubmit(formValues) {
-    this.myApp.addLoadingMessage()
-    this.deviceInfo = this.myApp.deviceInfo
-    this.regFormData = formValues;
-    this.saveRegForm()
+    this.validateAllFormFields(this.contactGroup);
+    if (!this.regForm.valid) {
+      this.myApp.onPresentToast('Application form contains error', true, false, 'error', 'top', true);
+    } else {
+      this.myApp.addLoadingMessage();
+      this.deviceInfo = this.myApp.deviceInfo;
+      this.regFormData = formValues;
+      this.saveRegForm();
+    }
   }
 
   saveRegForm() {
@@ -433,13 +454,10 @@ export class RegFormPage {
           this.hideForm = true
         }
         this.myApp.removeMessage()
-      },
-      error => {
+      }).catch((error) => {
+        error = typeof error === "undefined" ? 'Server issue while posting your info.' : error;
+        this.myApp.onPresentToast(error, false, false, 'error', 'top', true);
         this.myApp.removeMessage()
-        this.myApp.onPresentToast(error)
-      }).catch(exception => {
-        this.myApp.removeMessage()
-        this.myApp.onPresentToast(exception.message)
       });
   }
 
@@ -460,6 +478,41 @@ export class RegFormPage {
       });
     }
   }
+
+
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({ onlySelf: true });
+        let shadesEl = document.querySelector('[formControlName="' + field + '"]').parentElement.parentElement.parentElement;
+        if (control.errors != null) {
+          shadesEl.classList.remove('ng-untouched');
+          shadesEl.classList.add('ng-invalid', 'ng-touched', 'ng-dirty');
+        } else {
+          shadesEl.classList.remove('ng-dirty', 'ng-invalid');
+        }
+      } else if (control instanceof FormGroup) {
+        this.validateAllFormFields(control);
+      }
+    });
+  }
+
+  ctrlValid(formGroup: FormGroup, ctrl: string) {
+    let shadesEl = document.querySelector('[formControlName="' + ctrl + '"]').parentElement.parentElement.parentElement;
+    const control = formGroup.get(ctrl);
+    if (control.errors != null) {
+      shadesEl.classList.remove('ng-untouched');
+      shadesEl.classList.add('ng-invalid', 'ng-touched', 'ng-dirty');
+    } else {
+      shadesEl.classList.remove('ng-dirty', 'ng-invalid');
+    }
+  }
+
+  ctlIsValid() {
+    
+  }
+
 }
 
 interface optionsInterface {
@@ -484,4 +537,8 @@ interface schoolInterface {
 interface serverResponse {
   status?: Boolean,
   message?: any
+}
+
+interface formInterface {
+  classesID?: string
 }

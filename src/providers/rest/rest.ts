@@ -4,8 +4,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 @Injectable()
 export class RestProvider {
 
-  apiUrl: string = "http://synced.intellibiz.in/api/schools";
-  //apiUrl: string = "http://localhost/synced/api/schools";
+  //apiUrl: string = "http://synced.intellibiz.in/api/schools";
+  apiUrl: string = "http://localhost/synced/api/schools";
   private _trackData: trackData = {}
 
   constructor(private http: HttpClient) {
@@ -66,7 +66,7 @@ export class RestProvider {
     return new Promise((resolve, reject) => {
       this.http.post(this.apiUrl + '/admissions', targetData,
         {
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-API-KEY':'synced-9908313427' }
+          headers: { 'Content-Type': 'application/json', 'X-API-KEY':'synced-9908313427' }
         }).subscribe(res => {
           resolve(res)
         }, (err: HttpErrorResponse) => {
@@ -82,7 +82,7 @@ export class RestProvider {
     });
   }
 
-  trackApplication(trackData: any) {
+  trackApplication(siteID: number, trackData: any) {
     let newAPI = this.apiUrl;
     this._trackData = trackData;
 
@@ -97,6 +97,8 @@ export class RestProvider {
         newAPI = this.apiUrl + '/trackApplication?admissionNo=' + this._trackData.admissionNo;
       }
     }
+    
+    newAPI = newAPI + '&siteID=' + siteID;
     console.log('Loading track information from server: ' + newAPI);
     
     return new Promise((resolve, reject) => {

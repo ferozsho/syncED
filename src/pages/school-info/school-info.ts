@@ -20,7 +20,7 @@ export class SchoolInfoPage {
       this.localStorageSetData();
     }
     if (this.siteInfo === null) {
-      this.myApp.onPresentToast('Sorry! We unable to get school information from server.')
+      this.myApp.onPresentToast('Sorry! We unable to get school information from server.', false, false, 'error', 'top', true);
       this.navCtrl.push('SchoolListPage');
       this.navCtrl.popToRoot();
     }

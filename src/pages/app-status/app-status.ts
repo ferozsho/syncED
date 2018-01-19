@@ -63,7 +63,7 @@ export class AppStatusPage {
 
   onSearchSubmit() {
     if (this.findout_fill_group.valid) {
-      this.resProvider.trackApplication(this.findout_fill_group.value)
+      this.resProvider.trackApplication(this.siteData.siteID, this.findout_fill_group.value)
         .then(resData => {
           this.serverRes = resData;
           if (typeof this.serverRes.status == "undefined") {
