@@ -71,10 +71,11 @@ Misc:
 
 ```
 $ cordova plugin update
+cordova-custom-config 5.0.2 "cordova-custom-config"
 cordova-plugin-device 1.1.7 "Device"
 cordova-plugin-fullscreen 1.1.0 "cordova-plugin-fullscreen"
 cordova-plugin-ionic-webview 1.1.16 "cordova-plugin-ionic-webview"
-cordova-plugin-splashscreen 4.1.0 "Splashscreen"
+cordova-plugin-splashscreen 5.0.2-dev "Splashscreen"
 cordova-plugin-statusbar 2.4.1 "StatusBar"
 cordova-plugin-whitelist 1.3.3 "Whitelist"
 ionic-plugin-keyboard 2.2.1 "Keyboard"
