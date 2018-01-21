@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { StatusBar } from '@ionic-native/status-bar';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RestProvider } from './../../providers/rest/rest';
 import { MyApp } from './../../app/app.component';
@@ -14,9 +15,10 @@ export class SchoolListPage {
   schList: any;
   schListTemp: any;
   schOptions: any;
+  hasFilters: boolean = false;
+  public schoolBoard: string = 'all';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public myApp: MyApp, public resProvider: RestProvider, public storage: Storage) {
-    //his.barColor = platform.is('android') ? 'primary' : 'light';
+  constructor(public navCtrl: NavController, public navParams: NavParams, public myApp: MyApp, public resProvider: RestProvider, public storage: Storage, private statusBar: StatusBar) {
     this.refreshPage(0);
   }
 
@@ -122,4 +124,16 @@ export class SchoolListPage {
       });
   }
 
+  openFilters(myFilter) {
+    console.log(myFilter)
+    if (myFilter) {
+      this.schListTemp = this.schList;
+      this.hasFilters = false;
+      this.statusBar.backgroundColorByHexString('#3487b8');
+    } else {
+      //show  
+      this.hasFilters = true;
+      this.statusBar.backgroundColorByHexString('#F55F5F');
+    }
+  }
 }

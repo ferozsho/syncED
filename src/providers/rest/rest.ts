@@ -4,8 +4,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 @Injectable()
 export class RestProvider {
 
-  //apiUrl: string = "http://synced.intellibiz.in/api/schools";
-  apiUrl: string = "http://localhost/synced/api/schools";
+  apiUrl: string = "http://synced.intellibiz.in/api/schools";
+  //apiUrl: string = "http://localhost/synced/api/schools";
   private _trackData: trackData = {}
 
   constructor(private http: HttpClient) {

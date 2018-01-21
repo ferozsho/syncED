@@ -27,7 +27,7 @@
 
           <ion-item>
             <ion-label stacked>Name of the Applicant </ion-label>
-            <ion-input type="text" [(ngModel)]="applicantName" formControlName="applicantName" autocapitalize="sentences"></ion-input>
+            <ion-input type="text" [(ngModel)]="studentInfo.applicantName" formControlName="applicantName" autocapitalize="sentences"></ion-input>
             <ion-icon name="help-circle" class="helpcircle" item-right tooltip="As in (date of birth) certificate" positionH="left" arrow></ion-icon>
           </ion-item>
 
@@ -39,7 +39,7 @@
 
           <ion-item>
             <ion-label stacked>Aadhaar Number </ion-label>
-            <ion-input type="tel" pattern="\\d*" [(ngModel)]="aadhaarNo" formControlName="aadhaarNo" placeholder="ex: UID (333344445555)" max="12" [attr.maxlength]="12"></ion-input>
+            <ion-input type="tel" pattern="\\d*" [(ngModel)]="studentInfo.aadhaarNo" formControlName="aadhaarNo" placeholder="ex: UID (333344445555)" max="12" [attr.maxlength]="12" ></ion-input>
           </ion-item>
           <ng-container *ngFor="let validation of validationMessage.aadhaarNo">
             <div class="error" *ngIf="regForm.get('applicantGroup').get('aadhaarNo').hasError(validation.type) && (regForm.get('applicantGroup').get('aadhaarNo').dirty || regForm.get('applicantGroup').get('aadhaarNo').touched)">
@@ -49,7 +49,7 @@
 
           <ion-item>
             <ion-label stacked>Date of Birth</ion-label>
-            <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="dob" formControlName="dob"></ion-datetime>
+            <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="studentInfo.dob" formControlName="dob"></ion-datetime>
           </ion-item>
 
           <ion-grid no-padding>
@@ -57,7 +57,7 @@
               <ion-col col-5>
                   <ion-item>
                     <ion-label stacked>Gender</ion-label>
-                    <ion-select [(ngModel)]="sex" formControlName="sex">
+                    <ion-select [(ngModel)]="studentInfo.sex" formControlName="sex">
                       <ion-option value="Female">Female</ion-option>
                       <ion-option value="Male">Male</ion-option>
                     </ion-select>
@@ -66,7 +66,7 @@
               <ion-col col-6 offset-1>
                   <ion-item [class.ng-invalid]="!regForm.get('applicantGroup').get('classesID').valid">
                     <ion-label stacked>Class applied for </ion-label>
-                    <ion-select [(ngModel)]="classesID" formControlName="classesID" (ionChange)="ctrlValid(regForm.get('applicantGroup'),'classesID')">
+                    <ion-select [(ngModel)]="studentInfo.classesID" formControlName="classesID" (ionChange)="ctrlIsValid(regForm.get('applicantGroup'),'classesID')">
                       <ion-option *ngFor="let classOption of classOptionsFormatted" [value]="classOption.abbr">{{ classOption.name }}</ion-option>
                     </ion-select>
                   </ion-item>
@@ -79,7 +79,7 @@
               <ion-col col-5>
                 <ion-item [class.ng-invalid]="!regForm.get('applicantGroup').get('caste').valid">
                   <ion-label stacked>Caste </ion-label>
-                  <ion-select [(ngModel)]="caste" formControlName="caste" (ionChange)="ctrlValid(regForm.get('applicantGroup'),'caste')">
+                  <ion-select [(ngModel)]="studentInfo.caste" formControlName="caste" (ionChange)="ctrlIsValid(regForm.get('applicantGroup'),'caste')">
                     <ion-option *ngFor="let casteOption of casteOptionsFormatted" [value]="casteOption.abbr">{{ casteOption.name }}</ion-option>
                   </ion-select>
                 </ion-item>
@@ -87,7 +87,7 @@
               <ion-col col-6 offset-1>
                 <ion-item [class.ng-invalid]="!regForm.get('applicantGroup').get('religion').valid">
                   <ion-label stacked>Religion </ion-label>
-                  <ion-select [(ngModel)]="religion" formControlName="religion" (ionChange)="ctrlValid(regForm.get('applicantGroup'),'religion')">
+                  <ion-select [(ngModel)]="studentInfo.religion" formControlName="religion" (ionChange)="ctrlIsValid(regForm.get('applicantGroup'),'religion')">
                     <ion-option *ngFor="let religionOption of religionOptionsFormatted" [value]="religionOption.abbr">{{ religionOption.name }}</ion-option>
                   </ion-select>
                 </ion-item>
@@ -100,7 +100,7 @@
               <ion-col col-5>
                 <ion-item [class.ng-invalid]="!regForm.get('applicantGroup').get('mother_tongue').valid">
                   <ion-label stacked>Mother Tongue </ion-label>
-                  <ion-select [(ngModel)]="mother_tongue" formControlName="mother_tongue" (ionChange)="ctrlValid(regForm.get('applicantGroup'),'mother_tongue')">
+                  <ion-select [(ngModel)]="studentInfo.mother_tongue" formControlName="mother_tongue" (ionChange)="ctrlIsValid(regForm.get('applicantGroup'),'mother_tongue')">
                     <ion-option *ngFor="let mtOption of mtOptionsFormatted" [value]="mtOption.abbr">{{ mtOption.name }}</ion-option>
                   </ion-select>
                 </ion-item>
@@ -108,7 +108,7 @@
               <ion-col col-6 offset-1>
                 <ion-item>
                   <ion-label stacked>Blood Group </ion-label>
-                  <ion-select [(ngModel)]="bloodgroup" formControlName="bloodgroup">
+                  <ion-select [(ngModel)]="studentInfo.bloodgroup" formControlName="bloodgroup">
                     <ion-option *ngFor="let bgOption of bgOptionsFormatted" [value]="bgOption.abbr">{{ bgOption.name }}</ion-option>
                   </ion-select>
                 </ion-item>
@@ -119,7 +119,7 @@
 
           <ion-item>
             <ion-label stacked>Nationality </ion-label>
-            <ion-input type="text" [(ngModel)]="nationality" formControlName="nationality" clearInput></ion-input>
+            <ion-input type="text" [(ngModel)]="studentInfo.nationality" formControlName="nationality" clearInput></ion-input>
           </ion-item>
           <ng-container *ngFor="let validation of validationMessage.nationality">
             <div class="error" *ngIf="regForm.get('applicantGroup').get('nationality').hasError(validation.type) && (regForm.get('applicantGroup').get('nationality').dirty || regForm.get('applicantGroup').get('nationality').touched)">
@@ -129,11 +129,11 @@
 
           <ion-item>
             <ion-label floating>Identification Marks 1. </ion-label>
-            <ion-input type="text" [(ngModel)]="id_marks_one" formControlName="id_marks_one" clearInput></ion-input>
+            <ion-input type="text" [(ngModel)]="studentInfo.id_marks_one" formControlName="id_marks_one" clearInput></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>Identification Marks 2. </ion-label>
-            <ion-input type="text" [(ngModel)]="id_marks_two" formControlName="id_marks_two" clearInput></ion-input>
+            <ion-input type="text" [(ngModel)]="studentInfo.id_marks_two" formControlName="id_marks_two" clearInput></ion-input>
           </ion-item>
           
           <ion-grid>
@@ -150,7 +150,7 @@
 
           <ion-item>
             <ion-label stacked>Name </ion-label>
-            <ion-input type="text" [(ngModel)]="father_name" formControlName="father_name" autocapitalize="sentences" placeholder="Father's or guardian name"></ion-input>
+            <ion-input type="text" [(ngModel)]="studentInfo.father_name" formControlName="father_name" autocapitalize="sentences" placeholder="Father's or guardian name"></ion-input>
           </ion-item>
           <ng-container *ngFor="let validation of validationFatherMessage.father_name">
             <div class="error" *ngIf="regForm.get('fatherGroup').get('father_name').hasError(validation.type) && (regForm.get('fatherGroup').get('father_name').dirty || regForm.get('fatherGroup').get('father_name').touched)">
@@ -160,7 +160,7 @@
 
           <ion-item>
             <ion-label stacked>Qualification </ion-label>
-            <ion-input type="text" [(ngModel)]="father_qualification" formControlName="father_qualification" autocapitalize="sentences"></ion-input>
+            <ion-input type="text" [(ngModel)]="studentInfo.father_qualification" formControlName="father_qualification" autocapitalize="sentences"></ion-input>
           </ion-item>
           <ng-container *ngFor="let validation of validationFatherMessage.father_qualification">
             <div class="error" *ngIf="regForm.get('fatherGroup').get('father_qualification').hasError(validation.type) && (regForm.get('fatherGroup').get('father_qualification').dirty || regForm.get('fatherGroup').get('father_qualification').touched)">
@@ -170,7 +170,7 @@
 
           <ion-item>
             <ion-label stacked>Profession / Occupation </ion-label>
-            <ion-input type="text" [(ngModel)]="father_profession" formControlName="father_profession" spellcheck="false" autocapitalize="off"></ion-input>
+            <ion-input type="text" [(ngModel)]="studentInfo.father_profession" formControlName="father_profession" spellcheck="false" autocapitalize="off"></ion-input>
           </ion-item>
           <ng-container *ngFor="let validation of validationFatherMessage.father_profession">
             <div class="error" *ngIf="regForm.get('fatherGroup').get('father_profession').hasError(validation.type) && (regForm.get('fatherGroup').get('father_profession').dirty || regForm.get('fatherGroup').get('father_profession').touched)">
@@ -180,7 +180,7 @@
 
           <ion-item>
             <ion-label stacked>Mobile</ion-label>
-            <ion-input type="number" [(ngModel)]="father_phone" formControlName="father_phone" pattern="\\d*" placeholder="9908xxxxxx"></ion-input>
+            <ion-input type="number" [(ngModel)]="studentInfo.father_phone" formControlName="father_phone" pattern="\\d*" placeholder="9908xxxxxx"></ion-input>
           </ion-item>
           <ng-container *ngFor="let validation of validationFatherMessage.father_phone">
             <div class="error" *ngIf="regForm.get('fatherGroup').get('father_phone').hasError(validation.type) && (regForm.get('fatherGroup').get('father_phone').dirty || regForm.get('fatherGroup').get('father_phone').touched)">
@@ -190,7 +190,7 @@
 
           <ion-item>
             <ion-label stacked>Email</ion-label>
-            <ion-input type="text" [(ngModel)]="father_email" formControlName="father_email" placeholder="yourname@domain.com"></ion-input>
+            <ion-input type="text" [(ngModel)]="studentInfo.father_email" formControlName="father_email" placeholder="yourname@domain.com"></ion-input>
           </ion-item>
           <ng-container *ngFor="let validation of validationFatherMessage.father_email">
             <div class="error" *ngIf="regForm.get('fatherGroup').get('father_email').hasError(validation.type) && (regForm.get('fatherGroup').get('father_email').dirty || regForm.get('fatherGroup').get('father_email').touched)">
@@ -200,7 +200,7 @@
 
           <ion-item>
             <ion-label stacked>Monthly Income</ion-label>
-            <ion-input type="number" [(ngModel)]="monthly_income" formControlName="monthly_income" pattern="\\d*"></ion-input>
+            <ion-input type="number" [(ngModel)]="studentInfo.monthly_income" formControlName="monthly_income" pattern="\\d*"></ion-input>
           </ion-item>
           <ng-container *ngFor="let validation of validationFatherMessage.monthly_income">
             <div class="error" *ngIf="regForm.get('fatherGroup').get('monthly_income').hasError(validation.type) && (regForm.get('fatherGroup').get('monthly_income').dirty || regForm.get('fatherGroup').get('monthly_income').touched)">
@@ -225,7 +225,7 @@
 
           <ion-item>
             <ion-label stacked>Name </ion-label>
-            <ion-input type="text" [(ngModel)]="mother_name" formControlName="mother_name" autocapitalize="sentences"></ion-input>
+            <ion-input type="text" [(ngModel)]="studentInfo.mother_name" formControlName="mother_name" autocapitalize="sentences"></ion-input>
           </ion-item>
           <ng-container *ngFor="let validation of validationMotherMessage.mother_name">
             <div class="error" *ngIf="regForm.get('motherGroup').get('mother_name').hasError(validation.type) && (regForm.get('motherGroup').get('mother_name').dirty || regForm.get('motherGroup').get('mother_name').touched)">
@@ -235,7 +235,7 @@
 
           <ion-item>
             <ion-label stacked>Qualification </ion-label>
-            <ion-input type="text" [(ngModel)]="mother_qualification" formControlName="mother_qualification" autocapitalize="sentences"></ion-input>
+            <ion-input type="text" [(ngModel)]="studentInfo.mother_qualification" formControlName="mother_qualification" autocapitalize="sentences"></ion-input>
           </ion-item>
           <ng-container *ngFor="let validation of validationMotherMessage.mother_qualification">
             <div class="error" *ngIf="regForm.get('motherGroup').get('mother_qualification').hasError(validation.type) && (regForm.get('motherGroup').get('mother_qualification').dirty || regForm.get('motherGroup').get('mother_qualification').touched)">
@@ -245,7 +245,7 @@
 
           <ion-item>
             <ion-label stacked>Profession / Occupation </ion-label>
-            <ion-input type="text" [(ngModel)]="mother_profession" formControlName="mother_profession" spellcheck="false" autocapitalize="off"></ion-input>
+            <ion-input type="text" [(ngModel)]="studentInfo.mother_profession" formControlName="mother_profession" spellcheck="false" autocapitalize="off"></ion-input>
           </ion-item>
           <ng-container *ngFor="let validation of validationMotherMessage.mother_profession">
             <div class="error" *ngIf="regForm.get('motherGroup').get('mother_profession').hasError(validation.type) && (regForm.get('motherGroup').get('mother_profession').dirty || regForm.get('motherGroup').get('mother_profession').touched)">
@@ -255,7 +255,7 @@
 
           <ion-item>
             <ion-label stacked>Mobile </ion-label>
-            <ion-input type="number" [(ngModel)]="mother_phone" formControlName="mother_phone" pattern="\\d*" placeholder="9908xxxxxx"></ion-input>
+            <ion-input type="number" [(ngModel)]="studentInfo.mother_phone" formControlName="mother_phone" pattern="\\d*" placeholder="9908xxxxxx"></ion-input>
           </ion-item>
           <ng-container *ngFor="let validation of validationMotherMessage.mother_phone">
             <div class="error" *ngIf="regForm.get('motherGroup').get('mother_phone').hasError(validation.type) && (regForm.get('motherGroup').get('mother_phone').dirty || regForm.get('motherGroup').get('mother_phone').touched)">
@@ -265,7 +265,7 @@
 
           <ion-item>
             <ion-label stacked>Email </ion-label>
-            <ion-input type="text" [(ngModel)]="mother_email" formControlName="mother_email" placeholder="yourname@domain.com"></ion-input>
+            <ion-input type="text" [(ngModel)]="studentInfo.mother_email" formControlName="mother_email" placeholder="yourname@domain.com"></ion-input>
           </ion-item>
           <ng-container *ngFor="let validation of validationMotherMessage.mother_email">
             <div class="error" *ngIf="regForm.get('motherGroup').get('mother_email').hasError(validation.type) && (regForm.get('motherGroup').get('mother_email').dirty || regForm.get('motherGroup').get('mother_email').touched)">
@@ -290,7 +290,7 @@
 
           <ion-item>
             <ion-label stacked>Email </ion-label>
-            <ion-input type="text" [(ngModel)]="email" formControlName="email" placeholder="yourname@domain.com"></ion-input>
+            <ion-input type="text" [(ngModel)]="studentInfo.email" formControlName="email" placeholder="yourname@domain.com"></ion-input>
           </ion-item>
           <ng-container *ngFor="let validation of validationContactMessage.email">
             <div class="error" *ngIf="regForm.get('contactGroup').get('email').hasError(validation.type) && (regForm.get('contactGroup').get('email').dirty || regForm.get('contactGroup').get('email').touched)">
@@ -300,7 +300,7 @@
 
           <ion-item>
             <ion-label stacked>Contact Number </ion-label>
-            <ion-input type="number" [(ngModel)]="phone" formControlName="phone" pattern="\\d*" placeholder="9908xxxxxx"></ion-input>
+            <ion-input type="number" [(ngModel)]="studentInfo.phone" formControlName="phone" pattern="\\d*" placeholder="9908xxxxxx"></ion-input>
           </ion-item>
           <ng-container *ngFor="let validation of validationContactMessage.phone">
             <div class="error" *ngIf="regForm.get('contactGroup').get('phone').hasError(validation.type) && (regForm.get('contactGroup').get('phone').dirty || regForm.get('contactGroup').get('phone').touched)">
@@ -310,7 +310,7 @@
 
           <ion-item>
             <ion-label stacked>Address </ion-label>
-            <ion-input type="text" [(ngModel)]="address" formControlName="address" placeholder="Street Address, Apt., Suite, Bldg."></ion-input>
+            <ion-input type="text" [(ngModel)]="studentInfo.address" formControlName="address" placeholder="Street Address, Apt., Suite, Bldg."></ion-input>
           </ion-item>
           <ng-container *ngFor="let validation of validationContactMessage.address">
             <div class="error" *ngIf="regForm.get('contactGroup').get('address').hasError(validation.type) && (regForm.get('contactGroup').get('address').dirty || regForm.get('contactGroup').get('address').touched)">
@@ -320,10 +320,10 @@
 
           <ion-grid no-padding>
             <ion-row>
-              <ion-col col-6>
+              <ion-col col-5>
                 <ion-item>
                   <ion-label stacked>City </ion-label>
-                  <ion-input type="text" [(ngModel)]="city" formControlName="city" placeholder="Town/City"></ion-input>
+                  <ion-input type="text" [(ngModel)]="studentInfo.city" formControlName="city" placeholder="Town/City"></ion-input>
                 </ion-item>
                 <ng-container *ngFor="let validation of validationContactMessage.city">
                   <div class="error" *ngIf="regForm.get('contactGroup').get('city').hasError(validation.type) && (regForm.get('contactGroup').get('city').dirty || regForm.get('contactGroup').get('city').touched)">
@@ -331,10 +331,10 @@
                   </div>
                 </ng-container>
               </ion-col>
-              <ion-col col-6>
+              <ion-col col-6 offset-1>
                 <ion-item>
                   <ion-label stacked>Pincode </ion-label>
-                  <ion-input type="tel" pattern="\\d*" [(ngModel)]="pincode" formControlName="pincode" placeholder="ex: (500028)" max="10"
+                  <ion-input type="tel" pattern="\\d*" [(ngModel)]="studentInfo.pincode" formControlName="pincode" placeholder="ex: (500028)" max="10"
                     [attr.maxlength]="10"></ion-input>
                 </ion-item>
                 <ng-container *ngFor="let validation of validationMessage.pincode">
@@ -348,7 +348,7 @@
 
           <ion-item [class.ng-invalid]="!regForm.get('contactGroup').get('country').valid">
             <ion-label stacked>Country </ion-label>
-            <ion-select [(ngModel)]="country" formControlName="country" (ionChange)="ctrlValid(regForm.get('contactGroup'),'country')">
+            <ion-select [(ngModel)]="studentInfo.country" formControlName="country" (ionChange)="ctrlIsValid(regForm.get('contactGroup'),'country')">
               <ion-option *ngFor="let countryOption of countryOptionsFormatted" [value]="countryOption.abbr">{{ countryOption.name }}</ion-option>
             </ion-select>
           </ion-item>

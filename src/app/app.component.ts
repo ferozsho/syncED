@@ -15,27 +15,23 @@ export class MyApp {
   loader: any;
   public deviceInfo: deviceInterface = {};
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public androidFullScreen: AndroidFullScreen, public loading: LoadingController, public toastCtrl: ToastController, public device: Device ) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public androidFullScreen: AndroidFullScreen, public loading: LoadingController, public toastCtrl: ToastController, public device: Device) {
     console.log('Starting SyncEd Application');
+    this.androidFullScreen.isSupported()
+      .then(() => { this.androidFullScreen.showSystemUI()})
+      .catch((error: any) => console.error(error));
+
     this.setDefaultDeviceInfo();
-    if (this.platform.is('cordova') && this.platform.is('android')){
-      this.androidFullScreen.isSupported()
-        .then(() => {
-          this.androidFullScreen.showSystemUI();
-        })
-        .catch((error: any) => console.log(error));    
-    }
-    //this.androidFullScreen.isSupported().then(() => this.androidFullScreen.showSystemUI());
-    if (this.platform.is('cordova')) {
-      this.initializeApp();
-    }  
+    this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleLightContent();
-      this.getDeviceInfo();
-      this.hideSplashScreen();
+      if (this.platform.is('cordova') && this.platform.is('android')) {
+        this.statusBar.styleLightContent();
+        this.getDeviceInfo();
+        this.hideSplashScreen();
+      }
     });
   }
 
@@ -43,15 +39,15 @@ export class MyApp {
     this.deviceInfo.id = 'local';
     this.deviceInfo.platform = 'Browser';
   }
-  
+
   hideSplashScreen() {
     if (this.splashScreen) {
       setTimeout(() => {
         this.splashScreen.hide();
-      }, 100);
+      }, 500);
     }
   }
-  
+
   public addLoadingMessage() {
     this.loader = this.loading.create({
       content: 'Please Wait...',
@@ -67,10 +63,10 @@ export class MyApp {
     }
   }
 
-
   public onPresentToast(msgString: any, timeOut: boolean = false, isDismiss: boolean = true, clsName: string = 'error', position: string = 'bottom', showClosedBtn: boolean = false, timetostay: number = 3000) {
+
     let toast = null;
-    if (timeOut){
+    if (timeOut) {
       toast = this.toastCtrl.create({
         message: msgString,
         showCloseButton: showClosedBtn,
@@ -89,7 +85,7 @@ export class MyApp {
         closeButtonText: 'Ok',
         position: position
       });
-    }  
+    }
     toast.onDidDismiss(() => {
       console.log("Toast Dismiss!!!");
     });
@@ -100,12 +96,10 @@ export class MyApp {
     try {
       this.deviceInfo.id = this.device.uuid;
       this.deviceInfo.model = this.device.model;
-      this.deviceInfo.cordova = this.device.cordova;
       this.deviceInfo.platform = this.device.platform;
       this.deviceInfo.version = this.device.version;
       this.deviceInfo.manufacturer = this.device.manufacturer;
       this.deviceInfo.serial = this.device.serial;
-      this.deviceInfo.isVirtual = this.device.isVirtual;
     } catch (error) {
       console.error(error);
     }
@@ -116,10 +110,8 @@ export class MyApp {
 interface deviceInterface {
   id?: string,
   model?: string,
-  cordova?: string,
   platform?: string,
   version?: string,
   manufacturer?: string,
   serial?: string,
-  isVirtual?: boolean,
 }

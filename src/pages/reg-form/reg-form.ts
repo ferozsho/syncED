@@ -4,6 +4,7 @@ import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms'
 import { MyApp } from './../../app/app.component';
 import { ValidatorProvider } from './../../providers/validator/validator';
 import { RestProvider } from '../../providers/rest/rest';
+import { StudentInfo } from '../../models/student-info';
 
 @IonicPage()
 @Component({
@@ -13,66 +14,38 @@ import { RestProvider } from '../../providers/rest/rest';
 
 export class RegFormPage {
 
+  studentInfo = {} as StudentInfo;
+  
   public siteData: schoolInterface = {}
-  private siteOptions: optionsInterface = {}
   public serverRes: serverResponse = {}
   public hideForm: boolean = false;
-
+  private siteOptions: optionsInterface = {}
+  
   inputsInvalid: formInterface = {};
-  regFormData: any
-  validationMessage: any
-  validationFatherMessage: any
-  validationMotherMessage: any
-  validationContactMessage: any
-  ApplicationForm: string
-  deviceInfo: any
+  regFormData: any;
+  validationMessage: any;
+  validationFatherMessage: any;
+  validationMotherMessage: any;
+  validationContactMessage: any;
+  ApplicationForm: string;
+  deviceInfo: any;
+  
+  regForm: FormGroup;
+  applicantGroup: FormGroup;
+  fatherGroup: FormGroup;
+  motherGroup: FormGroup;
+  contactGroup: FormGroup;
 
-  regForm: FormGroup
-  applicantGroup: FormGroup
-  fatherGroup: FormGroup
-  motherGroup: FormGroup
-  contactGroup: FormGroup
+  btnFather: boolean = true;
+  btnMother: boolean = true;
+  btnContact: boolean = true;
 
-  btnFather: boolean = true
-  btnMother: boolean = true
-  btnContact: boolean = true
-
-  applicantName: string
-  sex: string
-  dob: string
-  aadhaarNo: string
-  classesID: string
-  caste: string
-  religion: string
-  mother_tongue: string
-  nationality: string
-  bloodgroup: string
-  id_marks_one: string
-  id_marks_two: string
-  father_name: string
-  father_qualification: string
-  father_profession: string
-  father_phone: number
-  father_email: string
-  monthly_income: number
-  mother_name: string
-  mother_qualification: string
-  mother_profession: string
-  mother_phone: number
-  mother_email: string
-  email: string
-  address: string
-  city: string
-  pincode: number
-  country: string
-  phone: number
-
-  classOptionsFormatted: Array<Object> = [];
-  casteOptionsFormatted: Array<Object> = [];
-  religionOptionsFormatted: Array<Object> = [];
-  mtOptionsFormatted: Array<Object> = [];
-  bgOptionsFormatted: Array<Object> = [];
-  countryOptionsFormatted: Array<Object> = [];
+  classOptionsFormatted: Array<classOptionsFormatted> = [];
+  casteOptionsFormatted: Array<casteOptionsFormatted> = [];
+  religionOptionsFormatted: Array<religionOptionsFormatted> = [];
+  mtOptionsFormatted: Array<mtOptionsFormatted> = [];
+  bgOptionsFormatted: Array<bgOptionsFormatted> = [];
+  countryOptionsFormatted: Array<countryOptionsFormatted> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public myApp: MyApp, public formBuilder: FormBuilder,
     public formValidator: ValidatorProvider, public resProvider: RestProvider, public alertCtrl: AlertController) {
@@ -217,38 +190,38 @@ export class RegFormPage {
     this.validationMotherMessage = this.formValidator.regFormMotherMessages;
     this.validationContactMessage = this.formValidator.regFormContactMessages;
 
-    this.dob = new Date().toISOString();
-    this.sex = 'Female';
-    this.applicantName = 'Sofiya Shaik';
-    this.aadhaarNo = '333344445555';
-    this.classesID = '13';
-    this.caste = 'OC';
-    this.religion = 'Islam';
-    this.mother_tongue = 'Urdu';
-    this.nationality = 'Indian';
-    this.bloodgroup = 'A+';
-    this.id_marks_one = '';
-    this.id_marks_two = '';
+    this.studentInfo.dob = new Date().toISOString();
+    this.studentInfo.sex = 'Female';
+    this.studentInfo.applicantName = 'Sofiya Shaik';
+    this.studentInfo.aadhaarNo = '333344445555';
+    this.studentInfo.classesID = '13';
+    this.studentInfo.caste = 'OC';
+    this.studentInfo.religion = 'Islam';
+    this.studentInfo.mother_tongue = 'Urdu';
+    this.studentInfo.nationality = 'Indian';
+    this.studentInfo.bloodgroup = 'A+';
+    this.studentInfo.id_marks_one = '';
+    this.studentInfo.id_marks_two = '';
 
-    this.father_name = 'Feroz Shaik';
-    this.father_qualification = 'BSc';
-    this.father_profession = 'IT';
-    this.monthly_income = 5000;
-    this.father_phone = null;
-    this.father_email = '';
+    this.studentInfo.father_name = 'Feroz Shaik';
+    this.studentInfo.father_qualification = 'BSc';
+    this.studentInfo.father_profession = 'IT';
+    this.studentInfo.monthly_income = 5000;
+    this.studentInfo.father_phone = null;
+    this.studentInfo.father_email = '';
 
-    this.mother_name = 'Asiya Nazima';
-    this.mother_qualification = 'M.A';
-    this.mother_profession = 'HMaker';
-    this.mother_phone = null;
-    this.mother_email = '';
+    this.studentInfo.mother_name = 'Asiya Nazima';
+    this.studentInfo.mother_qualification = 'M.A';
+    this.studentInfo.mother_profession = 'HMaker';
+    this.studentInfo.mother_phone = null;
+    this.studentInfo.mother_email = '';
 
-    this.email = 'feroz.shaik@3pillarstc.com';
-    this.address = '391-54/18, SN -2';
-    this.city = 'Hyderabad';
-    this.pincode = 500034;
-    this.country = 'IN';
-    this.phone = 9908313427;
+    this.studentInfo.email = 'feroz.shaik@3pillarstc.com';
+    this.studentInfo.address = '391-54/18, SN -2';
+    this.studentInfo.city = 'Hyderabad';
+    this.studentInfo.pincode = 500034;
+    this.studentInfo.country = 'IN';
+    this.studentInfo.phone = 9908313427;
 
     console.log('Loading default data...')
     
@@ -394,22 +367,22 @@ export class RegFormPage {
     }
     if (pageName === 'contact') {
       //check Phone field
-      if (this.phone == null) {
-        if (this.father_phone !== null && this.father_phone.toString() !== "") {
-          this.phone = this.father_phone;
+      if (this.studentInfo.phone == null) {
+        if (this.studentInfo.father_phone !== null && this.studentInfo.father_phone.toString() !== "") {
+          this.studentInfo.phone = this.studentInfo.father_phone;
         } else {
-          if (this.mother_phone !== null && this.mother_phone.toString() !== "") {
-            this.phone = this.mother_phone;
+          if (this.studentInfo.mother_phone !== null && this.studentInfo.mother_phone.toString() !== "") {
+            this.studentInfo.phone = this.studentInfo.mother_phone;
           }
         }
       }
       //check Email field
-      if (this.email.toString() === "") {
-        if (this.father_email !== null && this.father_email.toString() !== "") {
-          this.email = this.father_email;
+      if (this.studentInfo.email.toString() === "") {
+        if (this.studentInfo.father_email !== null && this.studentInfo.father_email.toString() !== "") {
+          this.studentInfo.email = this.studentInfo.father_email;
         } else {
-          if (this.mother_email !== null && this.mother_email.toString() !== "") {
-            this.email = this.mother_email;
+          if (this.studentInfo.mother_email !== null && this.studentInfo.mother_email.toString() !== "") {
+            this.studentInfo.email = this.studentInfo.mother_email;
           }
         }
       }
@@ -429,6 +402,7 @@ export class RegFormPage {
     this.validateAllFormFields(this.contactGroup);
     if (!this.regForm.valid) {
       this.myApp.onPresentToast('Application form contains error', true, false, 'error', 'top', true);
+      return false;
     } else {
       this.myApp.addLoadingMessage();
       this.deviceInfo = this.myApp.deviceInfo;
@@ -498,7 +472,7 @@ export class RegFormPage {
     });
   }
 
-  ctrlValid(formGroup: FormGroup, ctrl: string) {
+  ctrlIsValid(formGroup: FormGroup, ctrl: string) {
     let shadesEl = document.querySelector('[formControlName="' + ctrl + '"]').parentElement.parentElement.parentElement;
     const control = formGroup.get(ctrl);
     if (control.errors != null) {
@@ -507,10 +481,6 @@ export class RegFormPage {
     } else {
       shadesEl.classList.remove('ng-dirty', 'ng-invalid');
     }
-  }
-
-  ctlIsValid() {
-    
   }
 
 }
@@ -541,4 +511,34 @@ interface serverResponse {
 
 interface formInterface {
   classesID?: string
+}
+
+interface classOptionsFormatted {
+  abbr?: any,
+  name?: any
+}
+
+interface casteOptionsFormatted {
+  abbr?: any,
+  name?: any
+}
+
+interface religionOptionsFormatted {
+  abbr?: any,
+  name?: any
+}
+
+interface mtOptionsFormatted {
+  abbr?: any,
+  name?: any
+}
+
+interface bgOptionsFormatted {
+  abbr?: any,
+  name?: any
+}
+
+interface countryOptionsFormatted {
+  abbr?: any,
+  name?: any
 }

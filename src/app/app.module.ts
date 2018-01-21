@@ -21,6 +21,7 @@ import { Device } from '@ionic-native/device';
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp, {
+      statusbarPadding: false,
       scrollPadding: false,
       scrollAssist: true,
       autoFocusAssist: false //scroll issue on ios device ref: https://github.com/ionic-team/ionic/issues/6228

@@ -24,18 +24,18 @@ export class SchoolInfoPage {
       this.navCtrl.push('SchoolListPage');
       this.navCtrl.popToRoot();
     }
-    console.log('Enter School Information')
+    console.log('Enter School Information');
   }
 
   localStorageSetData() {
-    this.siteInfo = JSON.parse(localStorage.getItem('schoolInfo'))
+    this.siteInfo = JSON.parse(localStorage.getItem('schoolInfo'));
   }
 
   ionViewDidEnter() {
     try {
       this.myApp.removeMessage()
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 

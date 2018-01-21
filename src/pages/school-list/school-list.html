@@ -1,14 +1,25 @@
 <ion-header>
-  <ion-navbar color="synced" no-border-bottom>
-    <ion-title>Schools</ion-title>
+  <ion-navbar [color]="!hasFilters ? 'synced' : 'danger-light'" no-border no-padding>
+    <ion-toolbar *ngIf="hasFilters" no-border>
+      <ion-searchbar placeholder="Search school" debounce="700" (ionCancel)="onCancel($event)" (ionInput)="filterItems($event)" [animated]="true"></ion-searchbar>
+    </ion-toolbar>
+    <ion-title *ngIf="!hasFilters">Schools</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="refreshPage($event)">
+      <button ion-button icon-only (click)="openFilters(hasFilters)">
+        <ion-icon [name]="hasFilters ? 'close-circle' : 'search'"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="refreshPage($event)" *ngIf="!hasFilters">
         <ion-icon name="refresh"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
-  <ion-toolbar no-border-top color="synced">
-    <ion-searchbar placeholder="Search school" (ionCancel)="onCancel($event)" (ionInput)="filterItems($event)"></ion-searchbar>
+  <ion-toolbar no-padding no-border-top [color]="!hasFilters ? 'synced' : 'danger-light'">
+    <ion-segment [(ngModel)]="schoolBoard" color="light">
+      <ion-segment-button value="all">All</ion-segment-button>
+      <ion-segment-button value="ssc">SSC</ion-segment-button>
+      <ion-segment-button value="cbse">CBSE</ion-segment-button>
+      <ion-segment-button value="icse">ICSE</ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
