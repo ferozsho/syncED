@@ -9,4 +9,31 @@ page-school-list {
       padding-left: 8px;
     }
   }
+
+  div.main {
+    position:absolute;
+    z-index:1;
+    width:100%;
+    top: 0;
+    height: 100%;
+
+    ion-icon {
+      margin-top:20%;
+      font-size:12em;
+    }
+
+    h2 {
+      margin-top:10% !important;
+      font-weight:bold;
+      font-size:1.95em;
+    }
+  
+    p {
+      width:80%;
+      display:block;
+      margin: 0 auto;
+      font-size:1.1em;
+    }
+  }
+ 
 }

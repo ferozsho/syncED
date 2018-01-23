@@ -24,12 +24,94 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item-sliding *ngFor="let item of schListTemp" [attr.track]="item.tracks | lowercase" (click)="openSchoolInfo(item)">
-      <button ion-item detail-push>
-        <h2>{{ item.siteName }}</h2>
-        <p>{{ item.siteAddress }}</p>
-      </button>
-    </ion-item-sliding>
-  </ion-list>
+
+  <div [ngSwitch]="schoolBoard">
+
+    <div *ngSwitchCase="'all'">
+
+      <div class="main" text-center *ngIf="(schListTemp | schoolGroup: '').length >= 1 ? false: true">
+        <ion-icon name="ios-school-outline" color="all" [@flyOut]="'out'"></ion-icon>
+        <div [@flyOut]="'in'">
+          <h2>No Result!</h2>
+          <p>We cannot find the schools for, more coming soon stay tuned!</p>
+        </div>
+      </div>
+      
+      <ion-list *ngIf="(schListTemp | schoolGroup: '').length >= 1 ? true: false">
+        <ion-item-sliding *ngFor="let item of schListTemp | schoolGroup: '';" [attr.track]="item.tracks | lowercase" (click)="openSchoolInfo(item)">
+          <button ion-item detail-push>
+            <h2>{{ item.siteName }}</h2>
+            <p>{{ item.siteAddress }}</p>
+            <ion-note item-right>{{ item.ssc }}</ion-note>
+          </button>
+        </ion-item-sliding>
+      </ion-list>
+    </div>
+
+    <div *ngSwitchCase="'ssc'">
+
+      <div class="main" text-center *ngIf="(schListTemp | schoolGroup: 'ssc').length >= 1 ? false: true">
+        <ion-icon name="ios-school-outline" color="ssc" [@flyOut]="'out'" ></ion-icon>
+        <div [@flyOut]="'in'">
+          <h2>No Result!</h2>
+          <p>We cannot find the schools in <b>SSC</b> category for, more coming soon stay tuned!</p>
+        </div>
+      </div>
+
+      <ion-list *ngIf="(schListTemp | schoolGroup: 'ssc').length >= 1 ? true: false">
+        <ion-item-sliding *ngFor="let item of schListTemp | schoolGroup: 'ssc';" [attr.track]="item.tracks | lowercase" (click)="openSchoolInfo(item)">
+          <button ion-item detail-push>
+            <h2>{{ item.siteName }}</h2>
+            <p>{{ item.siteAddress }}</p>
+          </button>
+        </ion-item-sliding>
+      </ion-list>
+
+    </div>
+
+    <div *ngSwitchCase="'cbse'">
+
+      <div class="main" text-center *ngIf="(schListTemp | schoolGroup: 'cbse').length >= 1 ? false: true">
+        <ion-icon name="ios-school-outline" color="cbse" [@flyOut]="'in'"></ion-icon>
+        <div [@flyOut]="'in'">
+          <h2>No Result!</h2>
+          <p>We cannot find the schools in
+            <b>CBSE</b> category for, more coming soon stay tuned!</p>
+        </div>
+      </div>
+
+      <ion-list *ngIf="(schListTemp | schoolGroup: 'cbse').length >= 1 ? true: false">
+        <ion-item-sliding *ngFor="let item of schListTemp | schoolGroup: 'cbse';" [attr.track]="item.tracks | lowercase" (click)="openSchoolInfo(item)">
+          <button ion-item detail-push>
+            <h2>{{ item.siteName }}</h2>
+            <p>{{ item.siteAddress }}</p>
+          </button>
+        </ion-item-sliding>
+      </ion-list>
+      
+    </div>
+
+    <div *ngSwitchCase="'icse'">
+
+      <div class="main" text-center *ngIf="(schListTemp | schoolGroup: 'icse').length >= 1 ? false: true">
+        <ion-icon name="ios-school-outline" color="icse" [@flyOut]="'in'"></ion-icon>
+        <div [@flyOut]="'in'">
+          <h2>No Result!</h2>
+          <p>We cannot find the schools in
+            <b>ICSE</b> category for, more coming soon stay tuned!</p>
+        </div>
+      </div>
+      
+      <ion-list *ngIf="(schListTemp | schoolGroup: 'icse').length >= 1 ? true: false">
+        <ion-item-sliding *ngFor="let item of schListTemp | schoolGroup: 'icse';" [attr.track]="item.tracks | lowercase" (click)="openSchoolInfo(item)">
+          <button ion-item detail-push>
+            <h2>{{ item.siteName }}</h2>
+            <p>{{ item.siteAddress }}</p>
+          </button>
+        </ion-item-sliding>
+      </ion-list>
+      
+    </div>
+
+  </div>
 </ion-content>

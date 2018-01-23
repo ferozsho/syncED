@@ -20,6 +20,7 @@ import { Device } from '@ionic-native/device';
   imports: [
     BrowserModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     IonicModule.forRoot(MyApp, {
       statusbarPadding: false,
       scrollPadding: false,
@@ -30,7 +31,6 @@ import { Device } from '@ionic-native/device';
       name: 'synced',
       driverOrder: ['indexeddb', 'sqlite', 'websql']
     }),
-    BrowserAnimationsModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

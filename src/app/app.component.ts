@@ -17,10 +17,6 @@ export class MyApp {
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public androidFullScreen: AndroidFullScreen, public loading: LoadingController, public toastCtrl: ToastController, public device: Device) {
     console.log('Starting SyncEd Application');
-    this.androidFullScreen.isSupported()
-      .then(() => { this.androidFullScreen.showSystemUI()})
-      .catch((error: any) => console.error(error));
-
     this.setDefaultDeviceInfo();
     this.initializeApp();
   }
@@ -30,6 +26,9 @@ export class MyApp {
       if (this.platform.is('cordova') && this.platform.is('android')) {
         this.statusBar.styleLightContent();
         this.getDeviceInfo();
+        this.androidFullScreen.isSupported()
+          .then(() => { this.androidFullScreen.showSystemUI() })
+          .catch((error: any) => console.error(error));
         this.hideSplashScreen();
       }
     });

@@ -4,8 +4,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 @Injectable()
 export class RestProvider {
 
-  apiUrl: string = "http://synced.intellibiz.in/api/schools";
-  //apiUrl: string = "http://localhost/synced/api/schools";
+  //apiUrl: string = "http://synced.intellibiz.in/api/schools";
+  apiUrl: string = "http://localhost/synced/api/schools";
   private _trackData: trackData = {}
 
   constructor(private http: HttpClient) {
@@ -19,8 +19,9 @@ export class RestProvider {
       this.http.get(newAPI, {
         headers: { 'Content-Type': 'application/json', 'X-API-KEY': 'synced-9908313427' }
       }).subscribe(data => {
-          resolve(data)
+        resolve(data)
       }, (err: HttpErrorResponse) => {
+        console.error(err);
         if (err.error instanceof Error) {
           reject(err.message);
         } else {
@@ -29,7 +30,7 @@ export class RestProvider {
           }
           reject(err.message);
         }
-      });
+      })
     });
 
   }
@@ -42,7 +43,7 @@ export class RestProvider {
       newAPI = this.apiUrl + '/classes?siteID=' + siteID;
     }
     console.log('Loading classes from server: ' + newAPI);
-    
+
     return new Promise((resolve, reject) => {
       this.http.get(newAPI, {
         headers: { 'Content-Type': 'application/json', 'X-API-KEY': 'synced-9908313427' }
@@ -66,7 +67,7 @@ export class RestProvider {
     return new Promise((resolve, reject) => {
       this.http.post(this.apiUrl + '/admissions', targetData,
         {
-          headers: { 'Content-Type': 'application/json', 'X-API-KEY':'synced-9908313427' }
+          headers: { 'Content-Type': 'application/json', 'X-API-KEY': 'synced-9908313427' }
         }).subscribe(res => {
           resolve(res)
         }, (err: HttpErrorResponse) => {
@@ -97,10 +98,10 @@ export class RestProvider {
         newAPI = this.apiUrl + '/trackApplication?admissionNo=' + this._trackData.admissionNo;
       }
     }
-    
+
     newAPI = newAPI + '&siteID=' + siteID;
     console.log('Loading track information from server: ' + newAPI);
-    
+
     return new Promise((resolve, reject) => {
       this.http.get(newAPI, {
         headers: { 'Content-Type': 'application/json', 'X-API-KEY': 'synced-9908313427' }

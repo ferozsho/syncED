@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, trigger, transition, style, state, animate, keyframes } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -6,17 +6,38 @@ import { RestProvider } from './../../providers/rest/rest';
 import { MyApp } from './../../app/app.component';
 
 @IonicPage()
-@Component({
-  selector: 'page-school-list',
-  templateUrl: 'school-list.html',
+  @Component({
+    selector: 'page-school-list',
+    templateUrl: 'school-list.html',
+    animations: [
+      trigger('flyOut', [
+        state('in', style({ transform: 'translateY(0)' })),
+        transition('void => *', [
+          animate(1200, keyframes([
+            style({ opacity: 0, transform: 'translateY(0)', offset: 0 }),
+            style({ opacity: 0.1, transform: 'translateY(0)', offset: 0.1 }),
+            style({ opacity: 0.2, transform: 'translateY(0)', offset: 0.2 }),
+            style({ opacity: 0.3, transform: 'translateY(0)', offset: 0.3 }),
+            style({ opacity: 0.4, transform: 'translateY(0)', offset: 0.4 }),
+            style({ opacity: 0.5, transform: 'translateY(0)', offset: 0.5 }),
+            style({ opacity: 0.6, transform: 'translateY(0)', offset: 0.6 }),
+            style({ opacity: 0.7, transform: 'translateY(0)', offset: 0.7 }),
+            style({ opacity: 0.8, transform: 'translateY(0)', offset: 0.8 }),
+            style({ opacity: 0.9, transform: 'translateY(0)', offset: 0.9 }),
+            style({ opacity: 1, transform: 'translateY(0)', offset: 1.0 })
+          ]))
+        ])
+      ])
+    ]
 })
-export class SchoolListPage {
 
+export class SchoolListPage {
   schList: any;
   schListTemp: any;
   schOptions: any;
   hasFilters: boolean = false;
-  public schoolBoard: string = 'all';
+  schoolBoard: string = 'all';
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public myApp: MyApp, public resProvider: RestProvider, public storage: Storage, private statusBar: StatusBar) {
     this.refreshPage(0);
@@ -31,7 +52,7 @@ export class SchoolListPage {
     this.myApp.addLoadingMessage();
     this.fnGetSchoolData();
   }
-
+  
   fnGetSchoolData() {
     this.storage.ready().then(() => {
 
