@@ -3,6 +3,7 @@
 }
 
 page-school-list {
+
   @each $track, $value in auxiliary-categories() {
     ion-item-sliding[track=#{$track}] ion-label {
       border-left: 2px solid $value;
@@ -10,6 +11,9 @@ page-school-list {
     }
   }
 
+  ion-badge {
+    font-weight: lighter;
+  }
   div.main {
     position:absolute;
     z-index:1;

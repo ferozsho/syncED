@@ -37,7 +37,13 @@ export class SchoolListPage {
   schOptions: any;
   hasFilters: boolean = false;
   schoolBoard: string = 'all';
-
+  
+  public sbArray: Array<{ key: string, name: string }> = [
+    { key: 'all', name: 'ALL' },
+    { key: 'ssc', name: 'SSC' },
+    { key: 'cbse', name: 'CBSE' },
+    { key: 'icse', name: 'ICSE' },
+  ];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public myApp: MyApp, public resProvider: RestProvider, public storage: Storage, private statusBar: StatusBar) {
     this.refreshPage(0);
