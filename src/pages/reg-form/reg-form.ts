@@ -413,9 +413,9 @@ export class RegFormPage {
 
   saveRegForm() {
     let targetData = {
+      'siteID': this.siteData.siteID,
       'deviceInfo': this.deviceInfo,
-      'siteInfo': this.siteData,
-      'formData': this.regFormData
+      'formData': this.regFormData,
     }
     this.resProvider.postNewAdminssion(targetData)
       .then(data => {
