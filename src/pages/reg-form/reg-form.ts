@@ -192,48 +192,38 @@ export class RegFormPage {
 
     this.studentInfo.dob = new Date().toISOString();
     this.studentInfo.sex = 'Female';
-    this.studentInfo.applicantName = 'Sofiya Shaik';
-    this.studentInfo.aadhaarNo = '333344445555';
-    this.studentInfo.classesID = '13';
-    this.studentInfo.caste = 'OC';
-    this.studentInfo.religion = 'Islam';
-    this.studentInfo.mother_tongue = 'Urdu';
+    this.studentInfo.applicantName = '';
+    this.studentInfo.aadhaarNo = '';
+    this.studentInfo.classesID = '';
+    this.studentInfo.caste = '';
+    this.studentInfo.religion = '';
+    this.studentInfo.mother_tongue = '';
     this.studentInfo.nationality = 'Indian';
-    this.studentInfo.bloodgroup = 'A+';
+    this.studentInfo.bloodgroup = '';
     this.studentInfo.id_marks_one = '';
     this.studentInfo.id_marks_two = '';
 
-    this.studentInfo.father_name = 'Feroz Shaik';
-    this.studentInfo.father_qualification = 'BSc';
-    this.studentInfo.father_profession = 'IT';
-    this.studentInfo.monthly_income = 5000;
+    this.studentInfo.father_name = '';
+    this.studentInfo.father_qualification = '';
+    this.studentInfo.father_profession = '';
+    this.studentInfo.monthly_income = null;
     this.studentInfo.father_phone = null;
     this.studentInfo.father_email = '';
 
-    this.studentInfo.mother_name = 'Asiya Nazima';
-    this.studentInfo.mother_qualification = 'M.A';
-    this.studentInfo.mother_profession = 'HMaker';
+    this.studentInfo.mother_name = '';
+    this.studentInfo.mother_qualification = '';
+    this.studentInfo.mother_profession = '';
     this.studentInfo.mother_phone = null;
     this.studentInfo.mother_email = '';
 
-    this.studentInfo.email = 'feroz.shaik@3pillarstc.com';
-    this.studentInfo.address = '391-54/18, SN -2';
-    this.studentInfo.city = 'Hyderabad';
-    this.studentInfo.pincode = 500034;
+    this.studentInfo.email = '';
+    this.studentInfo.address = '';
+    this.studentInfo.city = '';
+    this.studentInfo.pincode = null;
     this.studentInfo.country = 'IN';
-    this.studentInfo.phone = 9908313427;
+    this.studentInfo.phone = null;
 
     console.log('Loading default data...')
-    
-    setTimeout(() => {
-      this.ApplicationForm = 'father';
-      setTimeout(() => {
-        this.ApplicationForm = 'mother';
-        setTimeout(() => {
-          this.ApplicationForm = 'contact';
-        }, 1000);
-      }, 1000);
-    }, 1000);
     
   }
 

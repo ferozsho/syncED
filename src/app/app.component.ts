@@ -35,8 +35,11 @@ export class MyApp {
   }
 
   setDefaultDeviceInfo() {
-    this.deviceInfo.id = 'local';
+    this.deviceInfo.deviceID = 'local';
     this.deviceInfo.platform = 'Browser';
+    this.deviceInfo.model = 'Base';
+    this.deviceInfo.version = '0.0.2';
+    this.deviceInfo.manufacturer = 'Windows';
   }
 
   hideSplashScreen() {
@@ -93,7 +96,7 @@ export class MyApp {
 
   public getDeviceInfo() {
     try {
-      this.deviceInfo.id = this.device.uuid;
+      this.deviceInfo.deviceID = this.device.uuid;
       this.deviceInfo.model = this.device.model;
       this.deviceInfo.platform = this.device.platform;
       this.deviceInfo.version = this.device.version;
@@ -107,7 +110,7 @@ export class MyApp {
 }
 
 interface deviceInterface {
-  id?: string,
+  deviceID?: string,
   model?: string,
   platform?: string,
   version?: string,
