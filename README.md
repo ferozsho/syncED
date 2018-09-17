@@ -38,25 +38,28 @@ A detailed description can be found in the [guide](https://ionicframework.com/ge
 ```
 cli packages: (C:\Users\feroz\AppData\Roaming\npm\node_modules)
 
-    @ionic/cli-utils  : 1.19.0
-    ionic (Ionic CLI) : 3.19.0
+   ionic (Ionic CLI)  : 4.1.2 (C:\Users\feroz\AppData\Roaming\npm\node_modules\ionic)
+   Ionic Framework    : ionic-angular 3.9.2
+   @ionic/app-scripts : 3.1.8
 
-global packages:
+Cordova:
 
-    cordova (Cordova CLI) : 8.0.0
-
-local packages:
-
-    @ionic/app-scripts : 3.1.7
-    Cordova Platforms  : android 7.0.0 ios 4.5.4
-    Ionic Framework    : ionic-angular 3.9.2
+   cordova (Cordova CLI) : 8.0.0
+   Cordova Platforms     : android 7.0.0
+   Cordova Plugins       : cordova-plugin-ionic-webview 1.1.1, (and 6 other plugins)
 
 System:
 
-    Android SDK Tools : 26.1.1
-    Node              : v8.9.3
-    npm               : 5.6.0
-    OS                : Windows 10
+   NodeJS : v8.12.0 (C:\Program Files\nodejs\node.exe)
+   npm    : 6.4.1
+   OS     : Windows 10
+   
+System:
+
+   Android SDK Tools : 26.1.1
+   Node              : v8.12.0
+   npm               : 6.4.1
+   OS                : Windows 10
 
 Environment Variables:
 
@@ -71,7 +74,7 @@ Misc:
 
 ```
 $ cordova plugin update
-cordova-custom-config 5.0.2 "cordova-custom-config"
+cordova-custom-config 5.0.2 "cordova-custom-config" - (Removed)
 cordova-plugin-device 1.1.7 "Device"
 cordova-plugin-fullscreen 1.1.0 "cordova-plugin-fullscreen"
 cordova-plugin-ionic-webview 1.1.16 "cordova-plugin-ionic-webview"
